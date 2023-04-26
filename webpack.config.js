@@ -1,6 +1,9 @@
+const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
+const HtmlPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
-  entry: "./src/test.tsx",
+  entry: { popup: path.resolve("./src/popup/popup.tsx") },
   module: {
     rules: [
       {
@@ -10,6 +13,24 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve("src/assets/manifest.json"),
+          to: path.resolve("dist"),
+        },
+        {
+          from: path.resolve("src/assets/"),
+          to: path.resolve("dist"),
+        },
+      ],
+    }),
+    new HtmlPlugin({
+      title: "English Vocabulary Booster Chrome Extension",
+      filename: "popup.html",
+    }),
+  ],
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
