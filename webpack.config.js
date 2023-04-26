@@ -3,7 +3,10 @@ const CopyPlugin = require("copy-webpack-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
-  entry: { popup: path.resolve("./src/popup/popup.tsx") },
+  devtool: "cheap-module-source-map",
+  entry: {
+    popup: path.resolve("./src/popup/popup.tsx"),
+  },
   module: {
     rules: [
       {
@@ -29,12 +32,13 @@ module.exports = {
     new HtmlPlugin({
       title: "English Vocabulary Booster Chrome Extension",
       filename: "popup.html",
+      chunks: ["popup"],
     }),
   ],
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   output: {
-    filename: "index.js",
+    filename: "[name].js",
   },
 };
