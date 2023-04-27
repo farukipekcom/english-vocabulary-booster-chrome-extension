@@ -6,6 +6,7 @@ module.exports = {
   devtool: "cheap-module-source-map",
   entry: {
     popup: path.resolve("./src/popup/popup.tsx"),
+    options: path.resolve("./src/options/options.tsx"),
   },
   module: {
     rules: [
@@ -33,11 +34,7 @@ module.exports = {
         },
       ],
     }),
-    new HtmlPlugin({
-      title: "English Vocabulary Booster Chrome Extension",
-      filename: "popup.html",
-      chunks: ["popup"],
-    }),
+    ...getHtmlPlugins(["popup", "options"]),
   ],
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
@@ -46,3 +43,14 @@ module.exports = {
     filename: "[name].js",
   },
 };
+
+function getHtmlPlugins(chunks) {
+  return chunks.map(
+    (chunk) =>
+      new HtmlPlugin({
+        title: "English Vocabulary Booster",
+        filename: `${chunk}.html`,
+        chunks: [chunk],
+      })
+  );
+}
