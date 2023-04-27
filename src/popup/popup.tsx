@@ -4,6 +4,7 @@ import "./popup.css";
 const test = (
   <div>
     <h1>HELLO WORLD</h1>
+    <img src="icon128.png" alt="" />
   </div>
 );
 

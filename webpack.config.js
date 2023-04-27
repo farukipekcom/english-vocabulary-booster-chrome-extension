@@ -19,6 +19,11 @@ module.exports = {
         use: ["style-loader", "css-loader"],
         test: /\.css$/i,
       },
+      {
+        type: "assets/resource",
+        use: "asset/resource",
+        test: /\.(png|svg|jpg|jpeg|gif)$/,
+      },
     ],
   },
   plugins: [
@@ -41,6 +46,11 @@ module.exports = {
   },
   output: {
     filename: "[name].js",
+  },
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+    },
   },
 };
 
