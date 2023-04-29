@@ -1,13 +1,11 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
 import "./options.css";
-const options = (
-  <div>
-    <h1>HELLO WORLD</h1>
-  </div>
-);
+const Options = () => {
+  return (
+    <div>
+      <h1>Hello World</h1>
+    </div>
+  );
+};
 
-const container = document.createElement("div");
-document.body.appendChild(container);
-const root = createRoot(container);
-root.render(options);
+export default Options;

@@ -6,7 +6,7 @@ module.exports = {
   devtool: "cheap-module-source-map",
   entry: {
     popup: path.resolve("./src/popup/index.tsx"),
-    options: path.resolve("./src/options/options.tsx"),
+    options: path.resolve("./src/options/index.tsx"),
     contentScript: path.resolve("./src/contentScript/contentScript.tsx"),
   },
   module: {
