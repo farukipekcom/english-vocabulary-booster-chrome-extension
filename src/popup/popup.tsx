@@ -1,14 +1,12 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
 import "./popup.css";
-const test = (
-  <div>
-    <h1>HELLO WORLD</h1>
-    <img src="icon128.png" alt="" />
-  </div>
-);
 
-const container = document.createElement("div");
-document.body.appendChild(container);
-const root = createRoot(container);
-root.render(test);
+const Popup = () => {
+  return (
+    <div>
+      <h1>Hello World</h1>
+    </div>
+  );
+};
+
+export default Popup;
