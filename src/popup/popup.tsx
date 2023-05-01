@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./popup.scss";
+import "../styles/main.scss";
 
 const Popup = () => {
   const handleSubmit = (e) => {
