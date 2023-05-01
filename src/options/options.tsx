@@ -1,5 +1,5 @@
 import React from "react";
-import "./options.css";
+import "./options.scss";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Settings from "./pages/settings";
