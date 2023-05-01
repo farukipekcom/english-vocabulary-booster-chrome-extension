@@ -1,0 +1,40 @@
+@mixin mq($width: "tablet") {
+  @if ($width == "tablet") {
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      @content;
+    }
+  } @else if($width == "desktop") {
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      @content;
+    }
+  } @else if($width == "large") {
+    // Extra large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      @content;
+    }
+  }
+}
+
+// Typography
+@mixin heading {
+  font-size: 2em;
+  font-weight: 600;
+  line-height: 2.375em;
+}
+@mixin md-regular {
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5em;
+}
+@mixin sm-regular {
+  font-size: 0.875em;
+  font-weight: 400;
+  line-height: 1.25em;
+}
+@mixin sm-medium {
+  font-size: 0.875em;
+  font-weight: 500;
+  line-height: 1.25em;
+}
