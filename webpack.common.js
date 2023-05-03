@@ -1,6 +1,8 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
+
 module.exports = {
   mode: "development",
   devtool: "cheap-module-source-map",
@@ -28,6 +30,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new Dotenv(),
     new CopyPlugin({
       patterns: [
         {
