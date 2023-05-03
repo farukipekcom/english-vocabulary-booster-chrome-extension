@@ -1,28 +1,35 @@
 import React from "react";
-
+import SearchIcon from "../components/icons/search";
+import PlusIcon from "../components/icons/plus";
+import DeleteIcon from "../components/icons/delete";
+import EditIcon from "../components/icons/edit";
+import DashboardICon from "../components/icons/dashboard";
+import MyWordIcon from "../components/icons/myword";
+import SettingsIcon from "../components/icons/settings";
+import Logo from "../components/icons/logo";
 function Mywords() {
   return (
     <div className="main">
       <header className="header">
         <div className="header-logo">
-          <img src="/logo.svg" alt="" />
+          <Logo />
         </div>
         <div className="header-menu">
           <div className="header-menu-item">
             <div className="header-menu-item-icon">
-              <img src="/dashboard.svg" alt="" />
+              <DashboardICon />
             </div>
             <div className="header-menu-item-text">Dashboard</div>
           </div>
           <div className="header-menu-item">
             <div className="header-menu-item-icon">
-              <img src="/mywords.svg" alt="" />
+              <MyWordIcon />
             </div>
             <div className="header-menu-item-text">My Words</div>
           </div>
           <div className="header-menu-item">
             <div className="header-menu-item-icon">
-              <img src="/settings.svg" alt="" />
+              <SettingsIcon />
             </div>
             <div className="header-menu-item-text">Settings</div>
           </div>
@@ -44,7 +51,7 @@ function Mywords() {
           <div className="content-heading-right">
             <div className="content-heading-right-button">
               <div className="content-heading-right-button-icon">
-                <img src="/plus.svg" alt="" />
+                <PlusIcon />
               </div>
               <div className="content-heading-right-button-text">Add</div>
             </div>
@@ -62,7 +69,7 @@ function Mywords() {
           </div>
           <div className="content-filter-search">
             <div className="content-filter-search-icon">
-              <img src="/search.svg" alt="" />
+              <SearchIcon />
             </div>
             <input
               type="text"
@@ -91,10 +98,10 @@ function Mywords() {
             <div className="content-table-row-column">apple</div>
             <div className="content-table-row-column content-table-row-column-buttons">
               <div className="content-table-row-column-buttons-delete">
-                <img src="/delete.svg" alt="" />
+                <DeleteIcon />
               </div>
               <div className="content-table-row-column-buttons-edit">
-                <img src="/edit.svg" alt="" />
+                <EditIcon />
               </div>
             </div>
           </div>
@@ -107,10 +114,10 @@ function Mywords() {
             <div className="content-table-row-column">apple</div>
             <div className="content-table-row-column content-table-row-column-buttons">
               <div className="content-table-row-column-buttons-delete">
-                <img src="/delete.svg" alt="" />
+                <DeleteIcon />
               </div>
               <div className="content-table-row-column-buttons-edit">
-                <img src="/edit.svg" alt="" />
+                <EditIcon />
               </div>
             </div>
           </div>

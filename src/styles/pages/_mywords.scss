@@ -34,6 +34,9 @@ body {
           background-color: $hover;
         }
         &-icon {
+          svg {
+            fill: #fff;
+          }
         }
         &-text {
           font-size: 16px;
@@ -97,6 +100,11 @@ body {
             transition: background-color 0.2s ease-in-out;
           }
           &-icon {
+            width: 12px;
+            height: 12px;
+            svg {
+              fill: #fff;
+            }
           }
           &-text {
             color: #fff;
@@ -142,6 +150,9 @@ body {
           position: absolute;
           top: 14px;
           left: 16px;
+          svg {
+            fill: $secondary;
+          }
         }
         &-input {
           width: 100%;
@@ -188,9 +199,19 @@ body {
             justify-content: space-between;
             flex: unset;
             &-edit {
+              width: 16px;
+              height: 16px;
               cursor: pointer;
+              svg {
+                fill: $secondary;
+              }
             }
             &-delete {
+              width: 16px;
+              height: 16px;
+              svg {
+                fill: $secondary;
+              }
               cursor: pointer;
             }
           }
