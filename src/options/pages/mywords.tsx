@@ -35,27 +35,41 @@ function Mywords() {
       <main className="content">
         <div className="content-heading">
           <div className="content-heading-left">
-            <div className="content-heading-title"></div>
-            <div className="content-heading-subtitle"></div>
+            <div className="content-heading-left-title">My Words</div>
+            <div className="content-heading-left-subtitle">
+              Lorem ipsum consectetur adipiscing elit duis tristique
+              sollicitudin.
+            </div>
           </div>
           <div className="content-heading-right">
-            <div className="content-heading-button">
-              <div className="content-heading-button-icon"></div>
-              <div className="content-heading-button-text">Add</div>
+            <div className="content-heading-right-button">
+              <div className="content-heading-right-button-icon">
+                <img src="/plus.svg" alt="" />
+              </div>
+              <div className="content-heading-right-button-text">Add</div>
             </div>
           </div>
         </div>
         <div className="content-filter">
           <div className="content-filter-categories">
-            <div className="content-filter-categories-item">View All</div>
+            <div className="content-filter-categories-item filter-active">
+              View All
+            </div>
             <div className="content-filter-categories-item">Verb</div>
             <div className="content-filter-categories-item">Noun</div>
             <div className="content-filter-categories-item">Adjective</div>
-            <div className="content-filter-categories-item">adverb</div>
+            <div className="content-filter-categories-item">Adverb</div>
           </div>
           <div className="content-filter-search">
-            <div className="content-filter-icon"></div>
-            <input type="text" name="search" placeholder="Search" />
+            <div className="content-filter-search-icon">
+              <img src="/search.svg" alt="" />
+            </div>
+            <input
+              type="text"
+              className="content-filter-search-input"
+              name="search"
+              placeholder="Search"
+            />
           </div>
         </div>
         <div className="content-table">
@@ -66,6 +80,7 @@ function Mywords() {
             <div className="content-table-row-column">Noun</div>
             <div className="content-table-row-column">Adjective</div>
             <div className="content-table-row-column">Adverb</div>
+            <div className="content-table-row-column content-table-row-column-buttons"></div>
           </div>
           <div className="content-table-row">
             <div className="content-table-row-column">apple</div>
@@ -75,8 +90,12 @@ function Mywords() {
             <div className="content-table-row-column">apple</div>
             <div className="content-table-row-column">apple</div>
             <div className="content-table-row-column content-table-row-column-buttons">
-              <div className="content-table-row-column-buttons-delete"></div>
-              <div className="content-table-row-column-buttons-edit"></div>
+              <div className="content-table-row-column-buttons-delete">
+                <img src="/delete.svg" alt="" />
+              </div>
+              <div className="content-table-row-column-buttons-edit">
+                <img src="/edit.svg" alt="" />
+              </div>
             </div>
           </div>
           <div className="content-table-row">
@@ -87,8 +106,12 @@ function Mywords() {
             <div className="content-table-row-column">apple</div>
             <div className="content-table-row-column">apple</div>
             <div className="content-table-row-column content-table-row-column-buttons">
-              <div className="content-table-row-column-buttons-delete"></div>
-              <div className="content-table-row-column-buttons-edit"></div>
+              <div className="content-table-row-column-buttons-delete">
+                <img src="/delete.svg" alt="" />
+              </div>
+              <div className="content-table-row-column-buttons-edit">
+                <img src="/edit.svg" alt="" />
+              </div>
             </div>
           </div>
         </div>
