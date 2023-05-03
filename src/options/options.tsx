@@ -7,7 +7,7 @@ import Mywords from "./pages/mywords";
 const Options = () => {
   return (
     <div>
-      <ul>
+      {/* <ul>
         <li>
           <a href="#/">Home</a>
         </li>
@@ -17,7 +17,7 @@ const Options = () => {
         <li>
           <a href="#/mywords">My Words</a>
         </li>
-      </ul>
+      </ul> */}
       <Routes>
         <Route index element={<Home />}></Route>
         <Route path="/home" element={<Home />}></Route>
