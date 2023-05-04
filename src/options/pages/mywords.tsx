@@ -10,6 +10,7 @@ import Logo from "../components/icons/logo";
 function Mywords() {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [isDeleting, setIsDeleting] = useState(false);
   useEffect(() => {
     setLoading(false);
     fetch(process.env.API_URL)
@@ -18,7 +19,16 @@ function Mywords() {
         setData(data);
         setLoading(true);
       });
-  }, []);
+    setIsDeleting(false);
+  }, [isDeleting]);
+  const handleDelete = (id) => {
+    fetch(process.env.API_URL + id, {
+      method: "DELETE",
+    }).then(() => {
+      setIsDeleting(true);
+    });
+  };
+  console.log("loading", isDeleting);
 
   return (
     <div className="main">
@@ -111,7 +121,10 @@ function Mywords() {
                 <div className="content-table-row-column">{item.adjective}</div>
                 <div className="content-table-row-column">{item.adverb}</div>
                 <div className="content-table-row-column content-table-row-column-buttons">
-                  <div className="content-table-row-column-buttons-delete">
+                  <div
+                    className="content-table-row-column-buttons-delete"
+                    onClick={() => handleDelete(item.id)}
+                  >
                     <DeleteIcon />
                   </div>
                   <div className="content-table-row-column-buttons-edit">
