@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SearchIcon from "../components/icons/search";
 import PlusIcon from "../components/icons/plus";
 import DeleteIcon from "../components/icons/delete";
@@ -8,6 +8,18 @@ import MyWordIcon from "../components/icons/myword";
 import SettingsIcon from "../components/icons/settings";
 import Logo from "../components/icons/logo";
 function Mywords() {
+  const [data, setData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  useEffect(() => {
+    setLoading(false);
+    fetch(process.env.API_URL)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(true);
+      });
+  }, []);
+
   return (
     <div className="main">
       <header className="header">
@@ -89,38 +101,25 @@ function Mywords() {
             <div className="content-table-row-column">Adverb</div>
             <div className="content-table-row-column content-table-row-column-buttons"></div>
           </div>
-          <div className="content-table-row">
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column content-table-row-column-buttons">
-              <div className="content-table-row-column-buttons-delete">
-                <DeleteIcon />
+          {isLoading &&
+            data.map((item) => (
+              <div className="content-table-row" key={item.id}>
+                <div className="content-table-row-column">{item.keyword}</div>
+                <div className="content-table-row-column">{item.replace}</div>
+                <div className="content-table-row-column">{item.verb}</div>
+                <div className="content-table-row-column">{item.noun}</div>
+                <div className="content-table-row-column">{item.adjective}</div>
+                <div className="content-table-row-column">{item.adverb}</div>
+                <div className="content-table-row-column content-table-row-column-buttons">
+                  <div className="content-table-row-column-buttons-delete">
+                    <DeleteIcon />
+                  </div>
+                  <div className="content-table-row-column-buttons-edit">
+                    <EditIcon />
+                  </div>
+                </div>
               </div>
-              <div className="content-table-row-column-buttons-edit">
-                <EditIcon />
-              </div>
-            </div>
-          </div>
-          <div className="content-table-row">
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column">apple</div>
-            <div className="content-table-row-column content-table-row-column-buttons">
-              <div className="content-table-row-column-buttons-delete">
-                <DeleteIcon />
-              </div>
-              <div className="content-table-row-column-buttons-edit">
-                <EditIcon />
-              </div>
-            </div>
-          </div>
+            ))}
         </div>
       </main>
     </div>
