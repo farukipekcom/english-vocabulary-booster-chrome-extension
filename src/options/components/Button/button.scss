@@ -1,0 +1,11 @@
+@import "../../../styles/abstracts/_variables";
+@import "../../../styles/abstracts/_mixin";
+.button {
+  cursor: pointer;
+  width: max-content;
+  background-color: $primary;
+  color: #fff;
+  padding: 10px 16px;
+  @include sm-medium;
+  border-radius: $radius-sm;
+}

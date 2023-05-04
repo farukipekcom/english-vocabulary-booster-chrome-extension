@@ -7,10 +7,12 @@ import DashboardICon from "../components/icons/dashboard";
 import MyWordIcon from "../components/icons/myword";
 import SettingsIcon from "../components/icons/settings";
 import Logo from "../components/icons/logo";
+import AddWord from "../components/AddWord/AddWord";
 function Mywords() {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isAddWordActive, setIsAddWordActive] = useState(true);
   useEffect(() => {
     setLoading(false);
     fetch(process.env.API_URL)
@@ -28,7 +30,9 @@ function Mywords() {
       setIsDeleting(true);
     });
   };
-  console.log("loading", isDeleting);
+  const handleAdd = () => {
+    setIsAddWordActive(!isAddWordActive);
+  };
 
   return (
     <div className="main">
@@ -71,7 +75,7 @@ function Mywords() {
             </div>
           </div>
           <div className="content-heading-right">
-            <div className="content-heading-right-button">
+            <div className="content-heading-right-button" onClick={handleAdd}>
               <div className="content-heading-right-button-icon">
                 <PlusIcon />
               </div>
@@ -134,6 +138,19 @@ function Mywords() {
               </div>
             ))}
         </div>
+        {isAddWordActive && (
+          <div className="content-add">
+            <div
+              className="content-add-background"
+              onClick={() => setIsAddWordActive(!isAddWordActive)}
+            ></div>
+            <AddWord
+              isDeleting={isDeleting}
+              setIsDeleting={setIsDeleting}
+              setIsAddWordActive={setIsAddWordActive}
+            />
+          </div>
+        )}
       </main>
     </div>
   );

@@ -1,0 +1,11 @@
+@import "../../../styles/abstracts/_mixin";
+@import "../../../styles/abstracts/_variables";
+.input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid $border;
+  box-shadow: $shadow;
+  border-radius: $radius-sm;
+  padding: 10px 16px;
+  @include md-regular;
+}
