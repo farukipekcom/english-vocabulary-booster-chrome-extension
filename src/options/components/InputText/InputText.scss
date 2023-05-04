@@ -8,4 +8,8 @@
   border-radius: $radius-sm;
   padding: 10px 16px;
   @include md-regular;
+  &:focus {
+    outline: none;
+    border: 1px solid $primary;
+  }
 }
