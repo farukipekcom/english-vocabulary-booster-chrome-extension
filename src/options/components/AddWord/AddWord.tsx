@@ -69,7 +69,7 @@ function AddWord({ isDeleting, setIsDeleting, setIsAddWordActive }) {
           </div>
         </div>
         <div className="card-input">
-          <div className="card-input-label">Keyword</div>
+          <div className="card-input-label">Meaning</div>
           <div className="card-input-item">
             <InputText
               name="replace"
@@ -80,7 +80,7 @@ function AddWord({ isDeleting, setIsDeleting, setIsAddWordActive }) {
           </div>
         </div>
         <div className="card-input">
-          <div className="card-input-label">Keyword</div>
+          <div className="card-input-label">Verb</div>
           <div className="card-input-item">
             <InputText
               name="verb"
@@ -91,7 +91,7 @@ function AddWord({ isDeleting, setIsDeleting, setIsAddWordActive }) {
           </div>
         </div>
         <div className="card-input">
-          <div className="card-input-label">Keyword</div>
+          <div className="card-input-label">Noun</div>
           <div className="card-input-item">
             <InputText
               name="noun"
@@ -102,7 +102,7 @@ function AddWord({ isDeleting, setIsDeleting, setIsAddWordActive }) {
           </div>
         </div>
         <div className="card-input">
-          <div className="card-input-label">Keyword</div>
+          <div className="card-input-label">Adjective</div>
           <div className="card-input-item">
             <InputText
               name="adjective"
@@ -113,7 +113,7 @@ function AddWord({ isDeleting, setIsDeleting, setIsAddWordActive }) {
           </div>
         </div>
         <div className="card-input">
-          <div className="card-input-label">Keyword</div>
+          <div className="card-input-label">Adverb</div>
           <div className="card-input-item">
             <InputText
               name="adverb"
