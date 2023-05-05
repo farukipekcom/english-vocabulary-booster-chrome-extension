@@ -8,11 +8,15 @@ import MyWordIcon from "../components/icons/myword";
 import SettingsIcon from "../components/icons/settings";
 import Logo from "../components/icons/logo";
 import AddWord from "../components/AddWord/AddWord";
+import EditWord from "../components/EditWord/EditWord";
 function Mywords() {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isAddWordActive, setIsAddWordActive] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isAddWordActive, setIsAddWordActive] = useState(false);
+  const [isEditWordActive, setIsEditWordActive] = useState(false);
+  const [wordId, setWordId] = useState("");
   useEffect(() => {
     setLoading(false);
     fetch(process.env.API_URL)
@@ -21,17 +25,20 @@ function Mywords() {
         setData(data);
         setLoading(true);
       });
-    setIsDeleting(false);
-  }, [isDeleting]);
+  }, [isEditing, isDeleting]);
   const handleDelete = (id) => {
     fetch(process.env.API_URL + id, {
       method: "DELETE",
     }).then(() => {
-      setIsDeleting(true);
+      setIsDeleting(!isDeleting);
     });
   };
   const handleAdd = () => {
     setIsAddWordActive(!isAddWordActive);
+  };
+  const handleEdit = (id) => {
+    setWordId(id);
+    setIsEditWordActive(true);
   };
 
   return (
@@ -131,7 +138,10 @@ function Mywords() {
                   >
                     <DeleteIcon />
                   </div>
-                  <div className="content-table-row-column-buttons-edit">
+                  <div
+                    className="content-table-row-column-buttons-edit"
+                    onClick={() => handleEdit(item.id)}
+                  >
                     <EditIcon />
                   </div>
                 </div>
@@ -148,6 +158,20 @@ function Mywords() {
               isDeleting={isDeleting}
               setIsDeleting={setIsDeleting}
               setIsAddWordActive={setIsAddWordActive}
+            />
+          </div>
+        )}
+        {isEditWordActive && (
+          <div className="content-add">
+            <div
+              className="content-add-background"
+              onClick={() => setIsEditWordActive(!isEditWordActive)}
+            ></div>
+            <EditWord
+              setIsEditWordActive={setIsEditWordActive}
+              wordId={wordId}
+              setIsEditing={setIsEditing}
+              isEditing={isEditing}
             />
           </div>
         )}
