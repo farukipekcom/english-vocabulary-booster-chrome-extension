@@ -1,0 +1,57 @@
+@import "../../../styles//abstracts/_mixin";
+@import "../../../styles//abstracts/_variables";
+.header {
+  width: 280px;
+  background-color: $primary;
+  color: #fff;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  &-logo {
+  }
+  &-menu {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    &-item {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 16px;
+      border-radius: $radius-sm;
+      cursor: pointer;
+      &:hover {
+        background-color: $hover;
+      }
+      &-icon {
+        svg {
+          fill: #fff;
+        }
+      }
+      &-text {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 600;
+      }
+    }
+  }
+  &-total {
+    background-color: $hover;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: $radius-sm;
+    margin-top: auto;
+    &-heading {
+      @include sm-medium;
+    }
+    &-count {
+      @include md-regular;
+      font-weight: 600;
+    }
+  }
+}

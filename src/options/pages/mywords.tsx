@@ -9,6 +9,7 @@ import SettingsIcon from "../components/icons/settings";
 import Logo from "../components/icons/logo";
 import AddWord from "../components/AddWord/AddWord";
 import EditWord from "../components/EditWord/EditWord";
+import Header from "../components/Header/Header";
 function Mywords() {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -44,35 +45,7 @@ function Mywords() {
 
   return (
     <div className="main">
-      <header className="header">
-        <div className="header-logo">
-          <Logo />
-        </div>
-        <div className="header-menu">
-          <div className="header-menu-item">
-            <div className="header-menu-item-icon">
-              <DashboardICon />
-            </div>
-            <div className="header-menu-item-text">Dashboard</div>
-          </div>
-          <div className="header-menu-item">
-            <div className="header-menu-item-icon">
-              <MyWordIcon />
-            </div>
-            <div className="header-menu-item-text">My Words</div>
-          </div>
-          <div className="header-menu-item">
-            <div className="header-menu-item-icon">
-              <SettingsIcon />
-            </div>
-            <div className="header-menu-item-text">Settings</div>
-          </div>
-        </div>
-        <div className="header-total">
-          <div className="header-total-heading">Total Words</div>
-          <div className="header-total-count">274</div>
-        </div>
-      </header>
+      <Header />
       <main className="content">
         <div className="content-heading">
           <div className="content-heading-left">

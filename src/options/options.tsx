@@ -7,17 +7,6 @@ import Mywords from "./pages/mywords";
 const Options = () => {
   return (
     <div>
-      {/* <ul>
-        <li>
-          <a href="#/">Home</a>
-        </li>
-        <li>
-          <a href="#/settings">Settings</a>
-        </li>
-        <li>
-          <a href="#/mywords">My Words</a>
-        </li>
-      </ul> */}
       <Routes>
         <Route index element={<Home />}></Route>
         <Route path="/home" element={<Home />}></Route>
