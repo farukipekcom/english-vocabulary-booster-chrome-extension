@@ -4,7 +4,13 @@ import "./EditWord.scss";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "../icons/close";
 
-function EditWord({ setIsEditWordActive, wordId, setIsEditing, isEditing }) {
+function EditWord({
+  setIsEditWordActive,
+  wordId,
+  setWordId,
+  setIsEditing,
+  isEditing,
+}) {
   const [data, setData] = useState<any>({});
   const [formValue, setformValue] = useState({
     keyword: "",
@@ -54,6 +60,7 @@ function EditWord({ setIsEditWordActive, wordId, setIsEditing, isEditing }) {
     }
     setIsEditing(!isEditing);
   };
+
   return (
     <div className="card">
       <div className="card-close" onClick={() => setIsEditWordActive(false)}>

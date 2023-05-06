@@ -17,6 +17,7 @@ function Mywords() {
   const [isAddWordActive, setIsAddWordActive] = useState(false);
   const [isEditWordActive, setIsEditWordActive] = useState(false);
   const [wordId, setWordId] = useState("");
+  const [clicked, setClicked] = useState("");
   useEffect(() => {
     setLoading(false);
     fetch(process.env.API_URL)
@@ -123,30 +124,83 @@ function Mywords() {
             <div className="content-table-row-column content-table-row-column-buttons"></div>
           </div>
           {isLoading &&
-            data.map((item) => (
-              <div className="content-table-row" key={item.id}>
-                <div className="content-table-row-column">{item.keyword}</div>
-                <div className="content-table-row-column">{item.replace}</div>
-                <div className="content-table-row-column">{item.verb}</div>
-                <div className="content-table-row-column">{item.noun}</div>
-                <div className="content-table-row-column">{item.adjective}</div>
-                <div className="content-table-row-column">{item.adverb}</div>
-                <div className="content-table-row-column content-table-row-column-buttons">
+            data
+              // .filter((item) => item.id == 8)
+              .map((item) =>
+                item.id == wordId ? (
                   <div
-                    className="content-table-row-column-buttons-delete"
-                    onClick={() => handleDelete(item.id)}
+                    // style={{
+                    //   backgroundColor: "#d0d5dd",
+                    //   transition: "all 1s",
+                    // }}
+                    className={`content-table-row ${clicked} `}
+                    key={item.id}
                   >
-                    <DeleteIcon />
+                    <div className="content-table-row-column">
+                      {item.keyword}
+                    </div>
+                    <div className="content-table-row-column">
+                      {item.replace}
+                    </div>
+                    <div className="content-table-row-column">{item.verb}</div>
+                    <div className="content-table-row-column">{item.noun}</div>
+                    <div className="content-table-row-column">
+                      {item.adjective}
+                    </div>
+                    <div className="content-table-row-column">
+                      {item.adverb}
+                    </div>
+                    <div className="content-table-row-column content-table-row-column-buttons">
+                      <div
+                        className="content-table-row-column-buttons-delete"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        <DeleteIcon />
+                      </div>
+                      <div
+                        className="content-table-row-column-buttons-edit"
+                        onClick={() => handleEdit(item.id)}
+                      >
+                        <EditIcon />
+                      </div>
+                    </div>
                   </div>
-                  <div
-                    className="content-table-row-column-buttons-edit"
-                    onClick={() => handleEdit(item.id)}
-                  >
-                    <EditIcon />
+                ) : (
+                  <div className="content-table-row" key={item.id}>
+                    <div className="content-table-row-column">
+                      {item.keyword}
+                    </div>
+                    <div className="content-table-row-column">
+                      {item.replace}
+                    </div>
+                    <div className="content-table-row-column">{item.verb}</div>
+                    <div className="content-table-row-column">{item.noun}</div>
+                    <div className="content-table-row-column">
+                      {item.adjective}
+                    </div>
+                    <div className="content-table-row-column">
+                      {item.adverb}
+                    </div>
+                    <div className="content-table-row-column content-table-row-column-buttons">
+                      <div
+                        className="content-table-row-column-buttons-delete"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        <DeleteIcon />
+                      </div>
+                      <div
+                        className="content-table-row-column-buttons-edit"
+                        onClick={() => {
+                          handleEdit(item.id);
+                          setClicked("click");
+                        }}
+                      >
+                        <EditIcon />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                )
+              )}
         </div>
         {isAddWordActive && (
           <div className="content-add">
@@ -165,11 +219,17 @@ function Mywords() {
           <div className="content-add">
             <div
               className="content-add-background"
-              onClick={() => setIsEditWordActive(!isEditWordActive)}
+              onClick={() => {
+                setIsEditWordActive(!isEditWordActive);
+                setClicked("clicked");
+              }}
             ></div>
             <EditWord
               setIsEditWordActive={setIsEditWordActive}
               wordId={wordId}
+              setWordId={setWordId}
+              // setSinif={setSinif}
+              // sinif={sinif}
               setIsEditing={setIsEditing}
               isEditing={isEditing}
             />

@@ -240,3 +240,11 @@ body {
     }
   }
 }
+.click {
+  background-color: #e5e5e5 !important;
+  transition: all 0.4s;
+}
+.clicked {
+  background-color: #fff !important;
+  transition: all 0.4s;
+}
