@@ -12,6 +12,7 @@ function AddWord({ isDeleting, setIsDeleting, setIsAddWordActive }) {
     verb: "",
     adverb: "",
     adjective: "",
+    type: "1",
   });
   const handleChangeInput = (event) => {
     setformValue({
@@ -28,6 +29,7 @@ function AddWord({ isDeleting, setIsDeleting, setIsAddWordActive }) {
     loginFormData.append("verb", formValue.verb);
     loginFormData.append("adverb", formValue.adverb);
     loginFormData.append("adjective", formValue.adjective);
+    loginFormData.append("type", "1");
     try {
       const response = await fetch(process.env.API_URL, {
         method: "POST",
