@@ -1,7 +1,11 @@
 @import "../../../styles//abstracts/_mixin";
 @import "../../../styles//abstracts/_variables";
 .header {
+  position: fixed;
+  left: 0px;
+  top: 0px;
   width: 280px;
+  height: 100vh;
   background-color: $primary;
   color: #fff;
   padding: 16px;
