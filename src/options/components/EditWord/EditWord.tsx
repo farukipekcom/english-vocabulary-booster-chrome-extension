@@ -1,16 +1,10 @@
 import Button from "../Button/Button";
 import InputText from "../InputText/InputText";
 import "./EditWord.scss";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import CloseIcon from "../icons/close";
 
-function EditWord({
-  setIsEditWordActive,
-  wordId,
-  setWordId,
-  setIsEditing,
-  isEditing,
-}) {
+function EditWord({setIsEditWordActive, wordId, setWordId, setIsEditing, isEditing}) {
   const [data, setData] = useState<any>({});
   const [formValue, setformValue] = useState({
     keyword: "",
@@ -69,8 +63,7 @@ function EditWord({
       <div className="card-heading">
         <div className="card-heading-title">Edit Word</div>
         <div className="card-heading-description">
-          You can update words to the form below. If they are verbs or
-          adjectives, please write them in separate boxes.
+          You can update words to the form below. If they are verbs or adjectives, please write them in separate boxes.
         </div>
       </div>
 
@@ -78,67 +71,37 @@ function EditWord({
         <div className="card-input">
           <div className="card-input-label">Keyword</div>
           <div className="card-input-item">
-            <InputText
-              name="keyword"
-              value={formValue.keyword}
-              onChange={handleChangeInput}
-              placeholder="Keyword"
-            />
+            <InputText name="keyword" value={formValue.keyword} onChange={handleChangeInput} placeholder="Keyword" />
           </div>
         </div>
         <div className="card-input">
           <div className="card-input-label">Meaning</div>
           <div className="card-input-item">
-            <InputText
-              name="replace"
-              value={formValue.replace}
-              onChange={handleChangeInput}
-              placeholder="Meaning"
-            />
+            <InputText name="replace" value={formValue.replace} onChange={handleChangeInput} placeholder="Meaning" />
           </div>
         </div>
         <div className="card-input">
           <div className="card-input-label">Verb</div>
           <div className="card-input-item">
-            <InputText
-              name="verb"
-              value={formValue.verb}
-              onChange={handleChangeInput}
-              placeholder="Verb"
-            />
+            <InputText name="verb" value={formValue.verb} onChange={handleChangeInput} placeholder="Verb" />
           </div>
         </div>
         <div className="card-input">
           <div className="card-input-label">Noun</div>
           <div className="card-input-item">
-            <InputText
-              name="noun"
-              value={formValue.noun}
-              onChange={handleChangeInput}
-              placeholder="Noun"
-            />
+            <InputText name="noun" value={formValue.noun} onChange={handleChangeInput} placeholder="Noun" />
           </div>
         </div>
         <div className="card-input">
           <div className="card-input-label">Adjective</div>
           <div className="card-input-item">
-            <InputText
-              name="adjective"
-              value={formValue.adjective}
-              onChange={handleChangeInput}
-              placeholder="Adjective"
-            />
+            <InputText name="adjective" value={formValue.adjective} onChange={handleChangeInput} placeholder="Adjective" />
           </div>
         </div>
         <div className="card-input">
           <div className="card-input-label">Adverb</div>
           <div className="card-input-item">
-            <InputText
-              name="adverb"
-              value={formValue.adverb}
-              onChange={handleChangeInput}
-              placeholder="Adverb"
-            />
+            <InputText name="adverb" value={formValue.adverb} onChange={handleChangeInput} placeholder="Adverb" />
           </div>
         </div>
         <div className="card-input card-full">

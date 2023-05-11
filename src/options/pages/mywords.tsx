@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import SearchIcon from "../components/icons/search";
 import PlusIcon from "../components/icons/plus";
 import DeleteIcon from "../components/icons/delete";
@@ -48,7 +48,7 @@ function Mywords() {
   chrome.storage.sync.get(["data"], (result) => {
     console.log("RESULT", result);
   });
-
+  const ref = useRef(null);
   return (
     <div className="main">
       <Header />
@@ -147,13 +147,13 @@ function Mywords() {
         {isAddWordActive && (
           <div className="content-add">
             <div className="content-add-background" onClick={() => setIsAddWordActive(!isAddWordActive)}></div>
-            <AddWord isDeleting={isDeleting} setIsDeleting={setIsDeleting} setIsAddWordActive={setIsAddWordActive} />
+            <AddWord isDeleting={isDeleting} setIsDeleting={setIsDeleting} setIsAddWordActive={setIsAddWordActive} refValue={ref} />
           </div>
         )}
         {isEditWordActive && (
-          <div className="content-add">
+          <div className="content-edit">
             <div
-              className="content-add-background"
+              className="content-edit-background"
               onClick={() => {
                 setIsEditWordActive(!isEditWordActive);
                 setClicked("clicked");
@@ -169,6 +169,7 @@ function Mywords() {
             />
           </div>
         )}
+        <div ref={ref}></div>
       </main>
     </div>
   );

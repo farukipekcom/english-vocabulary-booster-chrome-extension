@@ -7,8 +7,9 @@
   border-radius: $radius;
   border: 1px solid $border;
   box-shadow: $shadow, $shadow-double;
-  position: absolute;
+  position: fixed;
   top: 25vh;
+  left: 280px;
   margin: 0px auto;
   padding: 16px;
   display: flex;
