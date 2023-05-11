@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import SearchIcon from "../components/icons/search";
 import PlusIcon from "../components/icons/plus";
 import DeleteIcon from "../components/icons/delete";
@@ -26,6 +26,9 @@ function Mywords() {
       .then((data) => {
         setData(data);
         setLoading(true);
+        chrome.storage.sync.set({data: data}, () => {
+          console.log("Data is set ", data);
+        });
       });
   }, [isEditing, isDeleting]);
   const handleDelete = (id) => {
@@ -42,6 +45,9 @@ function Mywords() {
     setWordId(id);
     setIsEditWordActive(true);
   };
+  chrome.storage.sync.get(["data"], (result) => {
+    console.log("RESULT", result);
+  });
 
   return (
     <div className="main">
@@ -50,10 +56,7 @@ function Mywords() {
         <div className="content-heading">
           <div className="content-heading-left">
             <div className="content-heading-left-title">My Words</div>
-            <div className="content-heading-left-subtitle">
-              Lorem ipsum consectetur adipiscing elit duis tristique
-              sollicitudin.
-            </div>
+            <div className="content-heading-left-subtitle">Lorem ipsum consectetur adipiscing elit duis tristique sollicitudin.</div>
           </div>
           <div className="content-heading-right">
             <div className="content-heading-right-button" onClick={handleAdd}>
@@ -66,9 +69,7 @@ function Mywords() {
         </div>
         <div className="content-filter">
           <div className="content-filter-categories">
-            <div className="content-filter-categories-item filter-active">
-              View All
-            </div>
+            <div className="content-filter-categories-item filter-active">View All</div>
             <div className="content-filter-categories-item">Verb</div>
             <div className="content-filter-categories-item">Noun</div>
             <div className="content-filter-categories-item">Adjective</div>
@@ -78,12 +79,7 @@ function Mywords() {
             <div className="content-filter-search-icon">
               <SearchIcon />
             </div>
-            <input
-              type="text"
-              className="content-filter-search-input"
-              name="search"
-              placeholder="Search"
-            />
+            <input type="text" className="content-filter-search-input" name="search" placeholder="Search" />
           </div>
         </div>
         <div className="content-table">
@@ -107,58 +103,32 @@ function Mywords() {
                     //   transition: "all 1s",
                     // }}
                     className={`content-table-row ${clicked} `}
-                    key={item.id}
-                  >
-                    <div className="content-table-row-column">
-                      {item.keyword}
-                    </div>
-                    <div className="content-table-row-column">
-                      {item.replace}
-                    </div>
+                    key={item.id}>
+                    <div className="content-table-row-column">{item.keyword}</div>
+                    <div className="content-table-row-column">{item.replace}</div>
                     <div className="content-table-row-column">{item.verb}</div>
                     <div className="content-table-row-column">{item.noun}</div>
-                    <div className="content-table-row-column">
-                      {item.adjective}
-                    </div>
-                    <div className="content-table-row-column">
-                      {item.adverb}
-                    </div>
+                    <div className="content-table-row-column">{item.adjective}</div>
+                    <div className="content-table-row-column">{item.adverb}</div>
                     <div className="content-table-row-column content-table-row-column-buttons">
-                      <div
-                        className="content-table-row-column-buttons-delete"
-                        onClick={() => handleDelete(item.id)}
-                      >
+                      <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
                         <DeleteIcon />
                       </div>
-                      <div
-                        className="content-table-row-column-buttons-edit"
-                        onClick={() => handleEdit(item.id)}
-                      >
+                      <div className="content-table-row-column-buttons-edit" onClick={() => handleEdit(item.id)}>
                         <EditIcon />
                       </div>
                     </div>
                   </div>
                 ) : (
                   <div className="content-table-row" key={item.id}>
-                    <div className="content-table-row-column">
-                      {item.keyword}
-                    </div>
-                    <div className="content-table-row-column">
-                      {item.replace}
-                    </div>
+                    <div className="content-table-row-column">{item.keyword}</div>
+                    <div className="content-table-row-column">{item.replace}</div>
                     <div className="content-table-row-column">{item.verb}</div>
                     <div className="content-table-row-column">{item.noun}</div>
-                    <div className="content-table-row-column">
-                      {item.adjective}
-                    </div>
-                    <div className="content-table-row-column">
-                      {item.adverb}
-                    </div>
+                    <div className="content-table-row-column">{item.adjective}</div>
+                    <div className="content-table-row-column">{item.adverb}</div>
                     <div className="content-table-row-column content-table-row-column-buttons">
-                      <div
-                        className="content-table-row-column-buttons-delete"
-                        onClick={() => handleDelete(item.id)}
-                      >
+                      <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
                         <DeleteIcon />
                       </div>
                       <div
@@ -166,8 +136,7 @@ function Mywords() {
                         onClick={() => {
                           handleEdit(item.id);
                           setClicked("click");
-                        }}
-                      >
+                        }}>
                         <EditIcon />
                       </div>
                     </div>
@@ -177,15 +146,8 @@ function Mywords() {
         </div>
         {isAddWordActive && (
           <div className="content-add">
-            <div
-              className="content-add-background"
-              onClick={() => setIsAddWordActive(!isAddWordActive)}
-            ></div>
-            <AddWord
-              isDeleting={isDeleting}
-              setIsDeleting={setIsDeleting}
-              setIsAddWordActive={setIsAddWordActive}
-            />
+            <div className="content-add-background" onClick={() => setIsAddWordActive(!isAddWordActive)}></div>
+            <AddWord isDeleting={isDeleting} setIsDeleting={setIsDeleting} setIsAddWordActive={setIsAddWordActive} />
           </div>
         )}
         {isEditWordActive && (
@@ -195,8 +157,7 @@ function Mywords() {
               onClick={() => {
                 setIsEditWordActive(!isEditWordActive);
                 setClicked("clicked");
-              }}
-            ></div>
+              }}></div>
             <EditWord
               setIsEditWordActive={setIsEditWordActive}
               wordId={wordId}
