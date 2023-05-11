@@ -8,8 +8,8 @@
   border: 1px solid $border;
   box-shadow: $shadow, $shadow-double;
   position: absolute;
-  inset: 0px;
-  margin: auto;
+  top: 25vh;
+  margin: 0px auto;
   padding: 16px;
   display: flex;
   flex-direction: column;

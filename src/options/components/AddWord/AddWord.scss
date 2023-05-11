@@ -9,7 +9,8 @@
   box-shadow: $shadow, $shadow-double;
   position: absolute;
   inset: 0px;
-  margin: auto;
+  margin: 0px auto;
+  top: 25vh;
   padding: 16px;
   display: flex;
   flex-direction: column;
