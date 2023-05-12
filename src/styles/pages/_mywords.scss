@@ -11,7 +11,7 @@ body {
   position: relative;
   .content {
     width: calc(100% - 280px);
-    height: max-content;
+    height: calc(100vh - 12px);
     background-color: #fff;
     margin-top: 12px;
     border-top-left-radius: 32px;
@@ -90,7 +90,7 @@ body {
           }
         }
         .filter-active {
-          background-color: $hover-text;
+          background-color: $border;
         }
       }
       &-search {

@@ -63,10 +63,9 @@ function Mywords() {
   const ref = useRef(null);
   const setFilter = (value) => {
     setCategory(value);
+    console.log("VA", value);
+    console.log(category);
   };
-  console.log(query);
-
-  console.log(category);
   return (
     <div className="main">
       <Header />
@@ -87,19 +86,27 @@ function Mywords() {
         </div>
         <div className="content-filter">
           <div className="content-filter-categories">
-            <div className="content-filter-categories-item filter-active" onClick={() => setFilter("all")}>
+            <div className={`content-filter-categories-item ${category === "" ? "filter-active" : ""}`} onClick={() => setFilter("")}>
               View All
             </div>
-            <div className="content-filter-categories-item" onClick={() => setFilter("verb")}>
+            <div
+              className={`content-filter-categories-item ${category === "verb" ? "filter-active" : ""}`}
+              onClick={() => setFilter("verb")}>
               Verb
             </div>
-            <div className="content-filter-categories-item" onClick={() => setFilter("noun")}>
+            <div
+              className={`content-filter-categories-item ${category === "noun" ? "filter-active" : ""}`}
+              onClick={() => setFilter("noun")}>
               Noun
             </div>
-            <div className="content-filter-categories-item" onClick={() => setFilter("adjective")}>
+            <div
+              className={`content-filter-categories-item ${category === "adjective" ? "filter-active" : ""}`}
+              onClick={() => setFilter("adjective")}>
               Adjective
             </div>
-            <div className="content-filter-categories-item" onClick={() => setFilter("adverb")}>
+            <div
+              className={`content-filter-categories-item ${category === "adverb" ? "filter-active" : ""}`}
+              onClick={() => setFilter("adverb")}>
               Adverb
             </div>
           </div>
@@ -174,7 +181,7 @@ function Mywords() {
                   (item.noun.length > 0 && category === "noun") ||
                   (item.adjective.length > 0 && category === "adjective") ||
                   (item.adverb.length > 0 && category === "adverb") ||
-                  (category === "all" && setCategory(""))
+                  (category === "allWord" && setCategory(""))
               )
               .map((item) =>
                 item.id == wordId ? (
