@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
 import SearchIcon from "../components/icons/search";
-import PlusIcon from "../components/icons/plus";
 import DeleteIcon from "../components/icons/delete";
 import EditIcon from "../components/icons/edit";
 import AddWord from "../components/AddWord/AddWord";
 import EditWord from "../components/EditWord/EditWord";
 import Header from "../components/Header/Header";
 import Pagination from "../components/Pagination/Pagination";
+import Button from "../components/Button/Button";
 function Mywords() {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -74,11 +74,8 @@ function Mywords() {
             <div className="content-heading-left-subtitle">You can add words to make it easier to understand what you read.</div>
           </div>
           <div className="content-heading-right">
-            <div className="content-heading-right-button" onClick={handleAdd}>
-              <div className="content-heading-right-button-icon">
-                <PlusIcon />
-              </div>
-              <div className="content-heading-right-button-text">Add Word</div>
+            <div onClick={handleAdd}>
+              <Button text="Add Word" icon={true} />
             </div>
           </div>
         </div>
