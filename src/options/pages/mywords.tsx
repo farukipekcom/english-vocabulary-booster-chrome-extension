@@ -19,6 +19,7 @@ function Mywords() {
   const [pageNumber, setPageNumber] = useState(1);
   const [wordCount, setWordCount] = useState([]);
   const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("");
   const limit = 10;
   useEffect(() => {
     setLoading(false);
@@ -59,8 +60,13 @@ function Mywords() {
     e.preventDefault();
     setQuery(e.target.value);
   };
-  console.log(query);
   const ref = useRef(null);
+  const setFilter = (value) => {
+    setCategory(value);
+  };
+  console.log(query);
+
+  console.log(category);
   return (
     <div className="main">
       <Header />
@@ -81,11 +87,21 @@ function Mywords() {
         </div>
         <div className="content-filter">
           <div className="content-filter-categories">
-            <div className="content-filter-categories-item filter-active">View All</div>
-            <div className="content-filter-categories-item">Verb</div>
-            <div className="content-filter-categories-item">Noun</div>
-            <div className="content-filter-categories-item">Adjective</div>
-            <div className="content-filter-categories-item">Adverb</div>
+            <div className="content-filter-categories-item filter-active" onClick={() => setFilter("all")}>
+              View All
+            </div>
+            <div className="content-filter-categories-item" onClick={() => setFilter("verb")}>
+              Verb
+            </div>
+            <div className="content-filter-categories-item" onClick={() => setFilter("noun")}>
+              Noun
+            </div>
+            <div className="content-filter-categories-item" onClick={() => setFilter("adjective")}>
+              Adjective
+            </div>
+            <div className="content-filter-categories-item" onClick={() => setFilter("adverb")}>
+              Adverb
+            </div>
           </div>
           <div className="content-filter-search">
             <div className="content-filter-search-icon">
@@ -105,9 +121,61 @@ function Mywords() {
             <div className="content-table-row-column content-table-row-column-buttons"></div>
           </div>
           {isLoading &&
+            !category &&
             !query &&
-            data
-              .filter((item) => item.keyword.toLowerCase().includes(query))
+            data.map((item) =>
+              item.id == wordId ? (
+                <div className={`content-table-row ${clicked} `} key={item.id}>
+                  <div className="content-table-row-column">{item.keyword}</div>
+                  <div className="content-table-row-column">{item.replace}</div>
+                  <div className="content-table-row-column">{item.verb}</div>
+                  <div className="content-table-row-column">{item.noun}</div>
+                  <div className="content-table-row-column">{item.adjective}</div>
+                  <div className="content-table-row-column">{item.adverb}</div>
+                  <div className="content-table-row-column content-table-row-column-buttons">
+                    <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
+                      <DeleteIcon />
+                    </div>
+                    <div className="content-table-row-column-buttons-edit" onClick={() => handleEdit(item.id)}>
+                      <EditIcon />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="content-table-row" key={item.id}>
+                  <div className="content-table-row-column">{item.keyword}</div>
+                  <div className="content-table-row-column">{item.replace}</div>
+                  <div className="content-table-row-column">{item.verb}</div>
+                  <div className="content-table-row-column">{item.noun}</div>
+                  <div className="content-table-row-column">{item.adjective}</div>
+                  <div className="content-table-row-column">{item.adverb}</div>
+                  <div className="content-table-row-column content-table-row-column-buttons">
+                    <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
+                      <DeleteIcon />
+                    </div>
+                    <div
+                      className="content-table-row-column-buttons-edit"
+                      onClick={() => {
+                        handleEdit(item.id);
+                        setClicked("click");
+                      }}>
+                      <EditIcon />
+                    </div>
+                  </div>
+                </div>
+              )
+            )}
+          {isLoading &&
+            category &&
+            wordCount
+              .filter(
+                (item) =>
+                  (item.verb.length > 0 && category === "verb") ||
+                  (item.noun.length > 0 && category === "noun") ||
+                  (item.adjective.length > 0 && category === "adjective") ||
+                  (item.adverb.length > 0 && category === "adverb") ||
+                  (category === "all" && setCategory(""))
+              )
               .map((item) =>
                 item.id == wordId ? (
                   <div className={`content-table-row ${clicked} `} key={item.id}>
@@ -153,7 +221,7 @@ function Mywords() {
           {isLoading &&
             query &&
             wordCount
-              .filter((item) => item.keyword.toLowerCase().includes(query))
+              .filter((item) => item.keyword.includes(query))
               .map((item) =>
                 item.id == wordId ? (
                   <div className={`content-table-row ${clicked} `} key={item.id}>
