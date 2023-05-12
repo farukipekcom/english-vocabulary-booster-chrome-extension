@@ -3,10 +3,6 @@ import SearchIcon from "../components/icons/search";
 import PlusIcon from "../components/icons/plus";
 import DeleteIcon from "../components/icons/delete";
 import EditIcon from "../components/icons/edit";
-import DashboardICon from "../components/icons/dashboard";
-import MyWordIcon from "../components/icons/myword";
-import SettingsIcon from "../components/icons/settings";
-import Logo from "../components/icons/logo";
 import AddWord from "../components/AddWord/AddWord";
 import EditWord from "../components/EditWord/EditWord";
 import Header from "../components/Header/Header";
@@ -21,7 +17,8 @@ function Mywords() {
   const [wordId, setWordId] = useState("");
   const [clicked, setClicked] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
-  const [wordCount, setWordCount] = useState("");
+  const [wordCount, setWordCount] = useState([]);
+  const [query, setQuery] = useState("");
   const limit = 10;
   useEffect(() => {
     setLoading(false);
@@ -58,7 +55,11 @@ function Mywords() {
     setWordId(id);
     setIsEditWordActive(true);
   };
-
+  const onChange = (e) => {
+    e.preventDefault();
+    setQuery(e.target.value);
+  };
+  console.log(query);
   const ref = useRef(null);
   return (
     <div className="main">
@@ -90,7 +91,7 @@ function Mywords() {
             <div className="content-filter-search-icon">
               <SearchIcon />
             </div>
-            <input type="text" className="content-filter-search-input" name="search" placeholder="Search" />
+            <input type="text" className="content-filter-search-input" onChange={onChange} name="search" placeholder="Search" />
           </div>
         </div>
         <div className="content-table">
@@ -104,17 +105,58 @@ function Mywords() {
             <div className="content-table-row-column content-table-row-column-buttons"></div>
           </div>
           {isLoading &&
+            !query &&
             data
-              // .filter((item) => item.id == 8)
+              .filter((item) => item.keyword.toLowerCase().includes(query))
               .map((item) =>
                 item.id == wordId ? (
-                  <div
-                    // style={{
-                    //   backgroundColor: "#d0d5dd",
-                    //   transition: "all 1s",
-                    // }}
-                    className={`content-table-row ${clicked} `}
-                    key={item.id}>
+                  <div className={`content-table-row ${clicked} `} key={item.id}>
+                    <div className="content-table-row-column">{item.keyword}</div>
+                    <div className="content-table-row-column">{item.replace}</div>
+                    <div className="content-table-row-column">{item.verb}</div>
+                    <div className="content-table-row-column">{item.noun}</div>
+                    <div className="content-table-row-column">{item.adjective}</div>
+                    <div className="content-table-row-column">{item.adverb}</div>
+                    <div className="content-table-row-column content-table-row-column-buttons">
+                      <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
+                        <DeleteIcon />
+                      </div>
+                      <div className="content-table-row-column-buttons-edit" onClick={() => handleEdit(item.id)}>
+                        <EditIcon />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="content-table-row" key={item.id}>
+                    <div className="content-table-row-column">{item.keyword}</div>
+                    <div className="content-table-row-column">{item.replace}</div>
+                    <div className="content-table-row-column">{item.verb}</div>
+                    <div className="content-table-row-column">{item.noun}</div>
+                    <div className="content-table-row-column">{item.adjective}</div>
+                    <div className="content-table-row-column">{item.adverb}</div>
+                    <div className="content-table-row-column content-table-row-column-buttons">
+                      <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
+                        <DeleteIcon />
+                      </div>
+                      <div
+                        className="content-table-row-column-buttons-edit"
+                        onClick={() => {
+                          handleEdit(item.id);
+                          setClicked("click");
+                        }}>
+                        <EditIcon />
+                      </div>
+                    </div>
+                  </div>
+                )
+              )}
+          {isLoading &&
+            query &&
+            wordCount
+              .filter((item) => item.keyword.toLowerCase().includes(query))
+              .map((item) =>
+                item.id == wordId ? (
+                  <div className={`content-table-row ${clicked} `} key={item.id}>
                     <div className="content-table-row-column">{item.keyword}</div>
                     <div className="content-table-row-column">{item.replace}</div>
                     <div className="content-table-row-column">{item.verb}</div>
