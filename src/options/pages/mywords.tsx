@@ -10,6 +10,7 @@ import Logo from "../components/icons/logo";
 import AddWord from "../components/AddWord/AddWord";
 import EditWord from "../components/EditWord/EditWord";
 import Header from "../components/Header/Header";
+import Pagination from "../components/Pagination/Pagination";
 function Mywords() {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -19,18 +20,30 @@ function Mywords() {
   const [isEditWordActive, setIsEditWordActive] = useState(false);
   const [wordId, setWordId] = useState("");
   const [clicked, setClicked] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [wordCount, setWordCount] = useState("");
+  const limit = 10;
   useEffect(() => {
     setLoading(false);
     fetch(process.env.API_URL)
       .then((res) => res.json())
       .then((data) => {
-        setData(data);
+        setWordCount(data);
         setLoading(true);
         chrome.storage.sync.set({data: data}, () => {
           console.log("Data is set ", data);
         });
       });
-  }, [isEditing, isDeleting]);
+    fetch(process.env.API_URL + `?page=${pageNumber}&limit=${limit}&orderBy=added_date&order=asc`)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(true);
+      });
+    chrome.storage.sync.get(["data"], (result) => {
+      console.log("RESULT", result);
+    });
+  }, [pageNumber, isEditing, isDeleting]);
   const handleDelete = (id) => {
     fetch(process.env.API_URL + id, {
       method: "DELETE",
@@ -45,9 +58,7 @@ function Mywords() {
     setWordId(id);
     setIsEditWordActive(true);
   };
-  chrome.storage.sync.get(["data"], (result) => {
-    console.log("RESULT", result);
-  });
+
   const ref = useRef(null);
   return (
     <div className="main">
@@ -143,6 +154,7 @@ function Mywords() {
                   </div>
                 )
               )}
+          <Pagination length={wordCount.length} limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
         </div>
         {isAddWordActive && (
           <div className="content-add">
