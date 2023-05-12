@@ -63,8 +63,6 @@ function Mywords() {
   const ref = useRef(null);
   const setFilter = (value) => {
     setCategory(value);
-    console.log("VA", value);
-    console.log(category);
   };
   return (
     <div className="main">
@@ -73,14 +71,14 @@ function Mywords() {
         <div className="content-heading">
           <div className="content-heading-left">
             <div className="content-heading-left-title">My Words</div>
-            <div className="content-heading-left-subtitle">Lorem ipsum consectetur adipiscing elit duis tristique sollicitudin.</div>
+            <div className="content-heading-left-subtitle">You can add words to make it easier to understand what you read.</div>
           </div>
           <div className="content-heading-right">
             <div className="content-heading-right-button" onClick={handleAdd}>
               <div className="content-heading-right-button-icon">
                 <PlusIcon />
               </div>
-              <div className="content-heading-right-button-text">Add</div>
+              <div className="content-heading-right-button-text">Add Word</div>
             </div>
           </div>
         </div>
