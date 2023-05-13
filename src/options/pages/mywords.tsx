@@ -13,6 +13,7 @@ function Mywords() {
   const [isLoading2, setLoading2] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const [isAddWordActive, setIsAddWordActive] = useState(false);
   const [isEditWordActive, setIsEditWordActive] = useState(false);
   const [wordId, setWordId] = useState("");
@@ -34,7 +35,7 @@ function Mywords() {
           console.log("Data is set ", data);
         });
       });
-    fetch(process.env.API_URL + `?page=${pageNumber}&limit=${limit}&orderBy=added_date&order=asc`)
+    fetch(process.env.API_URL + `?page=${pageNumber}&limit=${limit}&orderBy=added_date&order=desc`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -43,7 +44,7 @@ function Mywords() {
     chrome.storage.sync.get(["data"], (result) => {
       console.log("RESULT", result);
     });
-  }, [pageNumber, isEditing, isDeleting]);
+  }, [pageNumber, isEditing, isDeleting, isAdding]);
   const handleDelete = (id) => {
     fetch(process.env.API_URL + id, {
       method: "DELETE",
@@ -274,7 +275,7 @@ function Mywords() {
         {isAddWordActive && (
           <div className="content-add">
             <div className="content-add-background" onClick={() => setIsAddWordActive(!isAddWordActive)}></div>
-            <AddWord isDeleting={isDeleting} setIsDeleting={setIsDeleting} setIsAddWordActive={setIsAddWordActive} refValue={ref} />
+            <AddWord isAdding={isAdding} setIsAdding={setIsAdding} setIsAddWordActive={setIsAddWordActive} refValue={ref} />
           </div>
         )}
         {isEditWordActive && (

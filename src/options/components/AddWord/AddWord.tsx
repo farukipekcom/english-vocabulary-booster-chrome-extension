@@ -4,7 +4,7 @@ import "./AddWord.scss";
 import React, {useState} from "react";
 import CloseIcon from "../icons/close";
 
-function AddWord({isDeleting, setIsDeleting, setIsAddWordActive, refValue}) {
+function AddWord({isAdding, setIsAdding, setIsAddWordActive, refValue}) {
   const [formValue, setformValue] = useState({
     keyword: "",
     replace: "",
@@ -12,7 +12,6 @@ function AddWord({isDeleting, setIsDeleting, setIsAddWordActive, refValue}) {
     verb: "",
     adverb: "",
     adjective: "",
-    type: "1",
   });
   const handleChangeInput = (event) => {
     setformValue({
@@ -29,7 +28,6 @@ function AddWord({isDeleting, setIsDeleting, setIsAddWordActive, refValue}) {
     loginFormData.append("verb", formValue.verb);
     loginFormData.append("adverb", formValue.adverb);
     loginFormData.append("adjective", formValue.adjective);
-    loginFormData.append("type", "1");
     try {
       const response = await fetch(process.env.API_URL, {
         method: "POST",
@@ -41,7 +39,7 @@ function AddWord({isDeleting, setIsDeleting, setIsAddWordActive, refValue}) {
       const result = await response.json();
       // console.log("Success:", result);
       refValue.current?.scrollIntoView({behavior: "smooth"});
-      setIsDeleting(true);
+      setIsAdding(!isAdding);
       setIsAddWordActive(false);
     } catch (error) {
       // console.error("Error:", error);
