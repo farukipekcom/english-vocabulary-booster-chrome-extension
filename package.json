@@ -8,11 +8,13 @@
     "build": "webpack --progress --config webpack.prod.js"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "@types/chrome": "^0.0.234",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "v6",
     "ts-loader": "^9.4.2",
     "typescript": "^5.0.4"
