@@ -12,6 +12,7 @@ function AddWord({isAdding, setIsAdding, setIsAddWordActive, refValue}) {
     verb: "",
     adverb: "",
     adjective: "",
+    added_date: new Date().valueOf(),
   });
   const handleChangeInput = (event) => {
     setformValue({
