@@ -58,7 +58,7 @@ function AddWord({isDeleting, setIsDeleting, setIsAddWordActive, refValue}) {
           You can add words to the form below. If they are verbs or adjectives, please write them in separate boxes.
         </div>
       </div>
-      <form onSubmit={handleAdd} className="form">
+      <div className="form">
         <div className="card-input">
           <div className="card-input-label">Keyword</div>
           <div className="card-input-item">
@@ -95,10 +95,10 @@ function AddWord({isDeleting, setIsDeleting, setIsAddWordActive, refValue}) {
             <InputText name="adverb" value={formValue.adverb} onChange={handleChangeInput} placeholder="Adverb" />
           </div>
         </div>
-        <div className="card-input card-full">
+        <div className="card-input card-full" onClick={handleAdd}>
           <Button text="Submit" />
         </div>
-      </form>
+      </div>
     </div>
   );
 }
