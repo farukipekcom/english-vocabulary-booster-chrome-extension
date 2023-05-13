@@ -1,8 +1,7 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+import {createRoot} from "react-dom/client";
 import Options from "./options";
-import { HashRouter as Router } from "react-router-dom";
-
+import {HashRouter as Router} from "react-router-dom";
 function init() {
   const appContainer = document.createElement("div");
   document.body.appendChild(appContainer);

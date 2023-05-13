@@ -9,7 +9,8 @@ import Pagination from "../components/Pagination/Pagination";
 import Button from "../components/Button/Button";
 function Mywords() {
   const [data, setData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
+  const [isLoading2, setLoading2] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isAddWordActive, setIsAddWordActive] = useState(false);
@@ -23,6 +24,7 @@ function Mywords() {
   const limit = 10;
   useEffect(() => {
     setLoading(false);
+    setLoading2(false);
     fetch(process.env.API_URL)
       .then((res) => res.json())
       .then((data) => {
@@ -36,7 +38,7 @@ function Mywords() {
       .then((res) => res.json())
       .then((data) => {
         setData(data);
-        setLoading(true);
+        setLoading2(true);
       });
     chrome.storage.sync.get(["data"], (result) => {
       console.log("RESULT", result);
@@ -64,6 +66,7 @@ function Mywords() {
   const setFilter = (value) => {
     setCategory(value);
   };
+
   return (
     <div className="main">
       <Header />
@@ -122,7 +125,7 @@ function Mywords() {
             <div className="content-table-row-column">Adverb</div>
             <div className="content-table-row-column content-table-row-column-buttons"></div>
           </div>
-          {isLoading &&
+          {isLoading2 &&
             !category &&
             !query &&
             data.map((item) =>

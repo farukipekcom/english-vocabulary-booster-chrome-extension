@@ -1,14 +1,24 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./Header.scss";
 import Logo from "../icons/logo";
 import DashboardICon from "../icons/dashboard";
 import MyWordIcon from "../icons/myword";
 import SettingsIcon from "../icons/settings";
-import { Routes, Route } from "react-router-dom";
-import Home from "../../pages/home";
-import Settings from "../../pages/settings";
-import Mywords from "../../pages/mywords";
 function Header() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(false);
+    const getData = async () => {
+      await fetch(process.env.API_URL)
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data.length);
+          setLoading(true);
+        });
+    };
+    getData();
+  }, []);
   return (
     <header className="header">
       <div className="header-logo">
@@ -36,7 +46,7 @@ function Header() {
       </div>
       <div className="header-total">
         <div className="header-total-heading">Total Words</div>
-        <div className="header-total-count">274</div>
+        <div className="header-total-count">{loading && data}</div>
       </div>
     </header>
   );
