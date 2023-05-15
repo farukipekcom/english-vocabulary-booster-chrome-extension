@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-import SearchIcon from "../components/icons/search";
 import DeleteIcon from "../components/icons/delete";
 import EditIcon from "../components/icons/edit";
 import AddWord from "../components/AddWord/AddWord";
@@ -7,6 +6,7 @@ import EditWord from "../components/EditWord/EditWord";
 import Header from "../components/Header/Header";
 import Pagination from "../components/Pagination/Pagination";
 import Button from "../components/Button/Button";
+import Filter from "../components/Filter/Filter";
 function Mywords() {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ function Mywords() {
   const [wordCount, setWordCount] = useState([]);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
-  const limit = 10;
+  const limit = 8;
   useEffect(() => {
     setLoading(false);
     setLoading2(false);
@@ -59,14 +59,7 @@ function Mywords() {
     setWordId(id);
     setIsEditWordActive(true);
   };
-  const onChange = (e) => {
-    e.preventDefault();
-    setQuery(e.target.value);
-  };
   const ref = useRef(null);
-  const setFilter = (value) => {
-    setCategory(value);
-  };
 
   return (
     <div className="main">
@@ -83,39 +76,7 @@ function Mywords() {
             </div>
           </div>
         </div>
-        <div className="content-filter">
-          <div className="content-filter-categories">
-            <div className={`content-filter-categories-item ${category === "" ? "filter-active" : ""}`} onClick={() => setFilter("")}>
-              View All
-            </div>
-            <div
-              className={`content-filter-categories-item ${category === "verb" ? "filter-active" : ""}`}
-              onClick={() => setFilter("verb")}>
-              Verb
-            </div>
-            <div
-              className={`content-filter-categories-item ${category === "noun" ? "filter-active" : ""}`}
-              onClick={() => setFilter("noun")}>
-              Noun
-            </div>
-            <div
-              className={`content-filter-categories-item ${category === "adjective" ? "filter-active" : ""}`}
-              onClick={() => setFilter("adjective")}>
-              Adjective
-            </div>
-            <div
-              className={`content-filter-categories-item ${category === "adverb" ? "filter-active" : ""}`}
-              onClick={() => setFilter("adverb")}>
-              Adverb
-            </div>
-          </div>
-          <div className="content-filter-search">
-            <div className="content-filter-search-icon">
-              <SearchIcon />
-            </div>
-            <input type="text" className="content-filter-search-input" onChange={onChange} name="search" placeholder="Search" />
-          </div>
-        </div>
+        <Filter category={category} setCategory={setCategory} setQuery={setQuery} />
         <div className="content-table">
           <div className="content-table-row content-table-heading">
             <div className="content-table-row-column">Word</div>
