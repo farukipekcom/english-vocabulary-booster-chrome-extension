@@ -4,7 +4,7 @@ import "./EditWord.scss";
 import React, {useEffect, useState} from "react";
 import CloseIcon from "../icons/close";
 
-function EditWord({setIsEditWordActive, wordId, setWordId, setIsEditing, isEditing}) {
+function EditWord({setIsEditWordActive, wordId, setIsEditing, isEditing}) {
   const [data, setData] = useState<any>({});
   const [formValue, setformValue] = useState({
     keyword: "",
@@ -104,8 +104,8 @@ function EditWord({setIsEditWordActive, wordId, setWordId, setIsEditing, isEditi
             <InputText name="adverb" value={formValue.adverb} onChange={handleChangeInput} placeholder="Adverb" />
           </div>
         </div>
-        <div className="card-input card-full" onClick={handleAdd}>
-          <Button text="Update" />
+        <div className="card-input card-full">
+          <Button text="Update" onClick={handleAdd} />
         </div>
       </form>
     </div>

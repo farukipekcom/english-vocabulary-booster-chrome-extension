@@ -94,8 +94,8 @@ function AddWord({isAdding, setIsAdding, setIsAddWordActive, refValue}) {
             <InputText name="adverb" value={formValue.adverb} onChange={handleChangeInput} placeholder="Adverb" />
           </div>
         </div>
-        <div className="card-input card-full" onClick={handleAdd}>
-          <Button text="Submit" />
+        <div className="card-input card-full">
+          <Button text="Submit" onClick={handleAdd} />
         </div>
       </div>
     </div>

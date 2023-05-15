@@ -71,9 +71,7 @@ function Mywords() {
             <div className="content-heading-left-subtitle">You can add words to make it easier to understand what you read.</div>
           </div>
           <div className="content-heading-right">
-            <div onClick={handleAdd}>
-              <Button text="Add Word" icon={true} />
-            </div>
+            <Button text="Add Word" icon={true} onClick={handleAdd} />
           </div>
         </div>
         <Filter category={category} setCategory={setCategory} setQuery={setQuery} />
@@ -247,15 +245,7 @@ function Mywords() {
                 setIsEditWordActive(!isEditWordActive);
                 setClicked("clicked");
               }}></div>
-            <EditWord
-              setIsEditWordActive={setIsEditWordActive}
-              wordId={wordId}
-              setWordId={setWordId}
-              // setSinif={setSinif}
-              // sinif={sinif}
-              setIsEditing={setIsEditing}
-              isEditing={isEditing}
-            />
+            <EditWord setIsEditWordActive={setIsEditWordActive} wordId={wordId} setIsEditing={setIsEditing} isEditing={isEditing} />
           </div>
         )}
         <div ref={ref}></div>
