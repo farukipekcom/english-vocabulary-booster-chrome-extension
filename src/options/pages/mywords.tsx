@@ -1,12 +1,10 @@
 import React, {useEffect, useRef, useState} from "react";
-import DeleteIcon from "../components/icons/delete";
-import EditIcon from "../components/icons/edit";
 import AddWord from "../components/AddWord/AddWord";
 import EditWord from "../components/EditWord/EditWord";
 import Header from "../components/Header/Header";
-import Pagination from "../components/Pagination/Pagination";
 import Button from "../components/Button/Button";
 import Filter from "../components/Filter/Filter";
+import Table from "../components/Table/Table";
 function Mywords() {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -75,162 +73,23 @@ function Mywords() {
           </div>
         </div>
         <Filter category={category} setCategory={setCategory} setQuery={setQuery} />
-        <div className="content-table">
-          <div className="content-table-row content-table-heading">
-            <div className="content-table-row-column">Word</div>
-            <div className="content-table-row-column">Meaning</div>
-            <div className="content-table-row-column">Verb</div>
-            <div className="content-table-row-column">Noun</div>
-            <div className="content-table-row-column">Adjective</div>
-            <div className="content-table-row-column">Adverb</div>
-            <div className="content-table-row-column content-table-row-column-buttons"></div>
-          </div>
-          {isLoading2 &&
-            !category &&
-            !query &&
-            data.map((item) =>
-              item.id == wordId ? (
-                <div className={`content-table-row ${clicked} `} key={item.id}>
-                  <div className="content-table-row-column">{item.keyword}</div>
-                  <div className="content-table-row-column">{item.replace}</div>
-                  <div className="content-table-row-column">{item.verb}</div>
-                  <div className="content-table-row-column">{item.noun}</div>
-                  <div className="content-table-row-column">{item.adjective}</div>
-                  <div className="content-table-row-column">{item.adverb}</div>
-                  <div className="content-table-row-column content-table-row-column-buttons">
-                    <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                      <DeleteIcon />
-                    </div>
-                    <div className="content-table-row-column-buttons-edit" onClick={() => handleEdit(item.id)}>
-                      <EditIcon />
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="content-table-row" key={item.id}>
-                  <div className="content-table-row-column">{item.keyword}</div>
-                  <div className="content-table-row-column">{item.replace}</div>
-                  <div className="content-table-row-column">{item.verb}</div>
-                  <div className="content-table-row-column">{item.noun}</div>
-                  <div className="content-table-row-column">{item.adjective}</div>
-                  <div className="content-table-row-column">{item.adverb}</div>
-                  <div className="content-table-row-column content-table-row-column-buttons">
-                    <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                      <DeleteIcon />
-                    </div>
-                    <div
-                      className="content-table-row-column-buttons-edit"
-                      onClick={() => {
-                        handleEdit(item.id);
-                        setClicked("click");
-                      }}>
-                      <EditIcon />
-                    </div>
-                  </div>
-                </div>
-              )
-            )}
-          {isLoading &&
-            category &&
-            wordCount
-              .filter(
-                (item) =>
-                  (item.verb.length > 0 && category === "verb") ||
-                  (item.noun.length > 0 && category === "noun") ||
-                  (item.adjective.length > 0 && category === "adjective") ||
-                  (item.adverb.length > 0 && category === "adverb") ||
-                  (category === "allWord" && setCategory(""))
-              )
-              .map((item) =>
-                item.id == wordId ? (
-                  <div className={`content-table-row ${clicked} `} key={item.id}>
-                    <div className="content-table-row-column">{item.keyword}</div>
-                    <div className="content-table-row-column">{item.replace}</div>
-                    <div className="content-table-row-column">{item.verb}</div>
-                    <div className="content-table-row-column">{item.noun}</div>
-                    <div className="content-table-row-column">{item.adjective}</div>
-                    <div className="content-table-row-column">{item.adverb}</div>
-                    <div className="content-table-row-column content-table-row-column-buttons">
-                      <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                        <DeleteIcon />
-                      </div>
-                      <div className="content-table-row-column-buttons-edit" onClick={() => handleEdit(item.id)}>
-                        <EditIcon />
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="content-table-row" key={item.id}>
-                    <div className="content-table-row-column">{item.keyword}</div>
-                    <div className="content-table-row-column">{item.replace}</div>
-                    <div className="content-table-row-column">{item.verb}</div>
-                    <div className="content-table-row-column">{item.noun}</div>
-                    <div className="content-table-row-column">{item.adjective}</div>
-                    <div className="content-table-row-column">{item.adverb}</div>
-                    <div className="content-table-row-column content-table-row-column-buttons">
-                      <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                        <DeleteIcon />
-                      </div>
-                      <div
-                        className="content-table-row-column-buttons-edit"
-                        onClick={() => {
-                          handleEdit(item.id);
-                          setClicked("click");
-                        }}>
-                        <EditIcon />
-                      </div>
-                    </div>
-                  </div>
-                )
-              )}
-          {isLoading &&
-            query &&
-            wordCount
-              .filter((item) => item.keyword.includes(query))
-              .map((item) =>
-                item.id == wordId ? (
-                  <div className={`content-table-row ${clicked} `} key={item.id}>
-                    <div className="content-table-row-column">{item.keyword}</div>
-                    <div className="content-table-row-column">{item.replace}</div>
-                    <div className="content-table-row-column">{item.verb}</div>
-                    <div className="content-table-row-column">{item.noun}</div>
-                    <div className="content-table-row-column">{item.adjective}</div>
-                    <div className="content-table-row-column">{item.adverb}</div>
-                    <div className="content-table-row-column content-table-row-column-buttons">
-                      <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                        <DeleteIcon />
-                      </div>
-                      <div className="content-table-row-column-buttons-edit" onClick={() => handleEdit(item.id)}>
-                        <EditIcon />
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="content-table-row" key={item.id}>
-                    <div className="content-table-row-column">{item.keyword}</div>
-                    <div className="content-table-row-column">{item.replace}</div>
-                    <div className="content-table-row-column">{item.verb}</div>
-                    <div className="content-table-row-column">{item.noun}</div>
-                    <div className="content-table-row-column">{item.adjective}</div>
-                    <div className="content-table-row-column">{item.adverb}</div>
-                    <div className="content-table-row-column content-table-row-column-buttons">
-                      <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                        <DeleteIcon />
-                      </div>
-                      <div
-                        className="content-table-row-column-buttons-edit"
-                        onClick={() => {
-                          handleEdit(item.id);
-                          setClicked("click");
-                        }}>
-                        <EditIcon />
-                      </div>
-                    </div>
-                  </div>
-                )
-              )}
-          <Pagination length={wordCount.length} limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
-        </div>
+        <Table
+          isLoading={isLoading}
+          isLoading2={isLoading2}
+          setCategory={setCategory}
+          limit={limit}
+          pageNumber={pageNumber}
+          setPageNumber={setPageNumber}
+          wordCount={wordCount}
+          category={category}
+          query={query}
+          data={data}
+          wordId={wordId}
+          clicked={clicked}
+          setClicked={setClicked}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
         {isAddWordActive && (
           <div className="content-add">
             <div className="content-add-background" onClick={() => setIsAddWordActive(!isAddWordActive)}></div>
