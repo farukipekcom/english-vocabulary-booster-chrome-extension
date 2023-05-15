@@ -104,7 +104,7 @@ function EditWord({setIsEditWordActive, wordId, setWordId, setIsEditing, isEditi
             <InputText name="adverb" value={formValue.adverb} onChange={handleChangeInput} placeholder="Adverb" />
           </div>
         </div>
-        <div className="card-input card-full">
+        <div className="card-input card-full" onClick={handleAdd}>
           <Button text="Update" />
         </div>
       </form>
