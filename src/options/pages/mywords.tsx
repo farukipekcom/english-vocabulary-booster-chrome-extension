@@ -18,7 +18,6 @@ function Mywords() {
   const [clicked, setClicked] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
   const [wordCount, setWordCount] = useState([]);
-  const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
   const limit = 8;
   useEffect(() => {
@@ -72,7 +71,7 @@ function Mywords() {
             <Button text="Add Word" icon={true} onClick={handleAdd} />
           </div>
         </div>
-        <Filter category={category} setCategory={setCategory} setQuery={setQuery} />
+        <Filter category={category} setCategory={setCategory} />
         <Table
           isLoading={isLoading}
           isLoading2={isLoading2}
@@ -82,7 +81,6 @@ function Mywords() {
           setPageNumber={setPageNumber}
           wordCount={wordCount}
           category={category}
-          query={query}
           data={data}
           wordId={wordId}
           clicked={clicked}

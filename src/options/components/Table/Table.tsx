@@ -3,6 +3,7 @@ import "./Table.scss";
 import DeleteIcon from "../../components/icons/delete";
 import EditIcon from "../../components/icons/edit";
 import Pagination from "../../components/Pagination/Pagination";
+import {useSelector} from "react-redux";
 function Table({
   isLoading,
   isLoading2,
@@ -12,7 +13,6 @@ function Table({
   setPageNumber,
   wordCount,
   category,
-  query,
   data,
   wordId,
   clicked,
@@ -20,6 +20,7 @@ function Table({
   handleDelete,
   handleEdit,
 }) {
+  const query = useSelector((state: any) => state.word.words);
   return (
     <div className="content-table">
       <div className="content-table-row content-table-heading">

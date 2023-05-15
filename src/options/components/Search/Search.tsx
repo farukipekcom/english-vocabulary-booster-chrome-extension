@@ -1,10 +1,13 @@
 import React from "react";
 import SearchIcon from "../../components/icons/search";
 import "./Search.scss";
-function Search({setQuery}) {
+import {useDispatch} from "react-redux";
+import {setQuery} from "../../../stores/word";
+function Search() {
+  const dispatch = useDispatch();
   const onChange = (e) => {
     e.preventDefault();
-    setQuery(e.target.value);
+    dispatch(setQuery(e.target.value));
   };
   return (
     <div className="search">
