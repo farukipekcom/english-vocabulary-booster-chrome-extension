@@ -6,7 +6,7 @@ function Categories({category, setCategory}) {
   };
   return (
     <div className="categories">
-      <div className={`categories-item ${category === "" ? "filter-active" : ""}`} onClick={() => setFilter("")}>
+      <div className={`categories-item ${category === "all" ? "filter-active" : ""}`} onClick={() => setFilter("all")}>
         View All
       </div>
       <div className={`categories-item ${category === "verb" ? "filter-active" : ""}`} onClick={() => setFilter("verb")}>

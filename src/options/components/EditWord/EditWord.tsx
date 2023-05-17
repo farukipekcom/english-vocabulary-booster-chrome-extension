@@ -3,9 +3,14 @@ import InputText from "../InputText/InputText";
 import "./EditWord.scss";
 import React, {useEffect, useState} from "react";
 import CloseIcon from "../icons/close";
+import {useDispatch, useSelector} from "react-redux";
+import {setModal, setTrigger, setWordId} from "../../../stores/word";
 
-function EditWord({setIsEditWordActive, wordId, setIsEditing, isEditing}) {
+function EditWord({isModalActive, setIsModalActive}) {
+  const dispatch = useDispatch();
   const [data, setData] = useState<any>({});
+  const trigger = useSelector((state: any) => state.word.triggers);
+  const wordId = useSelector((state: any) => state.word.wordId);
   const [formValue, setformValue] = useState({
     keyword: "",
     replace: "",
@@ -48,16 +53,22 @@ function EditWord({setIsEditWordActive, wordId, setIsEditing, isEditing}) {
       });
       const result = await response.json();
       // console.log("Success:", result);
-      setIsEditWordActive(false);
+      setIsModalActive(!isModalActive);
+      dispatch(setModal(false));
+      dispatch(setTrigger(!trigger));
     } catch (error) {
       // console.error("Error:", error);
     }
-    setIsEditing(!isEditing);
   };
 
   return (
     <div className="card">
-      <div className="card-close" onClick={() => setIsEditWordActive(false)}>
+      <div
+        className="card-close"
+        onClick={() => {
+          dispatch(setModal(false));
+          setIsModalActive(false);
+        }}>
         <CloseIcon />
       </div>
       <div className="card-heading">

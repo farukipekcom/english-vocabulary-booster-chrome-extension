@@ -1,183 +1,95 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "./Table.scss";
-import DeleteIcon from "../../components/icons/delete";
-import EditIcon from "../../components/icons/edit";
 import Pagination from "../../components/Pagination/Pagination";
 import {useSelector} from "react-redux";
-function Table({
-  isLoading,
-  isLoading2,
-  setCategory,
-  limit,
-  pageNumber,
-  setPageNumber,
-  wordCount,
-  category,
-  data,
-  wordId,
-  clicked,
-  setClicked,
-  handleDelete,
-  handleEdit,
-}) {
-  const query = useSelector((state: any) => state.word.words);
+import Modal from "../Modal/Modal";
+import {useDispatch} from "react-redux";
+import {setModal, setWordId, setWords, setAllWords, deleteWord} from "../../../stores/word";
+import TableItem from "../TableItem/TableItem";
+function Table({limit, wordCount, category, setIsDeleting, isDeleting, setAddOrEdit, isAddOrEdit}) {
+  const dispatch = useDispatch();
+  const trigger = useSelector((state: any) => state.word.triggers);
+  const data = useSelector((state: any) => state.word.words);
+  const allWords = useSelector((state: any) => state.word.allWords);
+  const modal = useSelector((state: any) => state.word.modals);
+  const query = useSelector((state: any) => state.word.query);
+  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [isModalActive, setIsModalActive] = useState(false);
+  const [pageNumber, setPageNumber] = useState(1);
+  useEffect(() => {
+    setIsModalActive(false);
+    const getData = async () => {
+      setIsLoadingData(false);
+      await fetch(process.env.API_URL + `?page=${pageNumber}&limit=${limit}&orderBy=added_date&order=desc`)
+        .then((res) => res.json())
+        .then((data) => {
+          dispatch(setWords(data));
+          setIsLoadingData(true);
+        });
+      // chrome.storage.sync.get(["data"], (result) => {
+      //   console.log("RESULT", result);
+      // });
+    };
+    getData();
+  }, [pageNumber, isDeleting, trigger]);
+
+  useEffect(() => {
+    const getAllData = async () => {
+      await fetch(process.env.API_URL)
+        .then((res) => res.json())
+        .then((data) => {
+          dispatch(setAllWords(data));
+          chrome.storage.sync.set({data: data}, () => {
+            console.log("Data is set ", data);
+          });
+        });
+    };
+    getAllData();
+  }, []);
+  const handleEdit = (id) => {
+    dispatch(setWordId(id));
+    dispatch(setModal(true));
+    setIsModalActive(!isModalActive);
+    setAddOrEdit(true);
+  };
+  const handleDelete = (id) => {
+    const status = dispatch(deleteWord(id));
+    setIsDeleting(status && !isDeleting);
+  };
   return (
-    <div className="content-table">
-      <div className="content-table-row content-table-heading">
-        <div className="content-table-row-column">Word</div>
-        <div className="content-table-row-column">Meaning</div>
-        <div className="content-table-row-column">Verb</div>
-        <div className="content-table-row-column">Noun</div>
-        <div className="content-table-row-column">Adjective</div>
-        <div className="content-table-row-column">Adverb</div>
-        <div className="content-table-row-column content-table-row-column-buttons"></div>
-      </div>
-      {isLoading2 &&
-        !category &&
-        !query &&
-        data.map((item) =>
-          item.id == wordId ? (
-            <div className={`content-table-row ${clicked} `} key={item.id}>
-              <div className="content-table-row-column">{item.keyword}</div>
-              <div className="content-table-row-column">{item.replace}</div>
-              <div className="content-table-row-column">{item.verb}</div>
-              <div className="content-table-row-column">{item.noun}</div>
-              <div className="content-table-row-column">{item.adjective}</div>
-              <div className="content-table-row-column">{item.adverb}</div>
-              <div className="content-table-row-column content-table-row-column-buttons">
-                <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                  <DeleteIcon />
-                </div>
-                <div className="content-table-row-column-buttons-edit" onClick={() => handleEdit(item.id)}>
-                  <EditIcon />
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="content-table-row" key={item.id}>
-              <div className="content-table-row-column">{item.keyword}</div>
-              <div className="content-table-row-column">{item.replace}</div>
-              <div className="content-table-row-column">{item.verb}</div>
-              <div className="content-table-row-column">{item.noun}</div>
-              <div className="content-table-row-column">{item.adjective}</div>
-              <div className="content-table-row-column">{item.adverb}</div>
-              <div className="content-table-row-column content-table-row-column-buttons">
-                <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                  <DeleteIcon />
-                </div>
-                <div
-                  className="content-table-row-column-buttons-edit"
-                  onClick={() => {
-                    handleEdit(item.id);
-                    setClicked("click");
-                  }}>
-                  <EditIcon />
-                </div>
-              </div>
-            </div>
-          )
+    <>
+      <div className="content-table">
+        <div className="content-table-row content-table-heading">
+          <div className="content-table-row-column">Word</div>
+          <div className="content-table-row-column">Meaning</div>
+          <div className="content-table-row-column">Verb</div>
+          <div className="content-table-row-column">Noun</div>
+          <div className="content-table-row-column">Adjective</div>
+          <div className="content-table-row-column">Adverb</div>
+          <div className="content-table-row-column content-table-row-column-buttons"></div>
+        </div>
+        {isLoadingData &&
+          !query &&
+          category === "all" &&
+          data.map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
+        {(query || category !== "all") &&
+          allWords
+            .filter(
+              (item) =>
+                (item.verb.length > 0 && category === "verb" && item.keyword.includes(query)) ||
+                (item.noun.length > 0 && category === "noun" && item.keyword.includes(query)) ||
+                (item.adjective.length > 0 && category === "adjective" && item.keyword.includes(query)) ||
+                (item.adverb.length > 0 && category === "adverb" && item.keyword.includes(query)) ||
+                (category === "all" && item.keyword.includes(query))
+            )
+            .map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
+        {!query && category === "all" && (
+          <Pagination length={wordCount} limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
         )}
-      {isLoading &&
-        category &&
-        wordCount
-          .filter(
-            (item) =>
-              (item.verb.length > 0 && category === "verb") ||
-              (item.noun.length > 0 && category === "noun") ||
-              (item.adjective.length > 0 && category === "adjective") ||
-              (item.adverb.length > 0 && category === "adverb") ||
-              (category === "allWord" && setCategory(""))
-          )
-          .map((item) =>
-            item.id == wordId ? (
-              <div className={`content-table-row ${clicked} `} key={item.id}>
-                <div className="content-table-row-column">{item.keyword}</div>
-                <div className="content-table-row-column">{item.replace}</div>
-                <div className="content-table-row-column">{item.verb}</div>
-                <div className="content-table-row-column">{item.noun}</div>
-                <div className="content-table-row-column">{item.adjective}</div>
-                <div className="content-table-row-column">{item.adverb}</div>
-                <div className="content-table-row-column content-table-row-column-buttons">
-                  <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                    <DeleteIcon />
-                  </div>
-                  <div className="content-table-row-column-buttons-edit" onClick={() => handleEdit(item.id)}>
-                    <EditIcon />
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="content-table-row" key={item.id}>
-                <div className="content-table-row-column">{item.keyword}</div>
-                <div className="content-table-row-column">{item.replace}</div>
-                <div className="content-table-row-column">{item.verb}</div>
-                <div className="content-table-row-column">{item.noun}</div>
-                <div className="content-table-row-column">{item.adjective}</div>
-                <div className="content-table-row-column">{item.adverb}</div>
-                <div className="content-table-row-column content-table-row-column-buttons">
-                  <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                    <DeleteIcon />
-                  </div>
-                  <div
-                    className="content-table-row-column-buttons-edit"
-                    onClick={() => {
-                      handleEdit(item.id);
-                      setClicked("click");
-                    }}>
-                    <EditIcon />
-                  </div>
-                </div>
-              </div>
-            )
-          )}
-      {isLoading &&
-        query &&
-        wordCount
-          .filter((item) => item.keyword.includes(query))
-          .map((item) =>
-            item.id == wordId ? (
-              <div className={`content-table-row ${clicked} `} key={item.id}>
-                <div className="content-table-row-column">{item.keyword}</div>
-                <div className="content-table-row-column">{item.replace}</div>
-                <div className="content-table-row-column">{item.verb}</div>
-                <div className="content-table-row-column">{item.noun}</div>
-                <div className="content-table-row-column">{item.adjective}</div>
-                <div className="content-table-row-column">{item.adverb}</div>
-                <div className="content-table-row-column content-table-row-column-buttons">
-                  <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                    <DeleteIcon />
-                  </div>
-                  <div className="content-table-row-column-buttons-edit" onClick={() => handleEdit(item.id)}>
-                    <EditIcon />
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="content-table-row" key={item.id}>
-                <div className="content-table-row-column">{item.keyword}</div>
-                <div className="content-table-row-column">{item.replace}</div>
-                <div className="content-table-row-column">{item.verb}</div>
-                <div className="content-table-row-column">{item.noun}</div>
-                <div className="content-table-row-column">{item.adjective}</div>
-                <div className="content-table-row-column">{item.adverb}</div>
-                <div className="content-table-row-column content-table-row-column-buttons">
-                  <div className="content-table-row-column-buttons-delete" onClick={() => handleDelete(item.id)}>
-                    <DeleteIcon />
-                  </div>
-                  <div
-                    className="content-table-row-column-buttons-edit"
-                    onClick={() => {
-                      handleEdit(item.id);
-                      setClicked("click");
-                    }}>
-                    <EditIcon />
-                  </div>
-                </div>
-              </div>
-            )
-          )}
-      <Pagination length={wordCount.length} limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
-    </div>
+      </div>
+
+      {modal && <Modal setIsModalActive={setIsModalActive} isModalActive={isModalActive} isAddOrEdit={isAddOrEdit} />}
+    </>
   );
 }
 

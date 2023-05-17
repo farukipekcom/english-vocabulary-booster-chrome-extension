@@ -98,28 +98,6 @@ body {
         }
       }
     }
-    &-add {
-      &-background {
-        background-color: rgba(0, 0, 0, 0.5);
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: -webkit-fill-available;
-        cursor: pointer;
-      }
-    }
-    &-edit {
-      &-background {
-        background-color: rgba(0, 0, 0, 0.5);
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: -webkit-fill-available;
-        cursor: pointer;
-      }
-    }
   }
 }
 .click {

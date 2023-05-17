@@ -3,8 +3,11 @@ import InputText from "../InputText/InputText";
 import "./AddWord.scss";
 import React, {useState} from "react";
 import CloseIcon from "../icons/close";
-
-function AddWord({isAdding, setIsAdding, setIsAddWordActive, refValue}) {
+import {setModal, setTrigger} from "../../../stores/word";
+import {useDispatch, useSelector} from "react-redux";
+function AddWord() {
+  const dispatch = useDispatch();
+  const trigger = useSelector((state: any) => state.word.triggers);
   const [formValue, setformValue] = useState({
     keyword: "",
     replace: "",
@@ -39,16 +42,15 @@ function AddWord({isAdding, setIsAdding, setIsAddWordActive, refValue}) {
       });
       const result = await response.json();
       // console.log("Success:", result);
-      refValue.current?.scrollIntoView({behavior: "smooth"});
-      setIsAdding(!isAdding);
-      setIsAddWordActive(false);
+      dispatch(setModal(false));
+      dispatch(setTrigger(!trigger));
     } catch (error) {
       // console.error("Error:", error);
     }
   };
   return (
     <div className="card">
-      <div className="card-close" onClick={() => setIsAddWordActive(false)}>
+      <div className="card-close" onClick={() => dispatch(setModal(false))}>
         <CloseIcon />
       </div>
       <div className="card-heading">
