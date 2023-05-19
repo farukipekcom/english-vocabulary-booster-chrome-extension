@@ -2,17 +2,15 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 const initialState = {
   query: "",
-  modals: false,
-  triggers: false,
+  modal: false,
+  trigger: false,
   wordId: "",
-  words: [],
-  yeni: [],
-  loading: false,
-  allWords: [],
-  error: "",
-  loading2: false,
-  allWords2: [],
-  error2: "",
+  allWordsLoading: false,
+  allWordsResponse: [],
+  allWordsErrors: "",
+  pageWordsLoading: false,
+  pageWordsResponse: [],
+  pageWordsErrors: "",
   deleteLoading: false,
   deleteResponse: false,
   deleteErrors: "",
@@ -20,8 +18,10 @@ const initialState = {
 export const fetchAllWords = createAsyncThunk("words/fetchAllWords", async (id) => {
   return axios.get(process.env.API_URL).then((res) => res.data.map((item) => item));
 });
-export const fetchPageWords = createAsyncThunk("words/fetchPageWords", async () => {
-  return axios.get(process.env.API_URL + `?page=1&limit=8&orderBy=added_date&order=desc`).then((res) => res.data.map((item) => item));
+export const fetchPageWords = createAsyncThunk("words/fetchPageWords", async (payload: any) => {
+  return axios
+    .get(process.env.API_URL + `?page=${payload.pageNumber}&limit=${payload.limit}&orderBy=added_date&order=desc`)
+    .then((res) => res.data.map((item) => item));
 });
 export const deleteWord = createAsyncThunk("words/deleteWord", async (id: any) => {
   return axios.delete(process.env.API_URL + id).then((res) => res.status === 200 && true);
@@ -34,47 +34,41 @@ const words = createSlice({
       state.query = action.payload;
     },
     setModal: (state, action) => {
-      state.modals = action.payload;
+      state.modal = action.payload;
     },
     setTrigger: (state, action) => {
-      state.triggers = action.payload;
+      state.trigger = action.payload;
     },
     setWordId: (state, action) => {
       state.wordId = action.payload;
     },
-    setWords: (state, action) => {
-      state.words = action.payload;
-    },
-    setAllWords: (state, action) => {
-      state.yeni = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchAllWords.pending, (state, action) => {
-      state.loading = true;
+      state.allWordsLoading = true;
     });
     builder.addCase(fetchAllWords.fulfilled, (state, action) => {
-      state.loading = false;
-      state.allWords = action.payload;
-      state.error = "";
+      state.allWordsLoading = false;
+      state.allWordsResponse = action.payload;
+      state.allWordsErrors = "";
     });
     builder.addCase(fetchAllWords.rejected, (state, action) => {
-      state.loading = true;
-      state.allWords = [];
-      state.error = action.error.message;
+      state.allWordsLoading = true;
+      state.allWordsResponse = [];
+      state.allWordsErrors = action.error.message;
     });
     builder.addCase(fetchPageWords.pending, (state, action) => {
-      state.loading2 = true;
+      state.pageWordsLoading = true;
     });
     builder.addCase(fetchPageWords.fulfilled, (state, action) => {
-      state.loading2 = false;
-      state.allWords2 = action.payload;
-      state.error2 = "";
+      state.pageWordsLoading = false;
+      state.pageWordsResponse = action.payload;
+      state.pageWordsErrors = "";
     });
     builder.addCase(fetchPageWords.rejected, (state, action) => {
-      state.loading2 = true;
-      state.allWords2 = [];
-      state.error2 = action.error.message;
+      state.pageWordsLoading = true;
+      state.pageWordsResponse = [];
+      state.pageWordsErrors = action.error.message;
     });
     builder.addCase(deleteWord.pending, (state, action) => {
       state.deleteLoading = true;
@@ -91,5 +85,5 @@ const words = createSlice({
     });
   },
 });
-export const {setQuery, setModal, setTrigger, setWordId, setWords, setAllWords} = words.actions;
+export const {setQuery, setModal, setTrigger, setWordId} = words.actions;
 export default words.reducer;

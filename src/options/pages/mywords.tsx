@@ -4,10 +4,9 @@ import Button from "../components/Button/Button";
 import Filter from "../components/Filter/Filter";
 import Table from "../components/Table/Table";
 import {setModal} from "../../stores/word";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 function Mywords() {
   const dispatch = useDispatch();
-  const yeni = useSelector((state: any) => state.word.yeni);
   const [isAddOrEdit, setAddOrEdit] = useState(null);
   const [category, setCategory] = useState("all");
   const limit = 8;

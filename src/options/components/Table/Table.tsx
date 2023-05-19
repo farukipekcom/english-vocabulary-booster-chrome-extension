@@ -4,25 +4,21 @@ import Pagination from "../../components/Pagination/Pagination";
 import {useSelector} from "react-redux";
 import Modal from "../Modal/Modal";
 import {useDispatch} from "react-redux";
-import {setModal, setWordId, setWords, setAllWords, fetchAllWords, fetchPageWords, deleteWord} from "../../../stores/word";
+import {setModal, setWordId, fetchAllWords, fetchPageWords, deleteWord} from "../../../stores/word";
 import TableItem from "../TableItem/TableItem";
 function Table({limit, category, setAddOrEdit, isAddOrEdit}) {
   const dispatch = useDispatch<any>();
-  const trigger = useSelector((state: any) => state.word.triggers);
-  const data = useSelector((state: any) => state.word.words);
-  const modal = useSelector((state: any) => state.word.modals);
-  const query = useSelector((state: any) => state.word.query);
-  const allWords = useSelector((state: any) => state.word);
-  const allWords2 = useSelector((state: any) => state.word);
-  const allWords3 = useSelector((state: any) => state.word);
+  const {deleteResponse, pageWordsResponse, pageWordsLoading, allWordsResponse, allWordsLoading, modal, query, trigger} = useSelector(
+    (state: any) => state.word
+  );
   const [isModalActive, setIsModalActive] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
-    dispatch(fetchPageWords());
-  }, [pageNumber, trigger, allWords3.allWords3]);
+    dispatch(fetchPageWords({pageNumber, limit}));
+  }, [pageNumber, trigger, deleteResponse]);
   useEffect(() => {
     dispatch(fetchAllWords());
-  }, []);
+  }, [deleteResponse]);
   const handleEdit = (id) => {
     dispatch(setWordId(id));
     dispatch(setModal(true));
@@ -44,11 +40,12 @@ function Table({limit, category, setAddOrEdit, isAddOrEdit}) {
           <div className="content-table-row-column">Adverb</div>
           <div className="content-table-row-column content-table-row-column-buttons"></div>
         </div>
-        {!query &&
+        {!pageWordsLoading &&
+          !query &&
           category === "all" &&
-          allWords2.allWords2.map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
-        {!allWords.loading && allWords.allWords.length > 0 && (query || category !== "all")
-          ? allWords.allWords
+          pageWordsResponse.map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
+        {!allWordsLoading && allWordsResponse.length > 0 && (query || category !== "all")
+          ? allWordsResponse
               .filter(
                 (item) =>
                   (item.verb.length > 0 && category === "verb" && item.keyword.includes(query)) ||
@@ -59,8 +56,9 @@ function Table({limit, category, setAddOrEdit, isAddOrEdit}) {
               )
               .map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)
           : ""}
+
         {!query && category === "all" && (
-          <Pagination length={allWords.length} limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+          <Pagination length={allWordsResponse.length} limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
         )}
       </div>
       {modal && <Modal setIsModalActive={setIsModalActive} isModalActive={isModalActive} isAddOrEdit={isAddOrEdit} />}
