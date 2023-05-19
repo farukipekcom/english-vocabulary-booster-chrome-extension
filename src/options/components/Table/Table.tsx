@@ -4,47 +4,24 @@ import Pagination from "../../components/Pagination/Pagination";
 import {useSelector} from "react-redux";
 import Modal from "../Modal/Modal";
 import {useDispatch} from "react-redux";
-import {setModal, setWordId, setWords, setAllWords, deleteWord} from "../../../stores/word";
+import {setModal, setWordId, setWords, setAllWords, fetchAllWords, fetchPageWords, deleteWord} from "../../../stores/word";
 import TableItem from "../TableItem/TableItem";
-function Table({limit, wordCount, category, setIsDeleting, isDeleting, setAddOrEdit, isAddOrEdit}) {
-  const dispatch = useDispatch();
+function Table({limit, category, setAddOrEdit, isAddOrEdit}) {
+  const dispatch = useDispatch<any>();
   const trigger = useSelector((state: any) => state.word.triggers);
   const data = useSelector((state: any) => state.word.words);
-  const allWords = useSelector((state: any) => state.word.allWords);
   const modal = useSelector((state: any) => state.word.modals);
   const query = useSelector((state: any) => state.word.query);
-  const [isLoadingData, setIsLoadingData] = useState(false);
+  const allWords = useSelector((state: any) => state.word);
+  const allWords2 = useSelector((state: any) => state.word);
+  const allWords3 = useSelector((state: any) => state.word);
   const [isModalActive, setIsModalActive] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
-    setIsModalActive(false);
-    const getData = async () => {
-      setIsLoadingData(false);
-      await fetch(process.env.API_URL + `?page=${pageNumber}&limit=${limit}&orderBy=added_date&order=desc`)
-        .then((res) => res.json())
-        .then((data) => {
-          dispatch(setWords(data));
-          setIsLoadingData(true);
-        });
-      // chrome.storage.sync.get(["data"], (result) => {
-      //   console.log("RESULT", result);
-      // });
-    };
-    getData();
-  }, [pageNumber, isDeleting, trigger]);
-
+    dispatch(fetchPageWords());
+  }, [pageNumber, trigger, allWords3.allWords3]);
   useEffect(() => {
-    const getAllData = async () => {
-      await fetch(process.env.API_URL)
-        .then((res) => res.json())
-        .then((data) => {
-          dispatch(setAllWords(data));
-          chrome.storage.sync.set({data: data}, () => {
-            console.log("Data is set ", data);
-          });
-        });
-    };
-    getAllData();
+    dispatch(fetchAllWords());
   }, []);
   const handleEdit = (id) => {
     dispatch(setWordId(id));
@@ -52,9 +29,8 @@ function Table({limit, wordCount, category, setIsDeleting, isDeleting, setAddOrE
     setIsModalActive(!isModalActive);
     setAddOrEdit(true);
   };
-  const handleDelete = (id) => {
-    const status = dispatch(deleteWord(id));
-    setIsDeleting(status && !isDeleting);
+  const handleDelete = async (id: any) => {
+    dispatch(deleteWord(id));
   };
   return (
     <>
@@ -68,26 +44,25 @@ function Table({limit, wordCount, category, setIsDeleting, isDeleting, setAddOrE
           <div className="content-table-row-column">Adverb</div>
           <div className="content-table-row-column content-table-row-column-buttons"></div>
         </div>
-        {isLoadingData &&
-          !query &&
+        {!query &&
           category === "all" &&
-          data.map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
-        {(query || category !== "all") &&
-          allWords
-            .filter(
-              (item) =>
-                (item.verb.length > 0 && category === "verb" && item.keyword.includes(query)) ||
-                (item.noun.length > 0 && category === "noun" && item.keyword.includes(query)) ||
-                (item.adjective.length > 0 && category === "adjective" && item.keyword.includes(query)) ||
-                (item.adverb.length > 0 && category === "adverb" && item.keyword.includes(query)) ||
-                (category === "all" && item.keyword.includes(query))
-            )
-            .map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
+          allWords2.allWords2.map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
+        {!allWords.loading && allWords.allWords.length > 0 && (query || category !== "all")
+          ? allWords.allWords
+              .filter(
+                (item) =>
+                  (item.verb.length > 0 && category === "verb" && item.keyword.includes(query)) ||
+                  (item.noun.length > 0 && category === "noun" && item.keyword.includes(query)) ||
+                  (item.adjective.length > 0 && category === "adjective" && item.keyword.includes(query)) ||
+                  (item.adverb.length > 0 && category === "adverb" && item.keyword.includes(query)) ||
+                  (category === "all" && item.keyword.includes(query))
+              )
+              .map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)
+          : ""}
         {!query && category === "all" && (
-          <Pagination length={wordCount} limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+          <Pagination length={allWords.length} limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
         )}
       </div>
-
       {modal && <Modal setIsModalActive={setIsModalActive} isModalActive={isModalActive} isAddOrEdit={isAddOrEdit} />}
     </>
   );

@@ -7,8 +7,7 @@ import {setModal} from "../../stores/word";
 import {useDispatch, useSelector} from "react-redux";
 function Mywords() {
   const dispatch = useDispatch();
-  const allWords = useSelector((state: any) => state.word.allWords);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const yeni = useSelector((state: any) => state.word.yeni);
   const [isAddOrEdit, setAddOrEdit] = useState(null);
   const [category, setCategory] = useState("all");
   const limit = 8;
@@ -30,15 +29,7 @@ function Mywords() {
           </div>
         </div>
         <Filter category={category} setCategory={setCategory} />
-        <Table
-          limit={limit}
-          wordCount={allWords.length}
-          category={category}
-          setIsDeleting={setIsDeleting}
-          isDeleting={isDeleting}
-          isAddOrEdit={isAddOrEdit}
-          setAddOrEdit={setAddOrEdit}
-        />
+        <Table limit={limit} category={category} isAddOrEdit={isAddOrEdit} setAddOrEdit={setAddOrEdit} />
       </main>
     </div>
   );
