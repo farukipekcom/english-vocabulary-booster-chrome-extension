@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import "../styles/main.scss";
 
 const Popup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const name = e.target[0].value;
-    chrome.storage.sync.set({ name: name }, () => {
+    chrome.storage.sync.set({name: name}, () => {
       console.log("Name is set to: ", name);
     });
   };

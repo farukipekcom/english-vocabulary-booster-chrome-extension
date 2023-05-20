@@ -6,6 +6,6 @@
     "moduleResolution": "node",
     "esModuleInterop": true
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.tsx", "src/**/*.jsx", "src/contentScript/contentScript.js"],
+  "include": ["declaration.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.tsx", "src/**/*.jsx", "src/contentScript/contentScript.js"],
   "exclude": ["node_modules"]
 }
