@@ -1,8 +1,6 @@
-@import "../../../styles/abstracts/mixin";
-@import "../../../styles/abstracts/variables";
-
+@import "../../../styles/abstracts/_index";
 .modal {
-  &-background {
+  &Background {
     background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
     top: 0px;

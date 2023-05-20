@@ -1,23 +1,21 @@
 import React from "react";
-import "./Modal.scss";
+import styles from "./Modal.module.scss";
 import EditWord from "../EditWord/EditWord";
 import AddWord from "../AddWord/AddWord";
 import {useDispatch} from "react-redux";
 import {setModal} from "../../../stores/word";
-function Search({isAddOrEdit, isModalActive, setIsModalActive}) {
+function Modal({isAddOrEdit}) {
   const dispatch = useDispatch();
-
   return (
-    <div className="modal">
+    <div className={styles.modal}>
       <div
-        className="modal-background"
+        className={styles.modalBackground}
         onClick={() => {
           dispatch(setModal(false));
-          setIsModalActive(false);
         }}></div>
-      {isAddOrEdit ? <EditWord isModalActive={isModalActive} setIsModalActive={setIsModalActive} /> : <AddWord />}
+      {isAddOrEdit ? <EditWord /> : <AddWord />}
     </div>
   );
 }
 
-export default Search;
+export default Modal;

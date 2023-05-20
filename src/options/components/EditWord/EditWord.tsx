@@ -6,7 +6,7 @@ import CloseIcon from "../icons/close";
 import {useDispatch, useSelector} from "react-redux";
 import {setModal, setTrigger, setWordId} from "../../../stores/word";
 
-function EditWord({isModalActive, setIsModalActive}) {
+function EditWord() {
   const dispatch = useDispatch();
   const [data, setData] = useState<any>({});
   const trigger = useSelector((state: any) => state.word.triggers);
@@ -53,7 +53,7 @@ function EditWord({isModalActive, setIsModalActive}) {
       });
       const result = await response.json();
       // console.log("Success:", result);
-      setIsModalActive(!isModalActive);
+      // setIsModalActive(!isModalActive);
       dispatch(setModal(false));
       dispatch(setTrigger(!trigger));
     } catch (error) {
@@ -67,7 +67,7 @@ function EditWord({isModalActive, setIsModalActive}) {
         className="card-close"
         onClick={() => {
           dispatch(setModal(false));
-          setIsModalActive(false);
+          // setIsModalActive(false);
         }}>
         <CloseIcon />
       </div>
