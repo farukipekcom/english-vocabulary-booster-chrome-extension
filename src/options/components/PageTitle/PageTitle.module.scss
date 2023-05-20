@@ -1,0 +1,20 @@
+@import "../../../styles/abstracts/_index";
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  &Left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    &Title {
+      @include heading;
+      color: $primary;
+    }
+    &Description {
+      @include md-regular;
+      color: $secondary;
+    }
+  }
+}

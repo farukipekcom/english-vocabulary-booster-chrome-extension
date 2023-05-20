@@ -1,10 +1,9 @@
 import React, {useState} from "react";
-import Header from "../components/Header/Header";
-import Button from "../components/Button/Button";
 import Filter from "../components/Filter/Filter";
 import Table from "../components/Table/Table";
 import {setModal} from "../../stores/word";
 import {useDispatch} from "react-redux";
+import PageTitle from "../components/PageTitle/PageTitle";
 function Mywords() {
   const dispatch = useDispatch();
   const [isAddOrEdit, setAddOrEdit] = useState(null);
@@ -15,22 +14,17 @@ function Mywords() {
     setAddOrEdit(false);
   };
   return (
-    <div className="main">
-      <Header />
-      <main className="content">
-        <div className="content-heading">
-          <div className="content-heading-left">
-            <div className="content-heading-left-title">My Words</div>
-            <div className="content-heading-left-subtitle">You can add words to make it easier to understand what you read.</div>
-          </div>
-          <div className="content-heading-right">
-            <Button text="Add Word" icon={true} onClick={handleAdd} />
-          </div>
-        </div>
-        <Filter category={category} setCategory={setCategory} />
-        <Table limit={limit} category={category} isAddOrEdit={isAddOrEdit} setAddOrEdit={setAddOrEdit} />
-      </main>
-    </div>
+    <main className="content">
+      <PageTitle
+        title="My Words"
+        description="You can add words to make it easier to understand what you read."
+        onClick={handleAdd}
+        buttonText="Add Word"
+        buttonIcon={true}
+      />
+      <Filter category={category} setCategory={setCategory} />
+      <Table limit={limit} category={category} isAddOrEdit={isAddOrEdit} setAddOrEdit={setAddOrEdit} />
+    </main>
   );
 }
 export default Mywords;

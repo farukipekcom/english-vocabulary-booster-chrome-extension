@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "../components/Header/Header";
+import PageTitle from "../components/PageTitle/PageTitle";
 
 function Settings() {
   return (
-    <div className="main">
-      <Header />
-    </div>
+    <main className="content">
+      <PageTitle title="Settings" description="Manage your preferences here." />
+    </main>
   );
 }
 

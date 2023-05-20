@@ -1,10 +1,9 @@
 import React from "react";
-import Header from "../components/Header/Header";
-
+import PageTitle from "../components/PageTitle/PageTitle";
 function Home() {
   return (
-    <div className="main">
-      <Header />
+    <div className="content">
+      <PageTitle title="Welcome back, Faruk" />
     </div>
   );
 }
