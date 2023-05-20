@@ -1,10 +1,9 @@
-@import "../../../styles/abstracts/mixin";
-@import "../../../styles/abstracts/variables";
+@import "../../../styles/abstracts/_index";
 .categories {
   display: flex;
   border: 1px solid $border;
   border-radius: $radius-sm;
-  &-item {
+  &Item {
     padding: 8px 16px;
     border-right: 1px solid $border;
     cursor: pointer;
@@ -20,8 +19,5 @@
       border-bottom-right-radius: $radius-sm;
       border-right: none;
     }
-  }
-  .filter-active {
-    background-color: $border;
   }
 }

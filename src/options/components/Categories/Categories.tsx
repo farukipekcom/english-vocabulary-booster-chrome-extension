@@ -1,24 +1,31 @@
 import React from "react";
-import "./Categories.scss";
-function Categories({category, setCategory}) {
+import styles from "./Categories.module.scss";
+export interface Props {
+  category?: string;
+  setCategory: (value: string) => void;
+}
+function Categories(Props: Props) {
+  const {category, setCategory} = Props;
   const setFilter = (value) => {
     setCategory(value);
   };
   return (
-    <div className="categories">
-      <div className={`categories-item ${category === "all" ? "filter-active" : ""}`} onClick={() => setFilter("all")}>
+    <div className={styles.categories}>
+      <div className={`${styles.categoriesItem} ${category === "all" ? "activeCategory" : ""}`} onClick={() => setFilter("all")}>
         View All
       </div>
-      <div className={`categories-item ${category === "verb" ? "filter-active" : ""}`} onClick={() => setFilter("verb")}>
+      <div className={`${styles.categoriesItem} ${category === "verb" ? "activeCategory" : ""}`} onClick={() => setFilter("verb")}>
         Verb
       </div>
-      <div className={`categories-item ${category === "noun" ? "filter-active" : ""}`} onClick={() => setFilter("noun")}>
+      <div className={`${styles.categoriesItem} ${category === "noun" ? "activeCategory" : ""}`} onClick={() => setFilter("noun")}>
         Noun
       </div>
-      <div className={`categories-item ${category === "adjective" ? "filter-active" : ""}`} onClick={() => setFilter("adjective")}>
+      <div
+        className={`${styles.categoriesItem} ${category === "adjective" ? "activeCategory" : ""}`}
+        onClick={() => setFilter("adjective")}>
         Adjective
       </div>
-      <div className={`categories-item ${category === "adverb" ? "filter-active" : ""}`} onClick={() => setFilter("adverb")}>
+      <div className={`${styles.categoriesItem} ${category === "adverb" ? "activeCategory" : ""}`} onClick={() => setFilter("adverb")}>
         Adverb
       </div>
     </div>

@@ -34,3 +34,9 @@ body {
   position: relative;
   margin-left: 280px;
 }
+.activeCategory {
+  background-color: $border;
+  &:hover {
+    background-color: $border !important;
+  }
+}
