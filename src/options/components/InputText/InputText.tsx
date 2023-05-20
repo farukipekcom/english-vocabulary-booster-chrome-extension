@@ -1,22 +1,17 @@
 import React from "react";
-import "./InputText.scss";
-function InputText({
-  placeholder = "Add a new word",
-  type = "text",
-  name,
-  value,
-  onChange,
-}) {
+import styles from "./InputText.module.scss";
+export interface Props {
+  className?: string;
+  type?: string;
+  placeholder: string;
+  name?: string;
+  value?: string;
+  onChange?: (e: any) => void;
+}
+function InputText(Props: Props) {
+  const {className, type, placeholder, name, value, onChange} = Props;
   return (
-    <input
-      type={type}
-      className="input"
-      placeholder={placeholder}
-      name={name}
-      onChange={onChange}
-      value={value}
-    />
+    <input className={`${styles.input} ${className}`} type={type} placeholder={placeholder} name={name} value={value} onChange={onChange} />
   );
 }
-
 export default InputText;

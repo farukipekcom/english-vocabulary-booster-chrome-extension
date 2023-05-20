@@ -6,7 +6,7 @@ function Categories() {
   return (
     <div className={styles.categories}>
       {categories.map((category) => (
-        <CategoryItem category={category} />
+        <CategoryItem key={category} category={category} />
       ))}
     </div>
   );

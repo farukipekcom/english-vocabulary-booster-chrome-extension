@@ -1,8 +1,9 @@
 import React from "react";
 import {SearchIcon} from "../../components/icons/";
-import "./Search.scss";
+import styles from "./Search.module.scss";
 import {useDispatch} from "react-redux";
 import {setQuery} from "../../../stores/word";
+import InputText from "../InputText/InputText";
 function Search() {
   const dispatch = useDispatch();
   const onChange = (e) => {
@@ -10,11 +11,11 @@ function Search() {
     dispatch(setQuery(e.target.value));
   };
   return (
-    <div className="search">
-      <div className="search-icon">
+    <div className={styles.search}>
+      <div className={styles.searchIcon}>
         <SearchIcon />
       </div>
-      <input type="text" className="search-input" onChange={onChange} name="search" placeholder="Search" />
+      <InputText className={styles.searchInput} onChange={onChange} name="search" placeholder="Search" />
     </div>
   );
 }
