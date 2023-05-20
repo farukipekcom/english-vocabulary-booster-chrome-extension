@@ -1,5 +1,5 @@
 import React from "react";
-import SearchIcon from "../../components/icons/search";
+import {SearchIcon} from "../../components/icons/";
 import "./Search.scss";
 import {useDispatch} from "react-redux";
 import {setQuery} from "../../../stores/word";

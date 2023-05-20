@@ -1,5 +1,4 @@
-@import "../../../styles//abstracts/_mixin";
-@import "../../../styles//abstracts/_variables";
+@import "../../../styles//abstracts/_index";
 .header {
   position: fixed;
   left: 0px;
@@ -11,14 +10,14 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
-  &-logo {
+  &Logo {
   }
-  &-menu {
+  &Menu {
     margin-top: 48px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    &-item {
+    &Item {
       width: 100%;
       height: 40px;
       display: flex;
@@ -30,19 +29,19 @@
       &:hover {
         background-color: $hover;
       }
-      &-icon {
+      &Icon {
         svg {
           fill: #fff;
         }
       }
-      &-text {
+      &Text {
         font-size: 16px;
         line-height: 24px;
         font-weight: 600;
       }
     }
   }
-  &-total {
+  &Total {
     background-color: $hover;
     padding: 8px 16px;
     display: flex;
@@ -50,10 +49,10 @@
     justify-content: space-between;
     border-radius: $radius-sm;
     margin-top: auto;
-    &-heading {
+    &Heading {
       @include sm-medium;
     }
-    &-count {
+    &Count {
       @include md-regular;
       font-weight: 600;
     }

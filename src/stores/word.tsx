@@ -8,6 +8,7 @@ const initialState = {
   activeCategory: "All",
   allWordsLoading: false,
   allWordsResponse: [],
+  allWordsCount: "",
   allWordsErrors: "",
   pageWordsLoading: false,
   pageWordsResponse: [],
@@ -54,6 +55,7 @@ const words = createSlice({
     builder.addCase(fetchAllWords.fulfilled, (state, action) => {
       state.allWordsLoading = false;
       state.allWordsResponse = action.payload;
+      state.allWordsCount = action.payload.length;
       state.allWordsErrors = "";
     });
     builder.addCase(fetchAllWords.rejected, (state, action) => {

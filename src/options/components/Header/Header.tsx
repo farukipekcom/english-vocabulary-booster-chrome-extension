@@ -1,52 +1,37 @@
-import React, {useEffect, useState} from "react";
-import "./Header.scss";
-import Logo from "../icons/logo";
-import DashboardICon from "../icons/dashboard";
-import MyWordIcon from "../icons/myword";
-import SettingsIcon from "../icons/settings";
+import React from "react";
+import styles from "./Header.module.scss";
+import {LogoIcon, DashboardIcon, MyWordIcon, SettingsIcon} from "../icons/index";
+import {useSelector} from "react-redux";
 function Header() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(false);
-    const getData = async () => {
-      await fetch(process.env.API_URL)
-        .then((res) => res.json())
-        .then((data) => {
-          setData(data.length);
-          setLoading(true);
-        });
-    };
-    getData();
-  }, []);
+  const {allWordsLoading, allWordsCount} = useSelector((state: any) => state.word);
   return (
-    <header className="header">
-      <div className="header-logo">
-        <Logo />
+    <header className={styles.header}>
+      <div className={styles.headerLogo}>
+        <LogoIcon />
       </div>
-      <div className="header-menu">
-        <a href="#/" className="header-menu-item">
-          <div className="header-menu-item-icon">
-            <DashboardICon />
+      <div className={styles.headerMenu}>
+        <a href="#/" className={styles.headerMenuItem}>
+          <div className={styles.headerMenuItemIcon}>
+            <DashboardIcon />
           </div>
-          <div className="header-menu-item-text">Dashboard</div>
+          <div className={styles.headerMenuItemText}>Dashboard</div>
         </a>
-        <a href="#/mywords" className="header-menu-item">
-          <div className="header-menu-item-icon">
+        <a href="#/mywords" className={styles.headerMenuItem}>
+          <div className={styles.headerMenuItemIcon}>
             <MyWordIcon />
           </div>
-          <div className="header-menu-item-text">My Words</div>
+          <div className={styles.headerMenuItemText}>My Words</div>
         </a>
-        <a href="#/settings" className="header-menu-item">
-          <div className="header-menu-item-icon">
+        <a href="#/settings" className={styles.headerMenuItem}>
+          <div className={styles.headerMenuItemIcon}>
             <SettingsIcon />
           </div>
-          <div className="header-menu-item-text">Settings</div>
+          <div className={styles.headerMenuItemText}>Settings</div>
         </a>
       </div>
-      <div className="header-total">
-        <div className="header-total-heading">Total Words</div>
-        <div className="header-total-count">{loading && data}</div>
+      <div className={styles.headerTotal}>
+        <div className={styles.headerTotalHeading}>Total Words</div>
+        <div className={styles.headerTotalCount}>{!allWordsLoading && allWordsCount}</div>
       </div>
     </header>
   );
