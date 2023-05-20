@@ -6,11 +6,10 @@ import Modal from "../Modal/Modal";
 import {useDispatch} from "react-redux";
 import {setModal, setWordId, fetchAllWords, fetchPageWords, deleteWord} from "../../../stores/word";
 import TableItem from "../TableItem/TableItem";
-function Table({limit, category, setAddOrEdit, isAddOrEdit}) {
+function Table({limit, setAddOrEdit, isAddOrEdit}) {
   const dispatch = useDispatch<any>();
-  const {deleteResponse, pageWordsResponse, pageWordsLoading, allWordsResponse, allWordsLoading, modal, query, trigger} = useSelector(
-    (state: any) => state.word
-  );
+  const {deleteResponse, pageWordsResponse, pageWordsLoading, allWordsResponse, allWordsLoading, modal, query, trigger, activeCategory} =
+    useSelector((state: any) => state.word);
   const [isModalActive, setIsModalActive] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
@@ -42,22 +41,22 @@ function Table({limit, category, setAddOrEdit, isAddOrEdit}) {
         </div>
         {!pageWordsLoading &&
           !query &&
-          category === "all" &&
+          activeCategory === "All" &&
           pageWordsResponse.map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
-        {!allWordsLoading && allWordsResponse.length > 0 && (query || category !== "all")
+        {!allWordsLoading && allWordsResponse.length > 0 && (query || activeCategory !== "All")
           ? allWordsResponse
               .filter(
                 (item) =>
-                  (item.verb.length > 0 && category === "verb" && item.keyword.includes(query)) ||
-                  (item.noun.length > 0 && category === "noun" && item.keyword.includes(query)) ||
-                  (item.adjective.length > 0 && category === "adjective" && item.keyword.includes(query)) ||
-                  (item.adverb.length > 0 && category === "adverb" && item.keyword.includes(query)) ||
-                  (category === "all" && item.keyword.includes(query))
+                  (item.verb.length > 0 && activeCategory === "Verb" && item.keyword.includes(query)) ||
+                  (item.noun.length > 0 && activeCategory === "Noun" && item.keyword.includes(query)) ||
+                  (item.adjective.length > 0 && activeCategory === "Adjective" && item.keyword.includes(query)) ||
+                  (item.adverb.length > 0 && activeCategory === "Adverb" && item.keyword.includes(query)) ||
+                  (activeCategory === "All" && item.keyword.includes(query))
               )
               .map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)
           : ""}
 
-        {!query && category === "all" && (
+        {!query && activeCategory === "All" && (
           <Pagination length={allWordsResponse.length} limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
         )}
       </div>

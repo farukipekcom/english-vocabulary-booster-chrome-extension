@@ -7,7 +7,6 @@ import PageTitle from "../components/PageTitle/PageTitle";
 function Mywords() {
   const dispatch = useDispatch();
   const [isAddOrEdit, setAddOrEdit] = useState(null);
-  const [category, setCategory] = useState("all");
   const limit = 8;
   const handleAdd = () => {
     dispatch(setModal(true));
@@ -22,8 +21,8 @@ function Mywords() {
         buttonText="Add Word"
         buttonIcon={true}
       />
-      <Filter category={category} setCategory={setCategory} />
-      <Table limit={limit} category={category} isAddOrEdit={isAddOrEdit} setAddOrEdit={setAddOrEdit} />
+      <Filter />
+      <Table limit={limit} isAddOrEdit={isAddOrEdit} setAddOrEdit={setAddOrEdit} />
     </main>
   );
 }

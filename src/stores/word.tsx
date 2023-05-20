@@ -5,6 +5,7 @@ const initialState = {
   modal: false,
   trigger: false,
   wordId: "",
+  activeCategory: "All",
   allWordsLoading: false,
   allWordsResponse: [],
   allWordsErrors: "",
@@ -41,6 +42,9 @@ const words = createSlice({
     },
     setWordId: (state, action) => {
       state.wordId = action.payload;
+    },
+    setActiveCategory: (state, action) => {
+      state.activeCategory = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -85,5 +89,5 @@ const words = createSlice({
     });
   },
 });
-export const {setQuery, setModal, setTrigger, setWordId} = words.actions;
+export const {setQuery, setModal, setTrigger, setWordId, setActiveCategory} = words.actions;
 export default words.reducer;

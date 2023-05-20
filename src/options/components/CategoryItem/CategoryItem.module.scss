@@ -1,0 +1,18 @@
+@import "../../../styles/abstracts/_index";
+.categoryItem {
+  padding: 8px 16px;
+  border-right: 1px solid $border;
+  cursor: pointer;
+  &:hover {
+    background-color: $hover-text;
+  }
+  &:first-child {
+    border-top-left-radius: $radius-sm;
+    border-bottom-left-radius: $radius-sm;
+  }
+  &:last-child {
+    border-top-right-radius: $radius-sm;
+    border-bottom-right-radius: $radius-sm;
+    border-right: none;
+  }
+}
