@@ -1,11 +1,17 @@
 import React from "react";
-import "./Pagination.scss";
-function Pagination({length, limit, setPageNumber, pageNumber}) {
-  const pageCount = Math.ceil(length / limit);
-  const pages = [];
-  for (let i = 1; i <= pageCount; i++) {
-    pages.push(i);
-  }
+import range from "lodash/range";
+import styles from "./Pagination.module.scss";
+import {useSelector} from "react-redux";
+export interface Props {
+  limit?: number;
+  setPageNumber?: (pageNumber: number) => void;
+  pageNumber?: number;
+}
+function Pagination(Props: Props) {
+  const {allWordsCount} = useSelector((state: any) => state.word);
+  const {limit, setPageNumber, pageNumber} = Props;
+  const pageCount = Math.ceil(allWordsCount / limit);
+  const pages = range(1, pageCount + 1);
   const previousPage = () => {
     if (pageNumber - 1 === 0) return;
     setPageNumber(pageNumber - 1);
@@ -18,25 +24,25 @@ function Pagination({length, limit, setPageNumber, pageNumber}) {
     setPageNumber(item);
   };
   return (
-    <div className="pagination">
+    <div className={styles.pagination}>
       {pageNumber - 1 > 0 ? (
-        <div className="pagination-previous" onClick={previousPage}>
+        <div className={styles.paginationPrevious} onClick={previousPage}>
           Previous
         </div>
       ) : (
-        <div className="pagination-previous disabled" onClick={previousPage}>
+        <div className={`${styles.paginationPrevious} ${styles.disabled}`} onClick={previousPage}>
           Previous
         </div>
       )}
-      <div className="pagination-numbers">
+      <div className={styles.paginationNumbers}>
         {pages.map((item) => (
           <span key={item}>
             {pageNumber === item ? (
-              <div className="pagination-numbers-item active" onClick={() => setPage(item)}>
+              <div className={`${styles.paginationNumbersItem} ${styles.active}`} onClick={() => setPage(item)}>
                 {pageNumber === item ? item : item}
               </div>
             ) : (
-              <div className="pagination-numbers-item" onClick={() => setPage(item)}>
+              <div className={styles.paginationNumbersItem} onClick={() => setPage(item)}>
                 {pageNumber === item ? item : item}
               </div>
             )}
@@ -44,11 +50,11 @@ function Pagination({length, limit, setPageNumber, pageNumber}) {
         ))}
       </div>
       {pageNumber < pageCount ? (
-        <div className="pagination-next" onClick={nextPage}>
+        <div className={styles.paginationNext} onClick={nextPage}>
           Next
         </div>
       ) : (
-        <div className="pagination-next disabled" onClick={nextPage}>
+        <div className={`${styles.paginationNext} ${styles.disabled}`} onClick={nextPage}>
           Next
         </div>
       )}

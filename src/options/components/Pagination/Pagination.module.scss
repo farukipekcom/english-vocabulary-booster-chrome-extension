@@ -1,5 +1,4 @@
-@import "../../../styles/abstracts/_mixin";
-@import "../../../styles/abstracts/variables";
+@import "../../../styles/abstracts/_index";
 .pagination {
   height: 72px;
   width: 100%;
@@ -7,8 +6,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 24px;
-  &-previous,
-  &-next {
+  &Previous,
+  &Next {
     @include sm-medium;
     border-radius: $radius-sm;
     border: 1px solid $border;
@@ -19,11 +18,11 @@
       background-color: $hover-text;
     }
   }
-  &-numbers {
+  &Numbers {
     display: flex;
     align-items: center;
     gap: 2px;
-    &-item {
+    &Item {
       display: flex;
       align-items: center;
       justify-content: center;

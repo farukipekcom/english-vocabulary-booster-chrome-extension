@@ -10,7 +10,6 @@ function Table({limit, setAddOrEdit, isAddOrEdit}) {
   const dispatch = useDispatch<any>();
   const {deleteResponse, pageWordsResponse, pageWordsLoading, allWordsResponse, allWordsLoading, modal, query, trigger, activeCategory} =
     useSelector((state: any) => state.word);
-  // const [isModalActive, setIsModalActive] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
     dispatch(fetchPageWords({pageNumber, limit}));
@@ -21,7 +20,6 @@ function Table({limit, setAddOrEdit, isAddOrEdit}) {
   const handleEdit = (id) => {
     dispatch(setWordId(id));
     dispatch(setModal(true));
-    // setIsModalActive(!isModalActive);
     setAddOrEdit(true);
   };
   const handleDelete = async (id: any) => {
@@ -56,9 +54,7 @@ function Table({limit, setAddOrEdit, isAddOrEdit}) {
               .map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)
           : ""}
 
-        {!query && activeCategory === "All" && (
-          <Pagination length={allWordsResponse.length} limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
-        )}
+        {!query && activeCategory === "All" && <Pagination limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />}
       </div>
       {modal && <Modal isAddOrEdit={isAddOrEdit} />}
     </>
