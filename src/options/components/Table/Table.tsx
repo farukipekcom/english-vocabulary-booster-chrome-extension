@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from "react";
-import "./Table.scss";
+import styles from "./Table.module.scss";
 import Pagination from "../../components/Pagination/Pagination";
-import {useSelector} from "react-redux";
 import Modal from "../Modal/Modal";
+import TableItem from "../TableItem/TableItem";
+import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
 import {setModal, setWordId, fetchAllWords, fetchPageWords, deleteWord} from "../../../stores/word";
-import TableItem from "../TableItem/TableItem";
 function Table({limit, setAddOrEdit, isAddOrEdit}) {
   const dispatch = useDispatch<any>();
   const {deleteResponse, pageWordsResponse, pageWordsLoading, allWordsResponse, allWordsLoading, modal, query, trigger, activeCategory} =
@@ -27,15 +27,15 @@ function Table({limit, setAddOrEdit, isAddOrEdit}) {
   };
   return (
     <>
-      <div className="content-table">
-        <div className="content-table-row content-table-heading">
-          <div className="content-table-row-column">Word</div>
-          <div className="content-table-row-column">Meaning</div>
-          <div className="content-table-row-column">Verb</div>
-          <div className="content-table-row-column">Noun</div>
-          <div className="content-table-row-column">Adjective</div>
-          <div className="content-table-row-column">Adverb</div>
-          <div className="content-table-row-column content-table-row-column-buttons"></div>
+      <div className={styles.table}>
+        <div className={`${styles.tableRow} ${styles.tableHeading}`}>
+          <div className={styles.tableRowColumn}>Word</div>
+          <div className={styles.tableRowColumn}>Meaning</div>
+          <div className={styles.tableRowColumn}>Verb</div>
+          <div className={styles.tableRowColumn}>Noun</div>
+          <div className={styles.tableRowColumn}>Adjective</div>
+          <div className={styles.tableRowColumn}>Adverb</div>
+          <div className={`${styles.tableRowColumn} ${styles.tableRowColumnButtons}`}></div>
         </div>
         {!pageWordsLoading &&
           !query &&
@@ -53,12 +53,10 @@ function Table({limit, setAddOrEdit, isAddOrEdit}) {
               )
               .map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)
           : ""}
-
         {!query && activeCategory === "All" && <Pagination limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />}
       </div>
       {modal && <Modal isAddOrEdit={isAddOrEdit} />}
     </>
   );
 }
-
 export default Table;

@@ -1,0 +1,62 @@
+@import "../../../styles/abstracts/_index";
+
+.table {
+  margin-top: 16px;
+  border-radius: $radius;
+  border: 1px solid $border;
+  box-shadow: $shadow, $shadow-double;
+  display: flex;
+  flex-direction: column;
+  &Row {
+    display: flex;
+    align-items: center;
+    gap: 27px;
+    min-height: 72px;
+    border-bottom: 1px solid $border;
+    padding-left: 24px;
+    padding-right: 24px;
+    &:last-child {
+      border-bottom: none;
+    }
+    &Column {
+      max-width: 200px;
+      flex: 1;
+      &:first-child {
+        font-weight: 500;
+      }
+      @include sm-regular;
+      &Buttons {
+        display: flex;
+        align-items: center;
+        width: 54px;
+        gap: 24px;
+        justify-content: space-between;
+        flex: unset;
+        &Edit {
+          width: 16px;
+          height: 16px;
+          cursor: pointer;
+          svg {
+            fill: $secondary;
+          }
+        }
+        &Delete {
+          width: 16px;
+          height: 16px;
+          svg {
+            fill: $secondary;
+          }
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  &Heading {
+    display: flex;
+    align-items: center;
+    height: 44px;
+    .content-table-row-column {
+      font-size: 12px;
+    }
+  }
+}

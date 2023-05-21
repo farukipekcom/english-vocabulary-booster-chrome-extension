@@ -1,33 +1,31 @@
 import React from "react";
-import DeleteIcon from "../icons/delete";
-import EditIcon from "../icons/edit";
-import "./TableItem.scss";
+import styles from "./TableItem.module.scss";
+import {DeleteIcon, EditIcon} from "../icons/";
 import {useSelector} from "react-redux";
 function TableItem({item, handleDelete, handleEdit}) {
-  const modals = useSelector((state: any) => state.word.modals);
-  const wordId = useSelector((state: any) => state.word.wordId);
+  const {modal} = useSelector((state: any) => state.word);
+  const {wordId} = useSelector((state: any) => state.word);
   return (
-    <div className={`content-table-row ${item.id === wordId && modals ? "click" : "clicked"} `} key={item.id}>
-      <div className="content-table-row-column">{item.keyword}</div>
-      <div className="content-table-row-column">{item.replace}</div>
-      <div className="content-table-row-column">{item.verb}</div>
-      <div className="content-table-row-column">{item.noun}</div>
-      <div className="content-table-row-column">{item.adjective}</div>
-      <div className="content-table-row-column">{item.adverb}</div>
-      <div className="content-table-row-column content-table-row-column-buttons">
+    <div className={`${styles.tableItemRow} ${item.id === wordId && modal ? styles.click : styles.clicked} `} key={item.id}>
+      <div className={styles.tableItemRowColumn}>{item.keyword}</div>
+      <div className={styles.tableItemRowColumn}>{item.replace}</div>
+      <div className={styles.tableItemRowColumn}>{item.verb}</div>
+      <div className={styles.tableItemRowColumn}>{item.noun}</div>
+      <div className={styles.tableItemRowColumn}>{item.adjective}</div>
+      <div className={styles.tableItemRowColumn}>{item.adverb}</div>
+      <div className={`${styles.tableItemRowColumn} ${styles.tableItemRowColumnButtons}`}>
         <div
-          className="content-table-row-column-buttons-delete"
+          className={styles.tableItemRowColumnButtonsDelete}
           onClick={() => {
             handleDelete(item.id);
           }}>
           <DeleteIcon />
         </div>
-        <div className="content-table-row-column-buttons-edit" onClick={() => handleEdit(item.id)}>
+        <div className={styles.tableItemRowColumnButtonsEdit} onClick={() => handleEdit(item.id)}>
           <EditIcon />
         </div>
       </div>
     </div>
   );
 }
-
 export default TableItem;
