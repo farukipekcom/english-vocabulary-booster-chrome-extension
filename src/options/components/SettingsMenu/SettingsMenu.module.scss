@@ -1,0 +1,22 @@
+@import "../../../styles/abstracts/_index";
+
+.menu {
+  width: 100%;
+  height: 32px;
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid #eaecf0;
+  margin-top: 24px;
+  @include sm-medium;
+  font-weight: 600;
+  &Item {
+    padding-left: 4px;
+    padding-right: 4px;
+    color: #475467;
+    cursor: pointer;
+  }
+  .active {
+    border-bottom: 2px solid black;
+    color: $primary;
+  }
+}

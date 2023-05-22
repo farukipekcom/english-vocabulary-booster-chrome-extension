@@ -7,4 +7,5 @@ import MyWordIcon from "./myword";
 import PlusIcon from "./plus";
 import SearchIcon from "./search";
 import SettingsIcon from "./settings";
-export {CloseIcon, DashboardIcon, DeleteIcon, EditIcon, LogoIcon, MyWordIcon, PlusIcon, SearchIcon, SettingsIcon};
+import LogoutIcon from "./logout";
+export {CloseIcon, DashboardIcon, DeleteIcon, EditIcon, LogoIcon, MyWordIcon, PlusIcon, SearchIcon, SettingsIcon, LogoutIcon};

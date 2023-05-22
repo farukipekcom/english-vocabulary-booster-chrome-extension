@@ -1,10 +1,12 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {supabase} from "../options/lib/helper/supabaseClient";
 import axios from "axios";
 const initialState = {
   query: "",
   modal: false,
   trigger: false,
   wordId: "",
+  token: JSON.parse(localStorage.getItem("token")),
   activeCategory: "All",
   allWordsLoading: false,
   allWordsResponse: [],
@@ -16,6 +18,9 @@ const initialState = {
   deleteLoading: false,
   deleteResponse: false,
   deleteErrors: "",
+  userLoading: false,
+  userResponse: null,
+  userErrors: "",
 };
 export const fetchAllWords = createAsyncThunk("words/fetchAllWords", async (id) => {
   return axios.get(process.env.API_URL).then((res) => res.data.map((item) => item));
@@ -27,6 +32,10 @@ export const fetchPageWords = createAsyncThunk("words/fetchPageWords", async (pa
 });
 export const deleteWord = createAsyncThunk("words/deleteWord", async (id: any) => {
   return axios.delete(process.env.API_URL + id).then((res) => res.status === 200 && true);
+});
+export const fetchUser = createAsyncThunk("words/fetchUser", async () => {
+  const res = await supabase.from("user").select("*");
+  return res.data[0];
 });
 const words = createSlice({
   name: "words",
@@ -46,6 +55,9 @@ const words = createSlice({
     },
     setActiveCategory: (state, action) => {
       state.activeCategory = action.payload;
+    },
+    setToken: (state, action) => {
+      state.token = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -89,7 +101,20 @@ const words = createSlice({
       state.deleteLoading = true;
       state.deleteErrors = action.error.message;
     });
+    builder.addCase(fetchUser.pending, (state, action) => {
+      state.userLoading = true;
+      state.userResponse = false;
+    });
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
+      state.userLoading = false;
+      state.userResponse = action.payload;
+      state.userErrors = "";
+    });
+    builder.addCase(fetchUser.rejected, (state, action) => {
+      state.userLoading = true;
+      state.userErrors = action.error.message;
+    });
   },
 });
-export const {setQuery, setModal, setTrigger, setWordId, setActiveCategory} = words.actions;
+export const {setQuery, setModal, setTrigger, setWordId, setActiveCategory, setToken} = words.actions;
 export default words.reducer;

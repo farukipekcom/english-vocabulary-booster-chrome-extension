@@ -2,7 +2,7 @@ import React from "react";
 import {PlusIcon} from "../../components/icons";
 import styles from "./Button.module.scss";
 export interface Props {
-  text?: string;
+  text: string;
   icon?: boolean;
   onClick?: (e: any) => void;
 }

@@ -1,0 +1,48 @@
+@import "../../../styles/abstracts/_index";
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+.heading {
+  padding-top: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eaecf0;
+}
+.title {
+  color: $primary;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+}
+.description {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: $secondary;
+}
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eaecf0;
+}
+.settingName {
+  width: 280px;
+  @include sm-medium;
+  color: #344054;
+}
+.setting {
+  width: 512px;
+}
+.settingHalf {
+  width: 512px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  input {
+    width: 50%;
+  }
+}

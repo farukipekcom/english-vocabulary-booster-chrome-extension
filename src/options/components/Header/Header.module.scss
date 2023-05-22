@@ -48,7 +48,7 @@
     align-items: center;
     justify-content: space-between;
     border-radius: $radius-sm;
-    margin-top: auto;
+    margin-top: 24px;
     &Heading {
       @include sm-medium;
     }
@@ -56,5 +56,40 @@
       @include md-regular;
       font-weight: 600;
     }
+  }
+}
+.footer {
+  margin-top: auto;
+}
+.profile {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+}
+.image {
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.info {
+  margin-left: 12px;
+}
+.name {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}
+.email {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+.logout {
+  margin-left: 12px;
+  cursor: pointer;
+  svg {
+    fill: white;
   }
 }

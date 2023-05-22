@@ -13,7 +13,7 @@
     "default_title": "Click Me",
     "default_popup": "popup.html"
   },
-  "options_page": "options.html",
+  "options_page": "options.html#/home",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

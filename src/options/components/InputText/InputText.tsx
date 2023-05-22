@@ -3,7 +3,7 @@ import styles from "./InputText.module.scss";
 export interface Props {
   className?: string;
   type?: string;
-  placeholder: string;
+  placeholder?: string;
   name?: string;
   value?: string;
   onChange?: (e: any) => void;
