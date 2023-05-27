@@ -1,7 +1,7 @@
 const style = document.createElement(`style`);
 style.innerHTML = `
   p:has(.chromeCard){
-    display: inline-block !important;
+    display:const [state, dispatch] = useReducer(first, second, third) !important;
   }
   .chromeCard {
     display:inline-block !important;
@@ -20,7 +20,7 @@ style.innerHTML = `
     -webkit-transform: translateX(-50%) !important;
     -ms-transform: translateX(-50%) !important;
     transform: translateX(-50%) !important;
-    z-index: -1 !important;
+    z-index: 0 !important;
   }
   .chromeCard:hover::after{
     background-color: #bc9f16cc !important;
