@@ -28,7 +28,7 @@ function List() {
     const {data, error}: any = await supabase
       .from("settings")
       .update({word_limit: formValue.word_limit})
-      .eq("user_id", token.user.id)
+      .eq("user_uuid", token.user.id)
       .select();
     dispatch(fetchSettings());
   };
