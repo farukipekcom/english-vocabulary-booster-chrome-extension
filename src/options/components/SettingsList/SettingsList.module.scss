@@ -8,6 +8,9 @@
   padding-top: 32px;
   padding-bottom: 24px;
   border-bottom: 1px solid #eaecf0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .title {
   color: $primary;
@@ -45,4 +48,13 @@
   input {
     width: 50%;
   }
+}
+.button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.buttonCancel {
+}
+.buttonSave {
 }

@@ -5,18 +5,39 @@ import Modal from "../Modal/Modal";
 import TableItem from "../TableItem/TableItem";
 import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
-import {setModal, setWordId, fetchAllWords, fetchPageWords, deleteWord} from "../../../stores/word";
-function Table({limit, setAddOrEdit, isAddOrEdit}) {
+import {setModal, setWordId, fetchAllWords, fetchPageWords, deleteWord, fetchSettings} from "../../../stores/word";
+function Table({setAddOrEdit, isAddOrEdit}) {
   const dispatch = useDispatch<any>();
-  const {deleteResponse, pageWordsResponse, pageWordsLoading, allWordsResponse, allWordsLoading, modal, query, trigger, activeCategory} =
-    useSelector((state: any) => state.word);
+  const {
+    deleteResponse,
+    pageWordsResponse,
+    pageWordsLoading,
+    allWordsResponse,
+    allWordsLoading,
+    modal,
+    query,
+    trigger,
+    activeCategory,
+    settingsLoading,
+    settingsResponse,
+    settingsSuccess,
+  } = useSelector((state: any) => state.word);
+  const [limit, setLimit] = useState();
   const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
-    dispatch(fetchPageWords({pageNumber, limit}));
-  }, [pageNumber, trigger, deleteResponse]);
+    dispatch(fetchSettings());
+  }, []);
+  useEffect(() => {
+    settingsSuccess && setLimit(settingsResponse?.word_limit);
+  }, [settingsLoading]);
+  useEffect(() => {
+    settingsSuccess && dispatch(fetchPageWords({pageNumber, limit}));
+  }, [pageNumber, trigger, deleteResponse, settingsSuccess, limit]);
+
   useEffect(() => {
     dispatch(fetchAllWords());
-  }, [deleteResponse]);
+  }, [deleteResponse, trigger]);
+
   const handleEdit = (id) => {
     dispatch(setWordId(id));
     dispatch(setModal(true));
@@ -25,6 +46,10 @@ function Table({limit, setAddOrEdit, isAddOrEdit}) {
   const handleDelete = async (id: any) => {
     dispatch(deleteWord(id));
   };
+  chrome.storage.sync.set({data: allWordsResponse}, () => {
+    // console.log("Data is set ", allWordsResponse);
+  });
+
   return (
     <>
       <div className={styles.table}>
@@ -38,6 +63,7 @@ function Table({limit, setAddOrEdit, isAddOrEdit}) {
           <div className={`${styles.tableRowColumn} ${styles.tableRowColumnButtons}`}></div>
         </div>
         {!pageWordsLoading &&
+          settingsSuccess &&
           !query &&
           activeCategory === "All" &&
           pageWordsResponse.map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
@@ -53,7 +79,9 @@ function Table({limit, setAddOrEdit, isAddOrEdit}) {
               )
               .map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)
           : ""}
-        {!query && activeCategory === "All" && <Pagination limit={limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />}
+        {!query && settingsSuccess && activeCategory === "All" && (
+          <Pagination limit={settingsResponse?.word_limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+        )}
       </div>
       {modal && <Modal isAddOrEdit={isAddOrEdit} />}
     </>

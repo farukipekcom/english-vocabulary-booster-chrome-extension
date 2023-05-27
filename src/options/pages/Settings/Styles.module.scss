@@ -1,0 +1,149 @@
+@import "../../../styles/abstracts/_index";
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+.heading {
+  padding-top: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eaecf0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.title {
+  color: $primary;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+}
+.description {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: $secondary;
+}
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eaecf0;
+}
+.settingName {
+  width: 280px;
+  min-width: 120px;
+  @include sm-medium;
+  color: #344054;
+}
+.setting {
+  width: 512px;
+}
+.settingHalf {
+  width: 512px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  input {
+    width: 100%;
+  }
+}
+.button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.buttonCancel {
+}
+.buttonSave {
+}
+.profilePhoto {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.profilePhotoImage {
+  border-radius: 50%;
+  object-fit: cover;
+}
+.dropContainer {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px dashed #d0d5dd;
+  color: #444;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+
+.dropContainer:hover {
+  background: $border;
+  border-color: #111;
+}
+
+.dropContainer:hover .dropTitle {
+  color: $primary;
+}
+
+.dropTitle {
+  color: $secondary;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  transition: color 0.2s ease-in-out;
+}
+
+input[type="file"] {
+  width: 350px;
+  max-width: 100%;
+  color: $secondary;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 5px;
+  background: $hover-text;
+  border-radius: 10px;
+  border: 1px solid #555;
+}
+
+input[type="file"]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background-color: $primary;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: $primary;
+}
+.selected {
+  background-color: #4ade80 !important;
+  &::file-selector-button {
+    background-color: #1aa34c !important;
+    box-shadow: $shadow;
+  }
+}
+
+.inputGroup {
+  position: relative;
+  svg {
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    z-index: 999;
+    fill: #667085;
+  }
+  input {
+    padding-left: 40px;
+  }
+}

@@ -1,20 +1,16 @@
 import React from "react";
-import PageTitle from "../components/PageTitle/PageTitle";
-import SettingsMenu from "../components/SettingsMenu/SettingsMenu";
-import SettingsList from "../components/SettingsList/SettingsList";
-import {useSelector} from "react-redux";
-import {Navigate} from "react-router-dom";
+import Profile from "./Settings/Profile";
+import {Routes, Route} from "react-router-dom";
+import Layout from "./Settings/Layout";
+import List from "./Settings/List";
 function Settings() {
-  const {token} = useSelector((state: any) => state.word);
-  if (!token) {
-    return <Navigate to="/login" />;
-  }
   return (
-    <main className="content">
-      <PageTitle title="Settings" description="Manage your preferences here." />
-      <SettingsMenu />
-      <SettingsList />
-    </main>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/list" element={<List />}></Route>
+      </Route>
+    </Routes>
   );
 }
 export default Settings;

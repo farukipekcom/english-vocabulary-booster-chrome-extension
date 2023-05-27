@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
-import styles from "./SettingsList.module.scss";
-import InputText from "../InputText/InputText";
-import {supabase} from "../../lib/helper/supabaseClient";
-import {fetchSettings} from "../../../stores/word";
 import {useDispatch, useSelector} from "react-redux";
-import Button from "../Button/Button";
-
-export default function SettingsList() {
-  const token = JSON.parse(localStorage.getItem("token"));
+import styles from "./Styles.module.scss";
+import Button from "../../components/Button/Button";
+import InputText from "../../components/InputText/InputText";
+import {fetchSettings} from "../../../stores/word";
+import {supabase} from "../../lib/helper/supabaseClient";
+function List() {
+  const {token} = useSelector((state: any) => state.word);
   const dispatch = useDispatch<any>();
   const {settingsResponse} = useSelector((state: any) => state.word);
   useEffect(() => {
@@ -65,3 +64,5 @@ export default function SettingsList() {
     </div>
   );
 }
+
+export default List;

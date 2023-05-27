@@ -4,6 +4,7 @@
   position: relative;
   &Icon {
     position: absolute;
+    z-index: 999;
     top: 14px;
     left: 16px;
     svg {

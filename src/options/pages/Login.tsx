@@ -16,7 +16,6 @@ export default function Login() {
     });
     navigate("../home");
     dispatch(setToken(data.session));
-    localStorage.setItem("token", JSON.stringify(data.session));
   };
   return (
     <div className={styles.main}>

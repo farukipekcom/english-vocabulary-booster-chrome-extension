@@ -3,7 +3,7 @@ import range from "lodash/range";
 import styles from "./Pagination.module.scss";
 import {useSelector} from "react-redux";
 export interface Props {
-  limit?: number;
+  limit?: any;
   setPageNumber?: (pageNumber: number) => void;
   pageNumber?: number;
 }

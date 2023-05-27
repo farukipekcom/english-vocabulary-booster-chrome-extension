@@ -4,11 +4,12 @@ export default function SettingsMenu() {
   return (
     <>
       <div className={styles.menu}>
-        <div className={`${styles.menuItem} ${styles.active}`}>General</div>
-        <div className={styles.menuItem}>List</div>
-        <div className={styles.menuItem}>Lorem, ipsum.</div>
-        <div className={styles.menuItem}>Lorem, ipsum.</div>
-        <div className={styles.menuItem}>Lorem, ipsum.</div>
+        <a href="#/settings/profile" className={`${styles.menuItem} ${styles.active}`}>
+          Profile
+        </a>
+        <a href="#/settings/list" className={styles.menuItem}>
+          List
+        </a>
       </div>
     </>
   );

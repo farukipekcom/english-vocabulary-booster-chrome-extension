@@ -8,4 +8,5 @@ import PlusIcon from "./plus";
 import SearchIcon from "./search";
 import SettingsIcon from "./settings";
 import LogoutIcon from "./logout";
-export {CloseIcon, DashboardIcon, DeleteIcon, EditIcon, LogoIcon, MyWordIcon, PlusIcon, SearchIcon, SettingsIcon, LogoutIcon};
+import EmailIcon from "./email";
+export {CloseIcon, DashboardIcon, DeleteIcon, EditIcon, LogoIcon, MyWordIcon, PlusIcon, SearchIcon, SettingsIcon, LogoutIcon, EmailIcon};

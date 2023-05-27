@@ -2,11 +2,12 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {supabase} from "../options/lib/helper/supabaseClient";
 import axios from "axios";
 const initialState = {
+  location: "",
   query: "",
   modal: false,
   trigger: false,
   wordId: "",
-  token: JSON.parse(localStorage.getItem("token")),
+  token: JSON.parse(localStorage.getItem("sb-noyonmsgfmqtzdesmhzy-auth-token")),
   activeCategory: "All",
   allWordsLoading: false,
   allWordsResponse: [],
@@ -19,10 +20,14 @@ const initialState = {
   deleteResponse: false,
   deleteErrors: "",
   userLoading: false,
+  userSuccess: false,
   userResponse: null,
   userErrors: "",
+  settingsLoading: false,
+  settingsSuccess: false,
+  settingsResponse: [],
 };
-export const fetchAllWords = createAsyncThunk("words/fetchAllWords", async (id) => {
+export const fetchAllWords = createAsyncThunk("words/fetchAllWords", async () => {
   return axios.get(process.env.API_URL).then((res) => res.data.map((item) => item));
 });
 export const fetchPageWords = createAsyncThunk("words/fetchPageWords", async (payload: any) => {
@@ -35,6 +40,10 @@ export const deleteWord = createAsyncThunk("words/deleteWord", async (id: any) =
 });
 export const fetchUser = createAsyncThunk("words/fetchUser", async () => {
   const res = await supabase.from("user").select("*");
+  return res.data[0];
+});
+export const fetchSettings = createAsyncThunk("words/fetchSettings", async () => {
+  const res = await supabase.from("settings").select("*");
   return res.data[0];
 });
 const words = createSlice({
@@ -58,6 +67,9 @@ const words = createSlice({
     },
     setToken: (state, action) => {
       state.token = action.payload;
+    },
+    setLocation: (state, action) => {
+      state.location = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -104,17 +116,33 @@ const words = createSlice({
     builder.addCase(fetchUser.pending, (state, action) => {
       state.userLoading = true;
       state.userResponse = false;
+      state.userSuccess = false;
     });
     builder.addCase(fetchUser.fulfilled, (state, action) => {
       state.userLoading = false;
+      state.userSuccess = true;
       state.userResponse = action.payload;
       state.userErrors = "";
     });
     builder.addCase(fetchUser.rejected, (state, action) => {
       state.userLoading = true;
       state.userErrors = action.error.message;
+      state.userSuccess = false;
+    });
+    builder.addCase(fetchSettings.pending, (state, action) => {
+      state.settingsLoading = true;
+      state.settingsSuccess = false;
+    });
+    builder.addCase(fetchSettings.fulfilled, (state, action: any) => {
+      state.settingsLoading = false;
+      state.settingsSuccess = true;
+      state.settingsResponse = action.payload;
+    });
+    builder.addCase(fetchSettings.rejected, (state, action) => {
+      state.settingsLoading = true;
+      state.settingsSuccess = false;
     });
   },
 });
-export const {setQuery, setModal, setTrigger, setWordId, setActiveCategory, setToken} = words.actions;
+export const {setQuery, setModal, setTrigger, setWordId, setActiveCategory, setToken, setLocation} = words.actions;
 export default words.reducer;

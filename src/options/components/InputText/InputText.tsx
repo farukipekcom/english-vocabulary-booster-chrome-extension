@@ -5,7 +5,7 @@ export interface Props {
   type?: string;
   placeholder?: string;
   name?: string;
-  value?: string;
+  value?: any;
   onChange?: (e: any) => void;
 }
 function InputText(Props: Props) {
