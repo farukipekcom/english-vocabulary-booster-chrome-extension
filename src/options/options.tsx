@@ -16,7 +16,7 @@ const Options = () => {
         <Route path="/" element={<Layout />}>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/mywords" element={<Mywords />}></Route>
-          <Route path="/settings/" element={<Settings />}>
+          <Route path="/settings/*" element={<Settings />}>
             <Route path="profile" element={<Profile />}></Route>
             <Route path="list" element={<List />}></Route>
           </Route>
