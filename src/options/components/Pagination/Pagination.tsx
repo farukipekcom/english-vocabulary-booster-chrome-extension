@@ -13,7 +13,6 @@ export interface Props {
   setWordTo?: (pageNumber: number) => void;
 }
 function Pagination(Props: Props) {
-  const dispatch = useDispatch<any>();
   const {wordsResponse} = useSelector((state: any) => state.word);
   const {limit, setPageNumber, pageNumber, wordFrom, setWordFrom, wordTo, setWordTo} = Props;
   const pageCount = Math.ceil(wordsResponse?.length / limit);
@@ -30,8 +29,11 @@ function Pagination(Props: Props) {
     setWordFrom(wordTo + 1);
     await setWordTo(wordTo + limit);
   };
-  const setPage = (item) => {
+  const setPage = async (item) => {
+    console.log("pageNumber 2", item);
     setPageNumber(item);
+    setWordTo(item * limit - 1);
+    setWordFrom(item * limit - 3);
   };
   return (
     <div className={styles.pagination}>
