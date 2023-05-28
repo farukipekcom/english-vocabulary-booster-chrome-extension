@@ -7,8 +7,8 @@ function TableItem({item, handleDelete, handleEdit}) {
   const {wordId} = useSelector((state: any) => state.word);
   return (
     <div className={`${styles.tableItemRow} ${item.id === wordId && modal ? styles.click : styles.clicked} `} key={item.id}>
-      <div className={styles.tableItemRowColumn}>{item.keyword}</div>
-      <div className={styles.tableItemRowColumn}>{item.replace}</div>
+      <div className={styles.tableItemRowColumn}>{item.word}</div>
+      <div className={styles.tableItemRowColumn}>{item.meaning}</div>
       <div className={styles.tableItemRowColumn}>{item.verb}</div>
       <div className={styles.tableItemRowColumn}>{item.noun}</div>
       <div className={styles.tableItemRowColumn}>{item.adjective}</div>

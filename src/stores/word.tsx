@@ -13,9 +13,6 @@ const initialState = {
   allWordsResponse: [],
   allWordsCount: "",
   allWordsErrors: "",
-  pageWordsLoading: false,
-  pageWordsResponse: [],
-  pageWordsErrors: "",
   deleteLoading: false,
   deleteResponse: false,
   deleteErrors: "",
@@ -26,15 +23,17 @@ const initialState = {
   settingsLoading: false,
   settingsSuccess: false,
   settingsResponse: [],
+  wordsLoading: false,
+  wordsSuccess: false,
+  wordsResponse: [],
+  pageWordsLoading: false,
+  pageWordsSuccess: false,
+  pageWordsResponse: [],
 };
 export const fetchAllWords = createAsyncThunk("words/fetchAllWords", async () => {
   return axios.get(process.env.API_URL).then((res) => res.data.map((item) => item));
 });
-export const fetchPageWords = createAsyncThunk("words/fetchPageWords", async (payload: any) => {
-  return axios
-    .get(process.env.API_URL + `?page=${payload.pageNumber}&limit=${payload.limit}&orderBy=added_date&order=desc`)
-    .then((res) => res.data.map((item) => item));
-});
+
 export const deleteWord = createAsyncThunk("words/deleteWord", async (id: any) => {
   return axios.delete(process.env.API_URL + id).then((res) => res.status === 200 && true);
 });
@@ -45,6 +44,14 @@ export const fetchUser = createAsyncThunk("words/fetchUser", async () => {
 export const fetchSettings = createAsyncThunk("words/fetchSettings", async () => {
   const res = await supabase.from("settings").select("*");
   return res.data[0];
+});
+export const fetchWords = createAsyncThunk("words/fetchWords", async () => {
+  const res = await supabase.from("words").select("*");
+  return res.data;
+});
+export const fetchPageWords = createAsyncThunk("words/fetchPageWords", async (payload: any) => {
+  const res = await supabase.from("words").select("*", {count: "exact"}).range(payload.wordFrom, payload.wordTo);
+  return res.data;
 });
 const words = createSlice({
   name: "words",
@@ -87,19 +94,6 @@ const words = createSlice({
       state.allWordsResponse = [];
       state.allWordsErrors = action.error.message;
     });
-    builder.addCase(fetchPageWords.pending, (state, action) => {
-      state.pageWordsLoading = true;
-    });
-    builder.addCase(fetchPageWords.fulfilled, (state, action) => {
-      state.pageWordsLoading = false;
-      state.pageWordsResponse = action.payload;
-      state.pageWordsErrors = "";
-    });
-    builder.addCase(fetchPageWords.rejected, (state, action) => {
-      state.pageWordsLoading = true;
-      state.pageWordsResponse = [];
-      state.pageWordsErrors = action.error.message;
-    });
     builder.addCase(deleteWord.pending, (state, action) => {
       state.deleteLoading = true;
       state.deleteResponse = false;
@@ -141,6 +135,32 @@ const words = createSlice({
     builder.addCase(fetchSettings.rejected, (state, action) => {
       state.settingsLoading = true;
       state.settingsSuccess = false;
+    });
+    builder.addCase(fetchWords.pending, (state, action) => {
+      state.wordsLoading = true;
+      state.wordsSuccess = false;
+    });
+    builder.addCase(fetchWords.fulfilled, (state, action: any) => {
+      state.wordsLoading = false;
+      state.wordsSuccess = true;
+      state.wordsResponse = action.payload;
+    });
+    builder.addCase(fetchWords.rejected, (state, action) => {
+      state.wordsLoading = true;
+      state.wordsSuccess = false;
+    });
+    builder.addCase(fetchPageWords.pending, (state, action) => {
+      state.pageWordsLoading = true;
+      state.pageWordsSuccess = false;
+    });
+    builder.addCase(fetchPageWords.fulfilled, (state, action: any) => {
+      state.pageWordsLoading = false;
+      state.pageWordsSuccess = true;
+      state.pageWordsResponse = action.payload;
+    });
+    builder.addCase(fetchPageWords.rejected, (state, action) => {
+      state.pageWordsLoading = true;
+      state.pageWordsSuccess = false;
     });
   },
 });

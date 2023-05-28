@@ -5,44 +5,50 @@ import Modal from "../Modal/Modal";
 import TableItem from "../TableItem/TableItem";
 import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
-import {setModal, setWordId, fetchAllWords, fetchPageWords, deleteWord, fetchSettings} from "../../../stores/word";
+import {setModal, setWordId, fetchPageWords, deleteWord, fetchSettings, fetchWords} from "../../../stores/word";
 function Table({setAddOrEdit, isAddOrEdit}) {
+  useEffect(() => {
+    dispatch(fetchSettings());
+    dispatch(fetchWords());
+  }, []);
   const dispatch = useDispatch<any>();
   const {
     deleteResponse,
-    pageWordsResponse,
-    pageWordsLoading,
+    // pageWordsResponse,
+    // pageWordsLoading,
     allWordsResponse,
-    allWordsLoading,
     modal,
     query,
     trigger,
     activeCategory,
-    settingsLoading,
     settingsResponse,
     settingsSuccess,
+    wordsResponse,
+    wordsSuccess,
+    pageWordsSuccess,
+    pageWordsResponse,
   } = useSelector((state: any) => state.word);
   const [limit, setLimit] = useState();
   const [pageNumber, setPageNumber] = useState(1);
-  useEffect(() => {
-    dispatch(fetchSettings());
-  }, []);
+  const [wordFrom, setWordFrom] = useState(0);
+  const [wordTo, setWordTo] = useState(undefined);
   useEffect(() => {
     settingsSuccess && setLimit(settingsResponse?.word_limit);
-  }, [settingsLoading]);
-  useEffect(() => {
-    settingsSuccess && dispatch(fetchPageWords({pageNumber, limit}));
-  }, [pageNumber, trigger, deleteResponse, settingsSuccess, limit]);
+    settingsSuccess && setWordTo(settingsResponse?.word_limit - 1);
+  }, [settingsResponse]);
+  useEffect(() => {}, [pageNumber, trigger, deleteResponse, settingsSuccess]);
 
   useEffect(() => {
-    dispatch(fetchAllWords());
+    dispatch(fetchWords());
   }, [deleteResponse, trigger]);
-
   const handleEdit = (id) => {
     dispatch(setWordId(id));
     dispatch(setModal(true));
     setAddOrEdit(true);
   };
+  useEffect(() => {
+    settingsSuccess && dispatch(fetchPageWords({wordFrom, wordTo}));
+  }, [wordFrom, wordTo, pageNumber]);
   const handleDelete = async (id: any) => {
     dispatch(deleteWord(id));
   };
@@ -62,25 +68,33 @@ function Table({setAddOrEdit, isAddOrEdit}) {
           <div className={styles.tableRowColumn}>Adverb</div>
           <div className={`${styles.tableRowColumn} ${styles.tableRowColumnButtons}`}></div>
         </div>
-        {!pageWordsLoading &&
+        {pageWordsSuccess &&
           settingsSuccess &&
           !query &&
           activeCategory === "All" &&
-          pageWordsResponse.map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
-        {!allWordsLoading && allWordsResponse.length > 0 && (query || activeCategory !== "All")
-          ? allWordsResponse
-              .filter(
-                (item) =>
-                  (item.verb.length > 0 && activeCategory === "Verb" && item.keyword.includes(query)) ||
-                  (item.noun.length > 0 && activeCategory === "Noun" && item.keyword.includes(query)) ||
-                  (item.adjective.length > 0 && activeCategory === "Adjective" && item.keyword.includes(query)) ||
-                  (item.adverb.length > 0 && activeCategory === "Adverb" && item.keyword.includes(query)) ||
-                  (activeCategory === "All" && item.keyword.includes(query))
-              )
-              .map((item) => <TableItem key={item.id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)
-          : ""}
+          pageWordsResponse.map((item) => <TableItem key={item.word_id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
+        {wordsSuccess &&
+          (query || activeCategory !== "All") &&
+          wordsResponse
+            .filter(
+              (item: any) =>
+                (item.verb?.length > 0 && activeCategory === "Verb" && item.word.includes(query)) ||
+                (item.noun?.length > 0 && activeCategory === "Noun" && item.word.includes(query)) ||
+                (item.adjective?.length > 0 && activeCategory === "Adjective" && item.word.includes(query)) ||
+                (item.adverb?.length > 0 && activeCategory === "Adverb" && item.word.includes(query)) ||
+                (activeCategory === "All" && item.word.includes(query))
+            )
+            .map((item) => <TableItem key={item.word_id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
         {!query && settingsSuccess && activeCategory === "All" && (
-          <Pagination limit={settingsResponse?.word_limit} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+          <Pagination
+            limit={settingsResponse?.word_limit}
+            pageNumber={pageNumber}
+            setPageNumber={setPageNumber}
+            wordFrom={wordFrom}
+            setWordFrom={setWordFrom}
+            wordTo={wordTo}
+            setWordTo={setWordTo}
+          />
         )}
       </div>
       {modal && <Modal isAddOrEdit={isAddOrEdit} />}

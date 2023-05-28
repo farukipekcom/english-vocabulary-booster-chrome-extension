@@ -1,24 +1,34 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import range from "lodash/range";
 import styles from "./Pagination.module.scss";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {Dispatch} from "@reduxjs/toolkit";
 export interface Props {
   limit?: any;
   setPageNumber?: (pageNumber: number) => void;
   pageNumber?: number;
+  wordFrom?: number;
+  setWordFrom?: (pageNumber: number) => void;
+  wordTo?: number;
+  setWordTo?: (pageNumber: number) => void;
 }
 function Pagination(Props: Props) {
-  const {allWordsCount} = useSelector((state: any) => state.word);
-  const {limit, setPageNumber, pageNumber} = Props;
-  const pageCount = Math.ceil(allWordsCount / limit);
+  const dispatch = useDispatch<any>();
+  const {wordsResponse} = useSelector((state: any) => state.word);
+  const {limit, setPageNumber, pageNumber, wordFrom, setWordFrom, wordTo, setWordTo} = Props;
+  const pageCount = Math.ceil(wordsResponse?.length / limit);
   const pages = range(1, pageCount + 1);
-  const previousPage = () => {
+  const previousPage = async () => {
     if (pageNumber - 1 === 0) return;
     setPageNumber(pageNumber - 1);
+    setWordFrom(wordFrom - limit);
+    await setWordTo(wordTo - limit);
   };
-  const nextPage = () => {
+  const nextPage = async () => {
     if (pageNumber + 1 === pageCount + 1) return;
     setPageNumber(pageNumber + 1);
+    setWordFrom(wordTo + 1);
+    await setWordTo(wordTo + limit);
   };
   const setPage = (item) => {
     setPageNumber(item);
@@ -61,5 +71,4 @@ function Pagination(Props: Props) {
     </div>
   );
 }
-
 export default Pagination;
