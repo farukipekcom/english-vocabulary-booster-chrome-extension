@@ -14,8 +14,6 @@ function Table({setAddOrEdit, isAddOrEdit}) {
   const dispatch = useDispatch<any>();
   const {
     deleteResponse,
-    // pageWordsResponse,
-    // pageWordsLoading,
     allWordsResponse,
     modal,
     query,
@@ -23,19 +21,21 @@ function Table({setAddOrEdit, isAddOrEdit}) {
     activeCategory,
     settingsResponse,
     settingsSuccess,
+    settingsLoading,
     wordsResponse,
     wordsSuccess,
     pageWordsSuccess,
     pageWordsResponse,
   } = useSelector((state: any) => state.word);
+
   const [limit, setLimit] = useState();
   const [pageNumber, setPageNumber] = useState(1);
   const [wordFrom, setWordFrom] = useState(0);
-  const [wordTo, setWordTo] = useState(undefined);
+  const [wordTo, setWordTo] = useState(settingsResponse?.word_limit - 1);
   useEffect(() => {
     settingsSuccess && setLimit(settingsResponse?.word_limit);
-    settingsSuccess && setWordTo(settingsResponse?.word_limit - 1);
-  }, [settingsResponse]);
+    setWordTo(settingsResponse?.word_limit - 1);
+  }, [settingsLoading]);
   useEffect(() => {}, [pageNumber, trigger, deleteResponse, settingsSuccess]);
 
   useEffect(() => {
@@ -55,6 +55,7 @@ function Table({setAddOrEdit, isAddOrEdit}) {
   chrome.storage.sync.set({data: allWordsResponse}, () => {
     // console.log("Data is set ", allWordsResponse);
   });
+  console.log("pageWordsResponse", pageWordsResponse);
 
   return (
     <>

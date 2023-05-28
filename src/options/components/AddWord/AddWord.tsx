@@ -3,19 +3,20 @@ import InputText from "../InputText/InputText";
 import "./AddWord.scss";
 import React, {useState} from "react";
 import CloseIcon from "../icons/close";
-import {setModal, setTrigger} from "../../../stores/word";
+import {fetchPageWords, setModal, setTrigger} from "../../../stores/word";
 import {useDispatch, useSelector} from "react-redux";
+import {supabase} from "../../lib/helper/supabaseClient";
 function AddWord() {
-  const dispatch = useDispatch();
-  const trigger = useSelector((state: any) => state.word.triggers);
+  const dispatch = useDispatch<any>();
+  const {token, settingsResponse, trigger} = useSelector((state: any) => state.word);
   const [formValue, setformValue] = useState({
-    keyword: "",
-    replace: "",
+    word: "",
+    meaning: "",
     noun: "",
     verb: "",
     adverb: "",
     adjective: "",
-    added_date: new Date().valueOf(),
+    user_uuid: token.user.id,
   });
   const handleChangeInput = (event) => {
     setformValue({
@@ -25,28 +26,10 @@ function AddWord() {
   };
   const handleAdd = async (e) => {
     e.preventDefault();
-    const loginFormData = new FormData();
-    loginFormData.append("keyword", formValue.keyword);
-    loginFormData.append("replace", formValue.replace);
-    loginFormData.append("noun", formValue.noun);
-    loginFormData.append("verb", formValue.verb);
-    loginFormData.append("adverb", formValue.adverb);
-    loginFormData.append("adjective", formValue.adjective);
-    try {
-      const response = await fetch(process.env.API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValue),
-      });
-      const result = await response.json();
-      // console.log("Success:", result);
-      dispatch(setModal(false));
-      dispatch(setTrigger(!trigger));
-    } catch (error) {
-      // console.error("Error:", error);
-    }
+    const {data, error}: any = await supabase.from("words").insert(formValue);
+    dispatch(setModal(false));
+    dispatch(setTrigger(!trigger));
+    dispatch(fetchPageWords({wordFrom: 0, wordTo: settingsResponse?.word_limit - 1}));
   };
   return (
     <div className="card">
@@ -63,13 +46,13 @@ function AddWord() {
         <div className="card-input">
           <div className="card-input-label">Keyword</div>
           <div className="card-input-item">
-            <InputText name="keyword" value={formValue.keyword} onChange={handleChangeInput} placeholder="Keyword" />
+            <InputText name="word" value={formValue.word} onChange={handleChangeInput} placeholder="Keyword" />
           </div>
         </div>
         <div className="card-input">
           <div className="card-input-label">Meaning</div>
           <div className="card-input-item">
-            <InputText name="replace" value={formValue.replace} onChange={handleChangeInput} placeholder="Meaning" />
+            <InputText name="meaning" value={formValue.meaning} onChange={handleChangeInput} placeholder="Meaning" />
           </div>
         </div>
         <div className="card-input">
