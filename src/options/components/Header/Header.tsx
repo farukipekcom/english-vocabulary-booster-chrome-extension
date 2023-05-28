@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import styles from "./Header.module.scss";
 import {LogoIcon, DashboardIcon, MyWordIcon, SettingsIcon, LogoutIcon} from "../icons/index";
 import {useDispatch, useSelector} from "react-redux";
@@ -8,9 +8,7 @@ import {useNavigate} from "react-router-dom";
 function Header() {
   let navigate = useNavigate();
   const dispatch = useDispatch<any>();
-  const {allWordsLoading, allWordsCount} = useSelector((state: any) => state.word);
-  const {token} = useSelector((state: any) => state.word);
-  const {userLoading, userResponse, userSuccess} = useSelector((state: any) => state.word);
+  const {userLoading, userResponse, userSuccess, wordsResponse, wordsSuccess} = useSelector((state: any) => state.word);
   useEffect(() => {
     dispatch(fetchUser());
   }, []);
@@ -64,7 +62,7 @@ function Header() {
         </div>
         <div className={styles.headerTotal}>
           <div className={styles.headerTotalHeading}>Total Words</div>
-          <div className={styles.headerTotalCount}>{!allWordsLoading && allWordsCount}</div>
+          <div className={styles.headerTotalCount}>{wordsSuccess && wordsResponse.length}</div>
         </div>
       </div>
     </header>
