@@ -4,30 +4,32 @@ import "./EditWord.scss";
 import React, {useEffect, useState} from "react";
 import CloseIcon from "../icons/close";
 import {useDispatch, useSelector} from "react-redux";
-import {setModal, setTrigger, setWordId} from "../../../stores/word";
+import {setModal, setTrigger} from "../../../stores/word";
+import {supabase} from "../../lib/helper/supabaseClient";
 
 function EditWord() {
   const dispatch = useDispatch();
-  const [data, setData] = useState<any>({});
-  const trigger = useSelector((state: any) => state.word.triggers);
-  const wordId = useSelector((state: any) => state.word.wordId);
+  const {trigger, wordId, token} = useSelector((state: any) => state.word);
   const [formValue, setformValue] = useState({
-    keyword: "",
-    replace: "",
+    word: "",
+    meaning: "",
     noun: "",
     verb: "",
     adverb: "",
     adjective: "",
+    user_uuid: token.user.id,
   });
   useEffect(() => {
-    fetch(process.env.API_URL + wordId)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setformValue(data);
-      });
+    console.log("BAK");
+    const fetchWord = async () => {
+      const {data, error}: any = await supabase.from("words").select().eq("word_id", wordId);
+      setformValue(data[0]);
+      console.log(data, error);
+    };
+    fetchWord();
   }, []);
 
+  console.log("XXX", formValue);
   const handleChangeInput = (event) => {
     setformValue({
       ...formValue,
@@ -36,38 +38,16 @@ function EditWord() {
   };
   const handleAdd = async (e) => {
     e.preventDefault();
-    const loginFormData = new FormData();
-    loginFormData.append("keyword", formValue.keyword);
-    loginFormData.append("replace", formValue.replace);
-    loginFormData.append("noun", formValue.noun);
-    loginFormData.append("verb", formValue.verb);
-    loginFormData.append("adverb", formValue.adverb);
-    loginFormData.append("adjective", formValue.adjective);
-    try {
-      const response = await fetch(process.env.API_URL + wordId, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValue),
-      });
-      const result = await response.json();
-      // console.log("Success:", result);
-      // setIsModalActive(!isModalActive);
-      dispatch(setModal(false));
-      dispatch(setTrigger(!trigger));
-    } catch (error) {
-      // console.error("Error:", error);
-    }
+    const {data, error}: any = await supabase.from("words").update(formValue).eq("word_id", wordId).select();
+    dispatch(setModal(false));
+    dispatch(setTrigger(!trigger));
   };
-
   return (
     <div className="card">
       <div
         className="card-close"
         onClick={() => {
           dispatch(setModal(false));
-          // setIsModalActive(false);
         }}>
         <CloseIcon />
       </div>
@@ -82,13 +62,13 @@ function EditWord() {
         <div className="card-input">
           <div className="card-input-label">Keyword</div>
           <div className="card-input-item">
-            <InputText name="keyword" value={formValue.keyword} onChange={handleChangeInput} placeholder="Keyword" />
+            <InputText name="word" value={formValue.word} onChange={handleChangeInput} placeholder="Keyword" />
           </div>
         </div>
         <div className="card-input">
           <div className="card-input-label">Meaning</div>
           <div className="card-input-item">
-            <InputText name="replace" value={formValue.replace} onChange={handleChangeInput} placeholder="Meaning" />
+            <InputText name="meaning" value={formValue.meaning} onChange={handleChangeInput} placeholder="Meaning" />
           </div>
         </div>
         <div className="card-input">

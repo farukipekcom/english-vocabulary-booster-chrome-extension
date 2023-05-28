@@ -6,7 +6,7 @@ function TableItem({item, handleDelete, handleEdit}) {
   const {modal} = useSelector((state: any) => state.word);
   const {wordId} = useSelector((state: any) => state.word);
   return (
-    <div className={`${styles.tableItemRow} ${item.id === wordId && modal ? styles.click : styles.clicked} `} key={item.id}>
+    <div className={`${styles.tableItemRow} ${item.word_id === wordId && modal ? styles.click : styles.clicked} `} key={item.word_id}>
       <div className={styles.tableItemRowColumn}>{item.word}</div>
       <div className={styles.tableItemRowColumn}>{item.meaning}</div>
       <div className={styles.tableItemRowColumn}>{item.verb}</div>
@@ -17,11 +17,11 @@ function TableItem({item, handleDelete, handleEdit}) {
         <div
           className={styles.tableItemRowColumnButtonsDelete}
           onClick={() => {
-            handleDelete(item.id);
+            handleDelete(item.word_id);
           }}>
           <DeleteIcon />
         </div>
-        <div className={styles.tableItemRowColumnButtonsEdit} onClick={() => handleEdit(item.id)}>
+        <div className={styles.tableItemRowColumnButtonsEdit} onClick={() => handleEdit(item.word_id)}>
           <EditIcon />
         </div>
       </div>

@@ -48,7 +48,7 @@ function Table({setAddOrEdit, isAddOrEdit}) {
   };
   useEffect(() => {
     settingsSuccess && dispatch(fetchPageWords({wordFrom, wordTo}));
-  }, [wordFrom, wordTo, pageNumber]);
+  }, [wordFrom, wordTo, pageNumber, trigger]);
   const handleDelete = async (id: any) => {
     dispatch(deleteWord(id));
   };
