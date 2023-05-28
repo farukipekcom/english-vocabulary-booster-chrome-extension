@@ -48,14 +48,13 @@ function Table({setAddOrEdit, isAddOrEdit}) {
   };
   useEffect(() => {
     settingsSuccess && dispatch(fetchPageWords({wordFrom, wordTo}));
-  }, [wordFrom, wordTo, pageNumber, trigger]);
+  }, [wordFrom, wordTo, pageNumber, trigger, deleteResponse]);
   const handleDelete = async (id: any) => {
     dispatch(deleteWord(id));
   };
   chrome.storage.sync.set({data: allWordsResponse}, () => {
     // console.log("Data is set ", allWordsResponse);
   });
-  console.log("pageWordsResponse", pageWordsResponse);
 
   return (
     <>

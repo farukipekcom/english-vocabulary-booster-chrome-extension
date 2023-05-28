@@ -34,8 +34,9 @@ export const fetchAllWords = createAsyncThunk("words/fetchAllWords", async () =>
   return axios.get(process.env.API_URL).then((res) => res.data.map((item) => item));
 });
 
-export const deleteWord = createAsyncThunk("words/deleteWord", async (id: any) => {
-  return axios.delete(process.env.API_URL + id).then((res) => res.status === 200 && true);
+export const deleteWord = createAsyncThunk("words/deleteWord", async (id: number) => {
+  const {data, error} = await supabase.from("words").delete().eq("word_id", id);
+  return true;
 });
 export const fetchUser = createAsyncThunk("words/fetchUser", async () => {
   const res = await supabase.from("user").select("*");
