@@ -51,7 +51,11 @@ export const fetchWords = createAsyncThunk("words/fetchWords", async () => {
   return res.data;
 });
 export const fetchPageWords = createAsyncThunk("words/fetchPageWords", async (payload: any) => {
-  const res = await supabase.from("words").select("*", {count: "exact"}).range(payload.wordFrom, payload.wordTo);
+  const res = await supabase
+    .from("words")
+    .select("*", {count: "exact"})
+    .range(payload.wordFrom, payload.wordTo)
+    .order("created_at", {ascending: false});
   return res.data;
 });
 const words = createSlice({
