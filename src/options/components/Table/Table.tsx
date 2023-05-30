@@ -52,8 +52,8 @@ function Table({setAddOrEdit, isAddOrEdit}) {
   const handleDelete = async (id: any) => {
     dispatch(deleteWord(id));
   };
-  chrome.storage.sync.set({data: allWordsResponse}, () => {
-    // console.log("Data is set ", allWordsResponse);
+  chrome.storage.sync.set({data: wordsResponse}, () => {
+    // console.log("Data is set ", wordsResponse);
   });
 
   return (

@@ -114,42 +114,44 @@ function replaceWord(obj) {
     for (var x = 0; x < allElements.length; x++) {
       let tempElement = allElements[x].innerHTML.toLowerCase().split(".").join(" ");
       let customElement = tempElement.toString().split(" ");
-      console.log("Searched word: ", obj[i].keyword);
-      if (obj[i].keyword === undefined) {
+      console.log("Searched word: ", obj[i].word);
+      if (obj[i].word === undefined) {
         break;
       }
-      if (customElement.indexOf(obj[i]?.keyword) === -1 ? false : true) {
+      if (customElement.indexOf(obj[i]?.word) === -1 ? false : true) {
         console.log("Found: ", customElement);
         count = count + 1;
         allElements[x].innerHTML = allElements[x].innerHTML.replace(
-          obj[i].keyword,
-          `<div class="chromeCard">${
-            obj[i].keyword
-          }<div class="chromeCardInner"><div class="chromeMeaningHero"><span class="chromeMeaningHeroItem chromeMeaningHeroItemTitle">ENGLISH</span><span class="chromeMeaningHeroItem chromeMeaningHeroItemValue">${
-            obj[i].keyword
-          }</span><span class="chromeMeaningHeroItem chromeMeaningHeroItemTitle">TURKISH</span><span class="chromeMeaningHeroItem chromeMeaningHeroItemValue">${
-            obj[i].replace
-          }</span></div>${
-            obj[i].noun || obj[i].verb || obj[i].adjective || obj[i].adverb
-              ? `<div class="chromeMeaningList">` +
-                `${
-                  obj[i].noun &&
-                  `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>noun:</div><div class='chromeMeaningListItemMeaning'>${obj[i].noun}</div></div>`
-                }` +
-                `${
-                  obj[i].verb &&
-                  `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>verb:</div><div class='chromeMeaningListItemMeaning'>${obj[i].verb}</div></div>`
-                }` +
-                `${
-                  obj[i].adjective &&
-                  `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>adjective:</div><div class='chromeMeaningListItemMeaning'>${obj[i].adjective}</div></div>`
-                }` +
-                `${
-                  obj[i].adverb &&
-                  `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>adverb:</div><div class='chromeMeaningListItemMeaning'>${obj[i].adverb}</div></div>`
-                }</div>`
-              : ""
-          }</div></div>`
+          " " + obj[i].word + " ",
+          " " +
+            `<div class="chromeCard">${
+              obj[i].word
+            }<div class="chromeCardInner"><div class="chromeMeaningHero"><span class="chromeMeaningHeroItem chromeMeaningHeroItemTitle">ENGLISH</span><span class="chromeMeaningHeroItem chromeMeaningHeroItemValue">${
+              obj[i].word
+            }</span><span class="chromeMeaningHeroItem chromeMeaningHeroItemTitle">TURKISH</span><span class="chromeMeaningHeroItem chromeMeaningHeroItemValue">${
+              obj[i].meaning
+            }</span></div>${
+              obj[i].noun || obj[i].verb || obj[i].adjective || obj[i].adverb
+                ? `<div class="chromeMeaningList">` +
+                  `${
+                    obj[i].noun &&
+                    `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>noun:</div><div class='chromeMeaningListItemMeaning'>${obj[i].noun}</div></div>`
+                  }` +
+                  `${
+                    obj[i].verb &&
+                    `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>verb:</div><div class='chromeMeaningListItemMeaning'>${obj[i].verb}</div></div>`
+                  }` +
+                  `${
+                    obj[i].adjective &&
+                    `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>adjective:</div><div class='chromeMeaningListItemMeaning'>${obj[i].adjective}</div></div>`
+                  }` +
+                  `${
+                    obj[i].adverb &&
+                    `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>adverb:</div><div class='chromeMeaningListItemMeaning'>${obj[i].adverb}</div></div>`
+                  }</div>`
+                : ""
+            }</div></div>` +
+            " "
         );
       }
     }
