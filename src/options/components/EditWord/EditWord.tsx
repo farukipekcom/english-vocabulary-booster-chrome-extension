@@ -20,16 +20,12 @@ function EditWord() {
     user_uuid: token.user.id,
   });
   useEffect(() => {
-    console.log("BAK");
     const fetchWord = async () => {
       const {data, error}: any = await supabase.from("words").select().eq("word_id", wordId);
       setformValue(data[0]);
-      console.log(data, error);
     };
     fetchWord();
   }, []);
-
-  console.log("XXX", formValue);
   const handleChangeInput = (event) => {
     setformValue({
       ...formValue,
