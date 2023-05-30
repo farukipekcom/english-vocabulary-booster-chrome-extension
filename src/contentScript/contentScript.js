@@ -29,6 +29,7 @@ style.innerHTML = `
     display: flex !important;
   }
   .chromeCardInner{
+    font-family: sans-serif !important;
     display:none !important;
     flex-direction:column !important;
     justify-content: center !important;
@@ -50,10 +51,13 @@ style.innerHTML = `
     flex-direction:column !important;
     font-style:normal !important;
     margin-bottom: 8px !important;
+    letter-spacing: normal !important;
+    width: 100% !important;
     .chromeMeaningHeroItem {
       color: black !important;
       font-size: 12px !important;
       line-height: 1.5 !important;
+      letter-spacing: normal !important;
     }
     .chromeMeaningHeroItemTitle {
       color:#636363 !important;
@@ -71,12 +75,15 @@ style.innerHTML = `
     }
   }
   .chromeMeaningList{
+    width: 100% !important;
     display:flex !important;
     flex-direction:column !important;
     border-top: 1px solid #e6e6e6 !important;
     padding-top:8px !important;
     font-style:normal !important;
+    letter-spacing: normal !important;
       .chromeMeaningListItem {
+        width: 100% !important;
         font-family: sans-serif !important;
         font-size: 14px !important;
         font-weight: 400 !important; 
@@ -84,6 +91,7 @@ style.innerHTML = `
         color: #252525 !important;
         display:flex !important;
         align-items: center !important;
+        letter-spacing: normal !important;
       }
       .chromeMeaningListItemTitle{
         font-size: 12px !important;
@@ -91,6 +99,8 @@ style.innerHTML = `
         color: #636363 !important;
         min-width:64px !important;
         font-family: sans-serif !important;
+        letter-spacing: normal !important;
+        margin: unset !important;
       }
       .chromeMeaningListItemMeaning{
         font-size: 14px !important;
@@ -98,6 +108,8 @@ style.innerHTML = `
         color: #252525 !important;
         min-width:64px !important;
         font-family: sans-serif !important;
+        letter-spacing: normal !important;
+        margin: unset !important;
       }
   }
 `;

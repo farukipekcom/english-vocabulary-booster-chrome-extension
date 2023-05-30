@@ -11,19 +11,17 @@ import Profile from "./pages/Settings/Profile";
 import List from "./pages/Settings/List";
 const Options = () => {
   return (
-    <div className="main">
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/home" element={<Home />}></Route>
-          <Route path="/mywords" element={<Mywords />}></Route>
-          <Route path="/settings/*" element={<Settings />}>
-            <Route path="profile" element={<Profile />}></Route>
-            <Route path="list" element={<List />}></Route>
-          </Route>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/home" element={<Home />}></Route>
+        <Route path="/mywords" element={<Mywords />}></Route>
+        <Route path="/settings/*" element={<Settings />}>
+          <Route path="profile" element={<Profile />}></Route>
+          <Route path="list" element={<List />}></Route>
         </Route>
-        <Route path="/login" element={<Login />}></Route>
-      </Routes>
-    </div>
+      </Route>
+      <Route path="/login" element={<Login />}></Route>
+    </Routes>
   );
 };
 
