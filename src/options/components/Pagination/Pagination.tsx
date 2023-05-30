@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import range from "lodash/range";
 import styles from "./Pagination.module.scss";
-import {useDispatch, useSelector} from "react-redux";
-import {Dispatch} from "@reduxjs/toolkit";
+import {useSelector} from "react-redux";
 export interface Props {
   limit?: any;
   setPageNumber?: (pageNumber: number) => void;
@@ -33,7 +32,7 @@ function Pagination(Props: Props) {
     console.log("pageNumber 2", item);
     setPageNumber(item);
     setWordTo(item * limit - 1);
-    setWordFrom(item * limit - 3);
+    setWordFrom(item * limit - limit);
   };
   return (
     <div className={styles.pagination}>
