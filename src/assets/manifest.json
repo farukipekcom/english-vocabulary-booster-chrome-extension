@@ -9,6 +9,9 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_title": "Click Me",
     "default_popup": "popup.html"
@@ -20,5 +23,5 @@
       "js": ["contentScript.js"]
     }
   ],
-  "permissions": ["storage"]
+  "permissions": ["storage", "contextMenus"]
 }

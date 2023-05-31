@@ -115,7 +115,7 @@ style.innerHTML = `
 `;
 var head = document.getElementsByTagName("HEAD")[0];
 head.appendChild(style);
-chrome.storage.sync.get(["data"], (result) => {
+chrome.storage.local.get(["data"], (result) => {
   replaceWord(result.data);
 });
 function replaceWord(obj) {

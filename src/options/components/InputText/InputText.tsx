@@ -5,13 +5,22 @@ export interface Props {
   type?: string;
   placeholder?: string;
   name?: string;
+  id?: any;
   value?: any;
   onChange?: (e: any) => void;
 }
 function InputText(Props: Props) {
-  const {className, type, placeholder, name, value, onChange} = Props;
+  const {className, type, placeholder, name, id, value, onChange} = Props;
   return (
-    <input className={`${styles.input} ${className}`} type={type} placeholder={placeholder} name={name} value={value} onChange={onChange} />
+    <input
+      className={`${styles.input} ${className}`}
+      type={type}
+      placeholder={placeholder}
+      name={name}
+      id={id}
+      value={value}
+      onChange={onChange}
+    />
   );
 }
 export default InputText;

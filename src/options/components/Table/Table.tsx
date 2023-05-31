@@ -6,7 +6,9 @@ import TableItem from "../TableItem/TableItem";
 import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
 import {setModal, setWordId, fetchPageWords, deleteWord, fetchSettings, fetchWords} from "../../../stores/word";
+import {useLocation} from "react-router-dom";
 function Table({setAddOrEdit, isAddOrEdit}) {
+  let location = useLocation();
   useEffect(() => {
     dispatch(fetchSettings());
     dispatch(fetchWords());
@@ -14,7 +16,6 @@ function Table({setAddOrEdit, isAddOrEdit}) {
   const dispatch = useDispatch<any>();
   const {
     deleteResponse,
-    allWordsResponse,
     modal,
     query,
     trigger,
@@ -27,7 +28,6 @@ function Table({setAddOrEdit, isAddOrEdit}) {
     pageWordsSuccess,
     pageWordsResponse,
   } = useSelector((state: any) => state.word);
-
   const [limit, setLimit] = useState();
   const [pageNumber, setPageNumber] = useState(1);
   const [wordFrom, setWordFrom] = useState(0);
@@ -52,7 +52,7 @@ function Table({setAddOrEdit, isAddOrEdit}) {
   const handleDelete = async (id: any) => {
     dispatch(deleteWord(id));
   };
-  chrome.storage.sync.set({data: wordsResponse}, () => {
+  chrome.storage.local.set({data: wordsResponse}, () => {
     // console.log("Data is set ", wordsResponse);
   });
 
@@ -97,7 +97,7 @@ function Table({setAddOrEdit, isAddOrEdit}) {
           />
         )}
       </div>
-      {modal && <Modal isAddOrEdit={isAddOrEdit} />}
+      {(modal || location.hash === "#modalopen") && <Modal isAddOrEdit={isAddOrEdit} />}
     </>
   );
 }

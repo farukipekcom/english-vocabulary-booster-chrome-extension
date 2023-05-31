@@ -6,11 +6,15 @@ import CloseIcon from "../icons/close";
 import {fetchPageWords, setModal, setTrigger} from "../../../stores/word";
 import {useDispatch, useSelector} from "react-redux";
 import {supabase} from "../../lib/helper/supabaseClient";
+import {useLocation, useNavigate} from "react-router-dom";
 function AddWord() {
+  let location = useLocation();
+  const navigate = useNavigate();
+  const locationSearch = location.search.split("=")[1];
   const dispatch = useDispatch<any>();
   const {token, settingsResponse, trigger} = useSelector((state: any) => state.word);
   const [formValue, setformValue] = useState({
-    word: "",
+    word: location.search.length > 0 ? locationSearch : "",
     meaning: "",
     noun: "",
     verb: "",
@@ -30,10 +34,16 @@ function AddWord() {
     dispatch(setModal(false));
     dispatch(setTrigger(!trigger));
     dispatch(fetchPageWords({wordFrom: 0, wordTo: settingsResponse?.word_limit - 1}));
+    navigate(location.pathname, {});
   };
   return (
     <div className="card">
-      <div className="card-close" onClick={() => dispatch(setModal(false))}>
+      <div
+        className="card-close"
+        onClick={() => {
+          dispatch(setModal(false));
+          navigate(location.pathname, {});
+        }}>
         <CloseIcon />
       </div>
       <div className="card-heading">
@@ -46,7 +56,14 @@ function AddWord() {
         <div className="card-input">
           <div className="card-input-label">Keyword</div>
           <div className="card-input-item">
-            <InputText name="word" value={formValue.word} onChange={handleChangeInput} placeholder="Keyword" />
+            <InputText
+              name="word"
+              id="word"
+              // value={location.search.length > 0 ? deneme : formValue.word}
+              value={formValue.word}
+              onChange={handleChangeInput}
+              placeholder="Keyword"
+            />
           </div>
         </div>
         <div className="card-input">
