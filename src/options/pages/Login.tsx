@@ -26,11 +26,11 @@ export default function Login() {
             <div className={styles.description}>Welcome back! Please enter your details.</div>
           </div>
           <div className={styles.inputList}>
-            <div className={styles.email}>
+            <div>
               <span>Email</span>
               <InputText name="email" placeholder="Enter your email" />
             </div>
-            <div className={styles.password}>
+            <div>
               <span>Password</span>
               <InputText name="password" type="password" placeholder="••••••••" />
             </div>
@@ -40,7 +40,7 @@ export default function Login() {
           </div>
           <div className={styles.forgot}>Forgot password</div>
           <div className={styles.signup}>
-            Don't have an account? <span>Sign up</span>
+            Don't have an account? <a href="#/signup">Sign up</a>
           </div>
         </div>
       </div>
