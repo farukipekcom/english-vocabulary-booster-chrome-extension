@@ -9,6 +9,7 @@ import {Routes, Route} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import Profile from "./pages/Settings/Profile";
 import List from "./pages/Settings/List";
+import Signup from "./pages/Signup";
 const Options = () => {
   return (
     <Routes>
@@ -21,6 +22,7 @@ const Options = () => {
         </Route>
       </Route>
       <Route path="/login" element={<Login />}></Route>
+      <Route path="/signup" element={<Signup />}></Route>
     </Routes>
   );
 };
