@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PageTitle from "../components/PageTitle/PageTitle";
-import {Navigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
+import {fetchWords} from "../../stores/word";
 function Home() {
+  const dispatch = useDispatch<any>();
+  useEffect(() => {
+    dispatch(fetchWords());
+  }, []);
   return (
     <div className="content">
       <PageTitle title="Welcome back, Faruk" />
