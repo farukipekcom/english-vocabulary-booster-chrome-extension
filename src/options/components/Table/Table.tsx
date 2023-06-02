@@ -9,10 +9,6 @@ import {setModal, setWordId, fetchPageWords, deleteWord, fetchSettings, fetchWor
 import {useLocation} from "react-router-dom";
 function Table({setAddOrEdit, isAddOrEdit}) {
   let location = useLocation();
-  useEffect(() => {
-    dispatch(fetchSettings());
-    dispatch(fetchWords());
-  }, []);
   const dispatch = useDispatch<any>();
   const {
     deleteResponse,
@@ -28,16 +24,21 @@ function Table({setAddOrEdit, isAddOrEdit}) {
     pageWordsSuccess,
     pageWordsResponse,
   } = useSelector((state: any) => state.word);
-
+  useEffect(() => {
+    dispatch(fetchSettings());
+  }, []);
   const [limit, setLimit] = useState();
   const [pageNumber, setPageNumber] = useState(1);
   const [wordFrom, setWordFrom] = useState(0);
-  const [wordTo, setWordTo] = useState(null);
+  const [wordTo, setWordTo] = useState(settingsResponse?.word_limit - 1);
+
   useEffect(() => {
-    settingsSuccess && setLimit(settingsResponse?.word_limit);
-    setWordTo(settingsResponse?.word_limit ? settingsResponse?.word_limit - 1 : 8);
-    settingsSuccess && dispatch(fetchPageWords({wordFrom, wordTo}));
+    setLimit(settingsResponse?.word_limit);
+    setWordTo(settingsResponse?.word_limit && settingsSuccess ? settingsResponse?.word_limit - 1 : 8);
   }, [settingsLoading]);
+  useEffect(() => {
+    settingsSuccess && dispatch(fetchPageWords({wordFrom, wordTo}));
+  }, [wordTo]);
   useEffect(() => {
     dispatch(fetchWords());
   }, [deleteResponse, trigger]);
@@ -48,7 +49,7 @@ function Table({setAddOrEdit, isAddOrEdit}) {
   };
   useEffect(() => {
     settingsSuccess && dispatch(fetchPageWords({wordFrom, wordTo}));
-  }, [wordFrom, wordTo, pageNumber, trigger, deleteResponse]);
+  }, [trigger, deleteResponse]);
   const handleDelete = async (id: any) => {
     dispatch(deleteWord(id));
   };
@@ -86,7 +87,7 @@ function Table({setAddOrEdit, isAddOrEdit}) {
             .map((item) => <TableItem key={item.word_id} item={item} handleDelete={handleDelete} handleEdit={handleEdit} />)}
         {!query && settingsSuccess && activeCategory === "All" && (
           <Pagination
-            limit={settingsResponse?.word_limit}
+            limit={limit}
             pageNumber={pageNumber}
             setPageNumber={setPageNumber}
             wordFrom={wordFrom}
