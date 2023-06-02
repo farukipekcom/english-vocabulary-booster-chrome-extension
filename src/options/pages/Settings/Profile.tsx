@@ -110,8 +110,12 @@ function Profile() {
             <div className={styles.settingName}>Profile Photo</div>
             <div className={styles.setting}>
               <div className={styles.profilePhoto}>
-                {userSuccess && (
-                  <img className={styles.profilePhotoImage} height={64} width={64} src={resizeBlob ? resizeBlob : imagePath} />
+                {userSuccess === true && userResponse?.image_path ? (
+                  <img className={styles.profilePhotoImage} src={imagePath} />
+                ) : resizeBlob ? (
+                  <img className={styles.profilePhotoImage} src={resizeBlob} />
+                ) : (
+                  <div className={styles.profilePhotoText}>{userSuccess && userResponse?.first_name.charAt(0)}</div>
                 )}
                 <label htmlFor="file_input" className={styles.dropContainer}>
                   <span className={styles.dropTitle}>Drop files here</span>
