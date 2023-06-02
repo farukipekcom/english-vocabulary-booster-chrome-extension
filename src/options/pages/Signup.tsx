@@ -20,7 +20,7 @@ export default function Login() {
       [event.target.name]: event.target.value,
     });
   };
-  const handleAdd = async (e) => {
+  const signUp = async (e) => {
     e.preventDefault();
     const {data, error} = await supabase.auth.signUp({
       email: formValue.email_address,
@@ -37,7 +37,7 @@ export default function Login() {
   return (
     <div className={styles.main}>
       <div className={styles.left}>
-        <div className={styles.form}>
+        <form className={styles.form} onSubmit={signUp}>
           <div className={styles.heading}>
             <div className={styles.title}>Sign up</div>
             <div className={styles.description}>Start improving your English.</div>
@@ -56,13 +56,13 @@ export default function Login() {
               <InputText name="password" type="password" placeholder="Create a password" onChange={handleChangeInput} />
             </div>
           </div>
-          <div className={styles.button} onClick={handleAdd}>
+          <div className={styles.button}>
             <Button text="Get started" />
           </div>
           <div className={styles.signup}>
             Do you have an account? <a href="#/login">Login</a>
           </div>
-        </div>
+        </form>
       </div>
       <div className={styles.right}></div>
     </div>

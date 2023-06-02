@@ -9,14 +9,14 @@ export interface Props {
 function Button(Props: Props) {
   const {text, icon, onClick} = Props;
   return (
-    <div className={styles.button} onClick={onClick}>
+    <button className={styles.button} onClick={onClick}>
       {icon && (
         <div className={styles.buttonIcon}>
           <PlusIcon />
         </div>
       )}
       <div className={styles.buttonText}>{text}</div>
-    </div>
+    </button>
   );
 }
 
