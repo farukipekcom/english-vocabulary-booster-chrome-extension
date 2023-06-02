@@ -32,10 +32,10 @@ function Table({setAddOrEdit, isAddOrEdit}) {
   const [limit, setLimit] = useState();
   const [pageNumber, setPageNumber] = useState(1);
   const [wordFrom, setWordFrom] = useState(0);
-  const [wordTo, setWordTo] = useState(8);
+  const [wordTo, setWordTo] = useState(null);
   useEffect(() => {
     settingsSuccess && setLimit(settingsResponse?.word_limit);
-    setWordTo(settingsResponse?.word_limit ? settingsResponse?.word_limit - 1 : 1);
+    setWordTo(settingsResponse?.word_limit ? settingsResponse?.word_limit - 1 : 8);
     settingsSuccess && dispatch(fetchPageWords({wordFrom, wordTo}));
   }, [settingsLoading]);
   useEffect(() => {

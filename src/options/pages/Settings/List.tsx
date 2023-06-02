@@ -23,12 +23,9 @@ function List() {
   };
   const handleAdd = async (e) => {
     e.preventDefault();
-    const loginFormData = new FormData();
-    loginFormData.append("keyword", formValue.word_limit);
     const {data, error}: any = await supabase
       .from("settings")
-      .update({word_limit: formValue.word_limit})
-      .eq("user_uuid", token.user.id)
+      .upsert({user_uuid: token.user.id, word_limit: formValue.word_limit})
       .select();
     dispatch(fetchSettings());
   };
