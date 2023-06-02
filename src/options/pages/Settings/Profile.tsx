@@ -17,8 +17,7 @@ function Profile() {
   const [uuid, setUuid] = useState(null);
   const imagePath = `${process.env.REACT_APP_SUPABASE_PHOTO_URL}${userResponse?.image_path}`;
   const [formValue, setformValue] = useState({
-    first_name: userResponse?.first_name,
-    last_name: userResponse?.last_name,
+    name: userResponse?.name,
     email_address: userResponse?.email_address,
   });
   const handleChangeInput = (event) => {
@@ -73,20 +72,13 @@ function Profile() {
             </div>
           </div>
           <div className={styles.item}>
-            <div className={styles.settingName}>Full Name</div>
-            <div className={styles.settingHalf}>
+            <div className={styles.settingName}>Name</div>
+            <div className={styles.setting}>
               <InputText
-                placeholder="First name"
+                placeholder="Enter your name"
                 type="text"
-                name="first_name"
-                value={formValue.first_name !== undefined ? formValue.first_name : userResponse?.first_name || ""}
-                onChange={handleChangeInput}
-              />
-              <InputText
-                placeholder="Last Name"
-                type="text"
-                name="last_name"
-                value={formValue.last_name !== undefined ? formValue.last_name : userResponse?.last_name || ""}
+                name="name"
+                value={formValue.name !== undefined ? formValue.name : userResponse?.name || ""}
                 onChange={handleChangeInput}
               />
             </div>
@@ -115,7 +107,7 @@ function Profile() {
                 ) : resizeBlob ? (
                   <img className={styles.profilePhotoImage} src={resizeBlob} />
                 ) : (
-                  <div className={styles.profilePhotoText}>{userSuccess && userResponse?.first_name.charAt(0)}</div>
+                  <div className={styles.profilePhotoText}>{userSuccess && userResponse?.name.charAt(0)}</div>
                 )}
                 <label htmlFor="file_input" className={styles.dropContainer}>
                   <span className={styles.dropTitle}>Drop files here</span>

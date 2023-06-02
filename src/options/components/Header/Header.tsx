@@ -48,10 +48,10 @@ function Header() {
           {userSuccess === true && userResponse?.image_path ? (
             <img className={styles.image} src={process.env.REACT_APP_SUPABASE_PHOTO_URL + userResponse?.image_path} />
           ) : (
-            <div className={styles.imageText}>{userSuccess && userResponse?.first_name.charAt(0)}</div>
+            <div className={styles.imageText}>{userSuccess && userResponse?.name.charAt(0)}</div>
           )}
           <div className={styles.info}>
-            <div className={styles.name}>{!userLoading && userResponse?.first_name}</div>
+            <div className={styles.name}>{!userLoading && userResponse?.name}</div>
             <div className={styles.email}>{!userLoading && userResponse?.email_address}</div>
           </div>
           <div className={styles.logout} onClick={logout}>
