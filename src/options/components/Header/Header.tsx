@@ -17,6 +17,7 @@ function Header() {
     dispatch(setToken(null));
     navigate("../login");
   };
+
   return (
     <header className={styles.header}>
       <div className={styles.headerLogo}>
@@ -44,16 +45,13 @@ function Header() {
       </div>
       <div className={styles.footer}>
         <div className={styles.profile}>
-          {userSuccess && (
-            <img
-              className={styles.image}
-              height={48}
-              width={48}
-              src={process.env.REACT_APP_SUPABASE_PHOTO_URL + userResponse?.image_path}
-            />
+          {userSuccess === true && userResponse?.image_path ? (
+            <img className={styles.image} src={process.env.REACT_APP_SUPABASE_PHOTO_URL + userResponse?.image_path} />
+          ) : (
+            <div className={styles.imageText}>{userSuccess && userResponse?.first_name.charAt(0)}</div>
           )}
           <div className={styles.info}>
-            <div className={styles.name}>{!userLoading && userResponse?.first_name + " " + userResponse?.last_name}</div>
+            <div className={styles.name}>{!userLoading && userResponse?.first_name}</div>
             <div className={styles.email}>{!userLoading && userResponse?.email_address}</div>
           </div>
           <div className={styles.logout} onClick={logout}>
