@@ -36,7 +36,7 @@ function Profile() {
     e.preventDefault();
     const res = await supabase
       .from("user")
-      .update({...formValue, image_path: "public/" + uuid})
+      .update({...formValue, image_path: userResponse?.image_path && !resizeBlob ? userResponse?.image_path : "public/" + uuid})
       .eq("user_uuid", token.user.id)
       .select();
     const {data, error} = await supabase.storage.from("profiles").upload("public/" + uuid, resizeImage, {
@@ -102,7 +102,7 @@ function Profile() {
             <div className={styles.settingName}>Profile Photo</div>
             <div className={styles.setting}>
               <div className={styles.profilePhoto}>
-                {userSuccess === true && userResponse?.image_path ? (
+                {userSuccess === true && userResponse?.image_path && !resizeBlob ? (
                   <img className={styles.profilePhotoImage} src={imagePath} />
                 ) : resizeBlob ? (
                   <img className={styles.profilePhotoImage} src={resizeBlob} />
