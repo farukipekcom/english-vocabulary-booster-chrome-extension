@@ -8,6 +8,7 @@ import {supabase} from "../../lib/helper/supabaseClient";
 import {v4 as uuidv4} from "uuid";
 import {resizeFile} from "../../lib/resizeFile";
 import {EmailIcon} from "../../components/icons";
+import {MyToast} from "../../lib/toast";
 function Profile() {
   const {token} = useSelector((state: any) => state.word);
   const dispatch = useDispatch<any>();
@@ -19,7 +20,17 @@ function Profile() {
   const [formValue, setformValue] = useState({
     name: userResponse?.name,
     email_address: userResponse?.email_address,
+    image_path: userResponse?.image_path,
   });
+  useEffect(() => {
+    userSuccess &&
+      setformValue({
+        ...formValue,
+        name: userResponse?.name,
+        email_address: userResponse?.email_address,
+        image_path: userResponse?.image_path,
+      });
+  }, [userSuccess]);
   const handleChangeInput = (event) => {
     setformValue({
       ...formValue,
@@ -42,6 +53,8 @@ function Profile() {
     const {data, error} = await supabase.storage.from("profiles").upload("public/" + uuid, resizeImage, {
       contentType: "image/png",
     });
+    data || res.data ? MyToast("updateSuccess") : MyToast("updateError");
+    setResizeImage(null);
     dispatch(fetchUser());
   };
   const handleUpload = async (e) => {
@@ -52,7 +65,18 @@ function Profile() {
     const resizeImage: any = await resizeFile(file);
     setResizeImage(await resizeImage);
     setResizeBlob(URL.createObjectURL(resizeImage));
+    setformValue({
+      ...formValue,
+      image_path: "public/" + uuid,
+    });
   };
+  const onChangeStatus =
+    userResponse?.name !== formValue.name ||
+    userResponse?.email_address !== formValue.email_address ||
+    userResponse?.image_path !== formValue.image_path
+      ? true
+      : null;
+
   return (
     <div className={styles.list}>
       {!userLoading && (
@@ -63,10 +87,7 @@ function Profile() {
               <div className={styles.description}>Update your profile details here.</div>
             </div>
             <div className={styles.button}>
-              <div className={styles.buttonCancel}>
-                <Button text="Cancel" />
-              </div>
-              <div className={styles.buttonSave} onClick={handleAdd}>
+              <div className={`${onChangeStatus ? styles.buttonActive : styles.button}`} onClick={onChangeStatus && handleAdd}>
                 <Button text="Save" />
               </div>
             </div>
@@ -124,7 +145,6 @@ function Profile() {
                     required
                   />
                 </label>
-                {/* <input type="file" accept="image/*" id="file_input" /> */}
               </div>
             </div>
           </div>

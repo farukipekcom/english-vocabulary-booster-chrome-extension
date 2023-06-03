@@ -51,13 +51,17 @@
   }
 }
 .button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  button {
+    opacity: 0.3;
+    transition: opacity 0.4s;
+  }
 }
-.buttonCancel {
-}
-.buttonSave {
+.buttonActive {
+  button {
+    opacity: 1;
+    background-color: $primary;
+    transition: opacity 0.4s;
+  }
 }
 .profilePhoto {
   display: flex;
@@ -94,7 +98,7 @@
   border: 2px dashed #d0d5dd;
   color: #444;
   cursor: pointer;
-  transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, border 0.2s ease-in-out;
 }
 
 .dropContainer:hover {
@@ -134,7 +138,7 @@ input[type="file"]::file-selector-button {
   border-radius: 10px;
   color: #fff;
   cursor: pointer;
-  transition: background 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
 }
 
 input[type="file"]::file-selector-button:hover {
@@ -147,7 +151,6 @@ input[type="file"]::file-selector-button:hover {
     box-shadow: $shadow;
   }
 }
-
 .inputGroup {
   position: relative;
   svg {

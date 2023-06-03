@@ -5,31 +5,32 @@ import Button from "../../components/Button/Button";
 import InputText from "../../components/InputText/InputText";
 import {fetchSettings} from "../../../stores/word";
 import {supabase} from "../../lib/helper/supabaseClient";
+import {MyToast} from "../../lib/toast";
 function List() {
   const {token} = useSelector((state: any) => state.word);
   const dispatch = useDispatch<any>();
-  const {settingsResponse} = useSelector((state: any) => state.word);
+  const {settingsResponse, settingsSuccess} = useSelector((state: any) => state.word);
+  const [formValue, setformValue] = useState({
+    word_limit: Number(""),
+  });
   useEffect(() => {
     dispatch(fetchSettings());
   }, []);
-  const [formValue, setformValue] = useState({
-    word_limit: settingsResponse?.word_limit,
-  });
+  useEffect(() => {
+    settingsSuccess && setformValue({...formValue, word_limit: settingsResponse?.word_limit});
+  }, [settingsSuccess]);
   const handleChangeInput = (event) => {
     setformValue({
       ...formValue,
-      [event.target.name]: event.target.value,
+      [event.target.name]: Number(event.target.value),
     });
   };
-  const handleAdd = async (e) => {
-    e.preventDefault();
-    const {data, error}: any = await supabase
-      .from("settings")
-      .upsert({user_uuid: token.user.id, word_limit: formValue.word_limit})
-      .select();
+  const handleAdd = async () => {
+    const {data} = await supabase.from("settings").upsert({user_uuid: token.user.id, word_limit: formValue.word_limit}).select();
     dispatch(fetchSettings());
+    data ? MyToast("updateSuccess") : MyToast("updateError");
   };
-
+  const onChangeStatus = settingsResponse.word_limit !== formValue.word_limit ? true : null;
   return (
     <div className={styles.list}>
       <div className={styles.heading}>
@@ -37,13 +38,8 @@ function List() {
           <div className={styles.title}>List</div>
           <div className={styles.description}>Update your list details here.</div>
         </div>
-        <div className={styles.button}>
-          <div className={styles.buttonCancel}>
-            <Button text="Cancel" />
-          </div>
-          <div className={styles.buttonSave} onClick={handleAdd}>
-            <Button text="Save" />
-          </div>
+        <div className={`${onChangeStatus ? styles.buttonActive : styles.button}`} onClick={onChangeStatus && handleAdd}>
+          <Button text="Save" />
         </div>
       </div>
       <div className={styles.item}>
