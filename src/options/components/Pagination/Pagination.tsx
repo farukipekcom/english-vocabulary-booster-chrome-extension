@@ -2,6 +2,7 @@ import React from "react";
 import range from "lodash/range";
 import styles from "./Pagination.module.scss";
 import {useSelector} from "react-redux";
+import {PaginationFunc} from "../../lib/pagination";
 export interface Props {
   limit?: any;
   setPageNumber?: (pageNumber: number) => void;
@@ -29,7 +30,6 @@ function Pagination(Props: Props) {
     await setWordTo(wordTo + limit);
   };
   const setPage = async (item) => {
-    console.log("pageNumber 2", item);
     setPageNumber(item);
     setWordTo(item * limit - 1);
     setWordFrom(item * limit - limit);
@@ -46,19 +46,9 @@ function Pagination(Props: Props) {
         </div>
       )}
       <div className={styles.paginationNumbers}>
-        {pages.map((item) => (
-          <span key={item}>
-            {pageNumber === item ? (
-              <div className={`${styles.paginationNumbersItem} ${styles.active}`} onClick={() => setPage(item)}>
-                {pageNumber === item ? item : item}
-              </div>
-            ) : (
-              <div className={styles.paginationNumbersItem} onClick={() => setPage(item)}>
-                {pageNumber === item ? item : item}
-              </div>
-            )}
-          </span>
-        ))}
+        {pages.map((item: object, id: number) => {
+          return <PaginationFunc key={id} id={id} pageNumber={pageNumber} item={item} styles={styles} pages={pages} setPage={setPage} />;
+        })}
       </div>
       {pageNumber < pageCount ? (
         <div className={styles.paginationNext} onClick={nextPage}>

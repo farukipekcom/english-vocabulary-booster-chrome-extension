@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
   padding: 24px;
   &Previous,
   &Next {
@@ -22,8 +23,9 @@
     display: flex;
     align-items: center;
     gap: 2px;
+    overflow: hidden;
     &Item {
-      display: flex;
+      display: flex !important;
       align-items: center;
       justify-content: center;
       @include sm-medium;
