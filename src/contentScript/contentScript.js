@@ -1,7 +1,7 @@
 const style = document.createElement(`style`);
 style.innerHTML = `
   p:has(.chromeCard){
-    display:const [state, dispatch] = useReducer(first, second, third) !important;
+    display: inline-block !important;
   }
   .chromeCard {
     display:inline-block !important;
