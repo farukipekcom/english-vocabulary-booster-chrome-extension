@@ -78,16 +78,16 @@ function Profile() {
       : null;
 
   return (
-    <div className={styles.list}>
+    <>
       {!userLoading && (
-        <>
+        <form className={styles.list} onSubmit={onChangeStatus && handleAdd}>
           <div className={styles.heading}>
             <div className={styles.title}>
               <div className={styles.title}>Profile</div>
               <div className={styles.description}>Update your profile details here.</div>
             </div>
             <div className={styles.button}>
-              <div className={`${onChangeStatus ? styles.buttonActive : styles.button}`} onClick={onChangeStatus && handleAdd}>
+              <div className={`${onChangeStatus ? styles.buttonActive : styles.button}`}>
                 <Button text="Save" />
               </div>
             </div>
@@ -142,15 +142,14 @@ function Profile() {
                     onChange={(e) => {
                       handleUpload(e);
                     }}
-                    required
                   />
                 </label>
               </div>
             </div>
           </div>
-        </>
+        </form>
       )}
-    </div>
+    </>
   );
 }
 {

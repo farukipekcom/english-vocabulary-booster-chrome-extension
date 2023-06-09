@@ -25,20 +25,21 @@ function List() {
       [event.target.name]: Number(event.target.value),
     });
   };
-  const handleAdd = async () => {
+  const handleAdd = async (e) => {
+    e.preventDefault();
     const {data} = await supabase.from("settings").upsert({user_uuid: token.user.id, word_limit: formValue.word_limit}).select();
     dispatch(fetchSettings());
     data ? MyToast("updateSuccess") : MyToast("updateError");
   };
   const onChangeStatus = settingsResponse.word_limit !== formValue.word_limit ? true : null;
   return (
-    <div className={styles.list}>
+    <form className={styles.list} onSubmit={onChangeStatus && handleAdd}>
       <div className={styles.heading}>
         <div className={styles.title}>
           <div className={styles.title}>List</div>
           <div className={styles.description}>Update your list details here.</div>
         </div>
-        <div className={`${onChangeStatus ? styles.buttonActive : styles.button}`} onClick={onChangeStatus && handleAdd}>
+        <div className={`${onChangeStatus ? styles.buttonActive : styles.button}`}>
           <Button text="Save" />
         </div>
       </div>
@@ -54,7 +55,7 @@ function List() {
           />
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 
