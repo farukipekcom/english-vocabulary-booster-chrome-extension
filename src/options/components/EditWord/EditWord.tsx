@@ -53,7 +53,6 @@ function EditWord() {
           You can update words to the form below. If they are verbs or adjectives, please write them in separate boxes.
         </div>
       </div>
-
       <form onSubmit={handleAdd} className="form">
         <div className="card-input">
           <div className="card-input-label">Keyword</div>
@@ -92,7 +91,7 @@ function EditWord() {
           </div>
         </div>
         <div className="card-input card-full">
-          <Button text="Update" onClick={handleAdd} />
+          <Button text="Update" />
         </div>
       </form>
     </div>
