@@ -1,15 +1,15 @@
 const style = document.createElement(`style`);
 style.innerHTML = `
-  p:has(.chromeCard){
+  p:has(.englishVocabularyBoosterCard){
     display: inline-block !important;
   }
-  .chromeCard {
+  .englishVocabularyBoosterCard {
     display:inline-block !important;
     position: relative !important;
     cursor: pointer !important;
     font-weight: 600 !important;
   }
-  .chromeCard::after {
+  .englishVocabularyBoosterCard::after {
     content: " " !important;
     position: absolute !important;
     width:100% !important;
@@ -22,21 +22,22 @@ style.innerHTML = `
     transform: translateX(-50%) !important;
     z-index: 0 !important;
   }
-  .chromeCard:hover::after{
+  .englishVocabularyBoosterCard:hover::after{
     background-color: #bc9f16cc !important;
   }
-  .chromeCard:hover > .chromeCardInner {
+  .englishVocabularyBoosterCard:hover > .englishVocabularyBoosterCardInner {
     display: flex !important;
   }
-  .chromeCardInner{
+  .englishVocabularyBoosterCardInner{
     font-family: sans-serif !important;
     display:none !important;
     flex-direction:column !important;
     justify-content: center !important;
+    gap:12px !important;
     min-width: 160px !important;
-    width: 180px !important;
+    width: 200px !important;
     max-width:260px !important;
-    padding: 8px 16px !important;
+    padding: 16px 16px !important;
     background: white !important;
     position: absolute !important;
     left:50% !important;
@@ -45,72 +46,79 @@ style.innerHTML = `
     -ms-transform: translateX(-50%) !important;
     transform: translateX(-50%) !important;
     border:1px solid #bbbbbb !important;
+    cursor: default !important;
+    border-radius: 8px !important;
   }
-  .chromeMeaningHero {
+  .englishVocabularyBoosterCardInnerHeading{
+    display:flex !important;
+  }
+  .englishVocabularyBoosterCardInnerHeadingDivider{
+    width: 4px !important;
+    height: 68px !important;
+    border-radius: 4px !important;
+    background-color:#101828 !important;
+  }
+  .englishVocabularyBoosterCardInnerHeadingText{
+    display:flex !important;
+    flex-direction: column !important;
+    gap:4px !important;
+    margin-left: 8px !important;
+  }
+  .englishVocabularyBoosterCardInnerHeadingTextTitle:nth-child(3){
+    margin-top: 4px !important;
+  }
+  .englishVocabularyBoosterCardInnerHeadingTextTitle{
+    color:#737373 !important;
+    font-family: Inter !important;
+    font-weight: 500 !important;
+    font-size:10px !important;
+    line-height:1 !important;
+  }
+  .englishVocabularyBoosterCardInnerHeadingTextMeaning{
+    color: #000 !important;
+    font-family: Inter !important;
+    font-weight:500 !important;
+    font-size: 16px !important;
+    line-height:1 !important;
+  }
+  .englishVocabularyBoosterCardInnerDivider{
+    height:1px !important;
+    width:100% !important;
+    background-color: #D9D9D9 !important;
+  }
+  .englishVocabularyBoosterCardInnerBody{
     display:flex !important;
     flex-direction:column !important;
-    font-style:normal !important;
-    margin-bottom: 8px !important;
-    letter-spacing: normal !important;
-    width: 100% !important;
-    .chromeMeaningHeroItem {
-      color: black !important;
-      font-size: 12px !important;
-      line-height: 1.5 !important;
-      letter-spacing: normal !important;
-    }
-    .chromeMeaningHeroItemTitle {
-      color:#636363 !important;
-      font-size: 11px !important;
-      font-weight: 600 !important;
-      margin-top: 8px !important;
-      font-family: sans-serif !important;
-    }
-    .chromeMeaningHeroItemValue {
-      color:black !important;
-      font-size: 16px !important;
-      font-weight:400 !important;
-      margin-left: 8px !important;
-      font-family: sans-serif !important;
-    }
+    gap: 8px !important;
   }
-  .chromeMeaningList{
-    width: 100% !important;
+  .englishVocabularyBoosterCardInnerBodyItem{
     display:flex !important;
-    flex-direction:column !important;
-    border-top: 1px solid #e6e6e6 !important;
-    padding-top:8px !important;
-    font-style:normal !important;
-    letter-spacing: normal !important;
-      .chromeMeaningListItem {
-        width: 100% !important;
-        font-family: sans-serif !important;
-        font-size: 14px !important;
-        font-weight: 400 !important; 
-        line-height: 1.5 !important;
-        color: #252525 !important;
-        display:flex !important;
-        align-items: center !important;
-        letter-spacing: normal !important;
-      }
-      .chromeMeaningListItemTitle{
-        font-size: 12px !important;
-        font-weight: 500 !important;
-        color: #636363 !important;
-        min-width:64px !important;
-        font-family: sans-serif !important;
-        letter-spacing: normal !important;
-        margin: unset !important;
-      }
-      .chromeMeaningListItemMeaning{
-        font-size: 14px !important;
-        font-weight: 400 !important;
-        color: #252525 !important;
-        min-width:64px !important;
-        font-family: sans-serif !important;
-        letter-spacing: normal !important;
-        margin: unset !important;
-      }
+    align-items:center !important;
+  }
+  .englishVocabularyBoosterCardInnerBodyItemTitle{
+    color: #737373 !important;
+    font-family: Inter !important;
+    font-style:italic !important;
+    line-height: 1 !important;
+    font-weight: 500 !important;
+    font-size:12px !important;
+    width: 58px !important;
+  }
+  .englishVocabularyBoosterCardInnerBodyItemMeaning{
+    color: #000000 !important;
+    font-family: Inter !important;
+    line-height: 1 !important;
+    font-weight: 500 !important;
+    font-size:13px !important;
+  }
+  .englishVocabularyBoosterCardInnerFooter{
+    font-family: Inter !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    color:#A2A2A2 !important;
+    width:100% !important;
+    text-align:right !important;
+    line-height: 1 !important;
   }
 `;
 var head = document.getElementsByTagName("HEAD")[0];
@@ -136,33 +144,55 @@ function replaceWord(obj) {
         allElements[x].innerHTML = allElements[x].innerHTML.replace(
           " " + obj[i].word + " ",
           " " +
-            `<div class="chromeCard">${
-              obj[i].word
-            }<div class="chromeCardInner"><div class="chromeMeaningHero"><span class="chromeMeaningHeroItem chromeMeaningHeroItemTitle">ENGLISH</span><span class="chromeMeaningHeroItem chromeMeaningHeroItemValue">${
-              obj[i].word
-            }</span><span class="chromeMeaningHeroItem chromeMeaningHeroItemTitle">TURKISH</span><span class="chromeMeaningHeroItem chromeMeaningHeroItemValue">${
-              obj[i].meaning
-            }</span></div>${
-              obj[i].noun || obj[i].verb || obj[i].adjective || obj[i].adverb
-                ? `<div class="chromeMeaningList">` +
-                  `${
-                    obj[i].noun &&
-                    `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>noun:</div><div class='chromeMeaningListItemMeaning'>${obj[i].noun}</div></div>`
-                  }` +
-                  `${
-                    obj[i].verb &&
-                    `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>verb:</div><div class='chromeMeaningListItemMeaning'>${obj[i].verb}</div></div>`
-                  }` +
-                  `${
-                    obj[i].adjective &&
-                    `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>adjective:</div><div class='chromeMeaningListItemMeaning'>${obj[i].adjective}</div></div>`
-                  }` +
-                  `${
-                    obj[i].adverb &&
-                    `<div class="chromeMeaningListItem"><div class='chromeMeaningListItemTitle'>adverb:</div><div class='chromeMeaningListItemMeaning'>${obj[i].adverb}</div></div>`
-                  }</div>`
-                : ""
-            }</div></div>` +
+            `<div class="englishVocabularyBoosterCard">
+            ${obj[i].word}
+            <div class="englishVocabularyBoosterCardInner">
+              <div class="englishVocabularyBoosterCardInnerHeading">
+                <div class="englishVocabularyBoosterCardInnerHeadingDivider"></div>
+                <div class="englishVocabularyBoosterCardInnerHeadingText">
+                  <div class="englishVocabularyBoosterCardInnerHeadingTextTitle">ENGLISH</div>
+                  <div class="englishVocabularyBoosterCardInnerHeadingTextMeaning">${obj[i].word}</div>
+                  <div class="englishVocabularyBoosterCardInnerHeadingTextTitle">TURKISH</div>
+                  <div class="englishVocabularyBoosterCardInnerHeadingTextMeaning">${obj[i].meaning}</div>
+                </div>
+              </div>
+              ${
+                obj[i].noun || obj[i].verb || obj[i].adjective || obj[i].adverb
+                  ? `
+                  <div class="englishVocabularyBoosterCardInnerDivider"></div>
+                  <div class="englishVocabularyBoosterCardInnerBody">` +
+                    `${
+                      obj[i].verb &&
+                      `<div class="englishVocabularyBoosterCardInnerBodyItem">
+                      <div class="englishVocabularyBoosterCardInnerBodyItemTitle">verb</div>
+                      <div class="englishVocabularyBoosterCardInnerBodyItemMeaning">${obj[i].verb}</div>
+                    </div>`
+                    }` +
+                    `${
+                      obj[i].noun &&
+                      `<div class="englishVocabularyBoosterCardInnerBodyItem">
+                      <div class="englishVocabularyBoosterCardInnerBodyItemTitle">noun</div>
+                      <div class="englishVocabularyBoosterCardInnerBodyItemMeaning">${obj[i].noun}</div>
+                    </div>`
+                    }` +
+                    `${
+                      obj[i].adjective &&
+                      `<div class="englishVocabularyBoosterCardInnerBodyItem">
+                      <div class="englishVocabularyBoosterCardInnerBodyItemTitle">adjective</div>
+                      <div class="englishVocabularyBoosterCardInnerBodyItemMeaning">${obj[i].adjective}</div>
+                    </div>`
+                    }` +
+                    `${
+                      obj[i].adverb &&
+                      `<div class="englishVocabularyBoosterCardInnerBodyItem">
+                      <div class="englishVocabularyBoosterCardInnerBodyItemTitle">adverb</div>
+                      <div class="englishVocabularyBoosterCardInnerBodyItemMeaning">${obj[i].adverb}</div>
+                    </div>`
+                    }` +
+                    `</div>`
+                  : ""
+              }   
+              <div class="englishVocabularyBoosterCardInnerFooter">EXTENSION OPTIONS</div></div></div>` +
             " "
         );
       }
